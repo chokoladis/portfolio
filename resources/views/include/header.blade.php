@@ -5,36 +5,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Portfolio on laravel</title>
+        @vite(['resources/scss/app.scss','resources/js/app.js'])
     </head>
     <body class="antialiased">
         <header class="header">
             <div class="container">
-                <div class="profile">
+                <!-- <div class="profile">
                     <div class="present">
                         <b>username</b>
                         <hr>
-                        <ul class="short_action hide">
-                            <li><a href="">profile</a></li>
-                            <li><a href="">settings</a></li>
-                            <li><a href="">logout</a></li>
-                        </ul>
                     </div>
-                    <div class="search">
-                        <form action="" method="POST" >
-                            <input type="text" name='search' id='search'>
-                            <button type='submit'>
-                                <img src="icon.png" alt="">
-                            </button>
-                        </form>
-                        <img src="icon.png" alt="" class='search-placeholder'>
-                    </div>
-                    <ul class="header-main">
-                        <li><a href="{{ route('work.index') }}">portfolio</a></li>
-                        <li><a href=""></a></li>
-                        <li><a href=""></a></li>
-                        <li><a href=""></a></li>
+                    <ul class="short_action hide">
+                        <li><a href="">profile</a></li>
+                        <li><a href="">settings</a></li>
+                        <li><a href="">logout</a></li>
                     </ul>
-                </div>
+                </div> -->
+                <!-- <div class="search">
+                    <form action="" method="POST" >
+                        <input type="text" name='search' id='search'>
+                        <button type='submit'>
+                            <img src="icon.png" alt="">
+                        </button>
+                    </form>
+                    <img src="icon.png" alt="" class='search-placeholder'>
+                </div> -->
+                <ul class="header-main">
+                    <li><a href="{{ route('work.index') }}">portfolio</a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                </ul>
             </div>
         </header>
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
