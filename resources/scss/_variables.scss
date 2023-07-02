@@ -3,7 +3,8 @@ $body-bg: #f8fafc;
 
 // Colors
 $main-clr: rgb(88, 88, 255);
-$dual-clr: rgb(85, 0, 176);
+$dual-clr: rgb(240, 1, 1);
+$main-clr-text: white;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -12,6 +13,9 @@ $line-height-base: 1.6;
 
 // header
 $header-bg: $main-clr;
-$header-link-color: white;
+$header-link-color: $main-clr-text;
 $header-link-color-hv: lighten($header-bg, 10%);
-$header-link-color-visited: lighten($dual-clr, 10%)
+$header-link-color-visited: lighten($dual-clr, 10%);
+
+// footer
+$footer-bg: darken($main-clr, 5%);

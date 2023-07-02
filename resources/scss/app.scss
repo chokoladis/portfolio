@@ -7,32 +7,93 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-// header{
-//     &.header{
-//         //
-//     }
+*,
+*:hover,
+*::after,
+*::before{
+    transition-duration: .3s;
+}
 
-// }
-header{
+body, html{
+    height: 100%;
+}
+ul,li,p{
+    margin: 0;
+    padding: 0;
+}
 
-    background: $header-bg;
 
-    ul.header-main{
-        display: flex;
+.root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 
-        li{
+    header{
 
-            a{
-                text-transform: uppercase;
-                color: $header-link-color;
+        background: $header-bg;
 
-                &:hover,&.active{
-                    color: $header-link-color-hv;
+        ul.header-main{
+            display: flex;
+            padding: 10px;
+
+            li{
+                display: block;
+                position: relative;
+                overflow: hidden;
+                padding-left: 10px;
+                padding-right: 5px;
+
+                a{
+                    text-transform: uppercase;
+                    color: $header-link-color;
+                    text-decoration: none;
+                    font-weight: 600;
+
+                    &:visited{
+                        color: $header-link-color-visited;
+                    }
                 }
-                &:visited{
-                    color: $header-link-color-visited;
+
+                &::after{
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    
+                    width: 4px;
+                    height: 4px;
+
+                    background: $header-link-color-visited;
                 }
+
+                &:hover{
+
+                    a{
+                        color: $header-link-color-hv;
+                    }
+
+                    &::after{
+                        bottom: 0;
+                        top:unset;
+                        height: 2px;
+                        width: 50px;
+                        left: 70%;
+                    }
+                    
+                }
+
             }
         }
+    }
+
+    footer{
+        padding: 20px 0;
+        background: $footer-bg;
+        color:$main-clr-text;
+    }
+
+    main{
+        padding: 10px 0;
+        flex: 1;
     }
 }

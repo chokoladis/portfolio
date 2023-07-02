@@ -1,7 +1,9 @@
 @include('include.header')
 
     <main>
-        @yield('content')
+        <div class="container">
+            @yield('content')
+        </div>
     </main>
         
 @include('include.footer')
