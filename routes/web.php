@@ -17,8 +17,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/works/', 'App\Http\Controllers\ExampleWork@index')->name('work.index');
-Route::get('/works/create/', 'App\Http\Controllers\ExampleWork@create');
+Route::get('/works', 'App\Http\Controllers\ExampleWork@index')->name('work.index');
+Route::get('/works/create/', 'App\Http\Controllers\ExampleWork@create')->name('work.create');
+Route::post('/works', 'App\Http\Controllers\ExampleWork@store')->name('work.store');
 Route::get('/works/update/', 'App\Http\Controllers\ExampleWork@update');
 Route::get('/works/delete/', 'App\Http\Controllers\ExampleWork@delete');
 Route::get('/works/deleteAll/', 'App\Http\Controllers\ExampleWork@deleteAll');

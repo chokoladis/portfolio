@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Example_work;
+use App\Http\Controllers\HelperController;
+
 class ExampleWork extends Controller
 {
     public function index(){
@@ -13,34 +15,35 @@ class ExampleWork extends Controller
         return view('works', compact('works'));
     }
 
-    public function create(){
-        $arr = [
-            [
-                'title' => 'Золотой Код',
-                'description' => 'Работа с Wordpress, Bitrix, MODx, OpenCart',
-                'url_files' => 'storage/image/zolotoykod.png',
-                'url_work' => 'zolotoykod.ru',
-            ],
-            [
-                'title' => 'Золотой Код 2',
-                'description' => 'Работа 2',
-                'url_files' => 'storage/image/zolotoykod2.png',
-                'url_work' => 'zolotoykod.ru',
-            ],
-            [
-                'title' => 'ASM',
-                'description' => 'landing-page сбгсервис',
-                'url_files' => 'storage/image/sbgservice.png',
-                'url_work' => 'sbgservice.ru'
-            ]
-        ];
+    public function store(){
+        
+        $success = true;
 
-        foreach($arr as $item){
-            Example_work::firstOrCreate([
-                'title' => $item['title']
-            ],
-            $item);
+        $data = request()->validate([
+            'title' => 'string',
+            'description' => 'string',
+            // 'url_files' => 'string',
+            'url_work' => 'string',
+        ]);
+
+        
+        $res = Example_work::firstOrCreate(
+            [ 'title' => $data['title']],
+            $data
+        );
+
+        if ($res->wasRecentlyCreated){
+            $response = ['result' => 'Данные успешно созданы'];
+        } else {
+            $success = false;
+            $response = ['error' => 'Запись с данным заголовком уже есть в БД'];
         }
+
+        return HelperController::jsonRespose($success,$response);
+    }
+
+    public function create(){
+        return view('works.create');
     }
 
     public function update(){

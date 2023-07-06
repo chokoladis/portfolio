@@ -4,6 +4,7 @@ $body-bg: #f8fafc;
 // Colors
 $main-clr: rgb(88, 88, 255);
 $dual-clr: rgb(240, 1, 1);
+
 $main-clr-text: white;
 
 // Typography
@@ -19,3 +20,6 @@ $header-link-color-visited: lighten($dual-clr, 10%);
 
 // footer
 $footer-bg: darken($main-clr, 5%);
+
+// main content
+$shadow-clr: rgba(91, 91, 255, 0.382);
