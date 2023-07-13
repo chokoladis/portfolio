@@ -12,6 +12,10 @@ $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
+// 
+$clr-danger: red;
+// $clr-
+
 // header
 $header-bg: $main-clr;
 $header-link-color: $main-clr-text;
@@ -23,3 +27,4 @@ $footer-bg: darken($main-clr, 5%);
 
 // main content
 $shadow-clr: rgba(91, 91, 255, 0.382);
+$action-el-clr: rgb(255, 157, 157);

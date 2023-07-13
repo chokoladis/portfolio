@@ -16,11 +16,31 @@ $(function(){
             
             let action = form.attr('action');
             let method = form.attr('method');
+            let formData = form.serializeArray();
+            let sendData = new FormData();
+
+            $.each(formData, function (key, input) {
+                sendData.append(input.name, input.value);
+            });
             
+            var file_data = $('input[name="url_files"]')[0].files;
+
+            for (var i = 0; i < file_data.length; i++) {
+                sendData.append("url_files[]", file_data[i]);
+            }
+
+
+            
+            console.log(file_data);
+            console.log(sendData);
+            
+
             $.ajax({
                 url: action,
                 method: method,
-                data: form.serialize(),
+                data: sendData,
+                processData: false,
+                contentType: false,
                 dataType: 'JSON',
                 success: function(json){
                     console.log(json);
@@ -47,5 +67,15 @@ $(function(){
             })
         }
     });
+
+    // $('.work').on('mouseover', function(){
+    //     setTimeout(() => {$(this).addClass('hovered') }, 1000);
+    // });
+
+    // $('.work').on('mouseout', function(){
+    //     setTimeout(() => {$(this).removeClass('hovered')}, 1000);
+    // });
+
+    
 
 });

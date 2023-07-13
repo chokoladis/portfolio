@@ -10,9 +10,15 @@
                 <p>{{  $work->description  }}</p>
                 <a href="{{ $work->url_work }}">{{ $work->url_work }}</a>
                 <!-- <h3>{{  $work->title  }}</h3> -->
+                {{  $work->url_files }}
             </div>
             <div class="work_actions">
-                <div class="work_actions btn btn_delete">Х</div>
+                <div class="work_action custom-btn clr-danger">
+                    <span uk-icon="icon:trash"></span>
+                </div>
+                <div class="work_action custom-btn">
+                    <span uk-icon="icon:pencil"></span>
+                </div>
             </div>
         </div>
     @endforeach
