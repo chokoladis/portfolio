@@ -65,9 +65,10 @@ class ExampleWork extends Controller
         return view('works.create');
     }
 
-    public function update(){
+    public function update(Example_work $work){
 
-        $works = Example_work::find(1);
+        // validate
+        $works = Example_work::find($work);
         $works->update(
             [
                 'title' => 'Золотой Код upd',
@@ -79,9 +80,13 @@ class ExampleWork extends Controller
 
     }
 
-    public function delete(){
-        $works = Example_work::find(1);
-        $works->delete();
+    public function delete(Example_work $work){
+
+        if ($work->delete()){
+            return HelperController::jsonRespose(true, ['result' => 'Запись успешно удаленна']);
+        } else {
+            return HelperController::jsonRespose(false, ['error' => 'Произошла ошибка при удалении']);
+        }
     }
 
     public function deleteAll(){
@@ -90,5 +95,10 @@ class ExampleWork extends Controller
             $work->delete();
         }
         
+    }
+
+    public function worksList(){
+        $works = Example_work::all();
+        return view('compiled.works', compact('works'));
     }
 }

@@ -18,10 +18,13 @@ Route::get('/', function () {
 });
 
 Route::get('/works', 'App\Http\Controllers\ExampleWork@index')->name('work.index');
+Route::get('/works?ajax=worksList', 'App\Http\Controllers\ExampleWork@worksList');
+
 Route::get('/works/create/', 'App\Http\Controllers\ExampleWork@create')->name('work.create');
 Route::post('/works', 'App\Http\Controllers\ExampleWork@store')->name('work.store');
-Route::get('/works/update/', 'App\Http\Controllers\ExampleWork@update');
-Route::get('/works/delete/', 'App\Http\Controllers\ExampleWork@delete');
+// Route::get('/works/{work}', 'App\Http\Controllers\ExampleWork@detail')->name('work.detail.index');
+Route::get('/works/update/{work}', 'App\Http\Controllers\ExampleWork@update');
+Route::get('/works/{work}/delete/', 'App\Http\Controllers\ExampleWork@delete')->name('work.delete');
 Route::get('/works/deleteAll/', 'App\Http\Controllers\ExampleWork@deleteAll');
 
 // about me -  мой путь в разработке

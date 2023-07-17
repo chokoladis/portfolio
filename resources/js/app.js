@@ -28,13 +28,10 @@ $(function(){
             for (var i = 0; i < file_data.length; i++) {
                 sendData.append("url_files[]", file_data[i]);
             }
-
-
             
-            console.log(file_data);
-            console.log(sendData);
-            
-
+            // console.log(file_data);
+            // console.log(sendData);
+        
             $.ajax({
                 url: action,
                 method: method,
@@ -43,6 +40,7 @@ $(function(){
                 contentType: false,
                 dataType: 'JSON',
                 success: function(json){
+                    // обновить список работ
                     console.log(json);
                 },
                 error :function( data ) {
@@ -66,6 +64,39 @@ $(function(){
                 }
             })
         }
+    });
+
+    $('.js_work_del').on('click', function(){
+
+        let parent = $(this).parents('.work');
+        let workId = parent.attr('data-id');
+
+        $.ajax({
+            url: '/works/'+workId+'/delete/',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data){
+
+                if (data.success){
+                    
+                    $('.works_list [data-id="'+workId+'"]').remove();
+
+                    // $.ajax({
+                    //     url: '/works?ajax=worksList',
+                    //     method: 'GET',
+                    //     success: function(data){
+                    //         if (data){
+                    //             $('.works_list .work').remove();
+                    //         }
+                    //     }
+                    // });  
+
+                } else {
+                    // notification
+                }
+            }
+        });
+
     });
 
     // $('.work').on('mouseover', function(){

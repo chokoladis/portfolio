@@ -15,7 +15,7 @@
                 <textarea class="uk-textarea" name="description" placeholder="Описание"></textarea>
             </div>
             <div class="uk-margin">
-                <input type="file" name="url_files" multiple="multiple">
+                <input type="file" name="url_files" multiple="multiple" accept="image/*">
             </div>
             <div class="uk-margin">
                 <input class="uk-input" type="text" name="url_work" placeholder="Ссылка на сайт">
