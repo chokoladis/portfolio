@@ -9,6 +9,7 @@ $(function(){
 
         let form = $(this).parent('form');
         let ajax = form.find('input[name="AJAX"]');
+        let formId = form.attr('id');
         
         if (ajax.length && ajax.val() == 'Y' ){
             
@@ -16,53 +17,68 @@ $(function(){
             
             let action = form.attr('action');
             let method = form.attr('method');
-            let formData = form.serializeArray();
-            let sendData = new FormData();
 
-            $.each(formData, function (key, input) {
-                sendData.append(input.name, input.value);
-            });
-            
-            var file_data = $('input[name="url_files"]')[0].files;
+            if (formId == 'work_create'){
 
-            for (var i = 0; i < file_data.length; i++) {
-                sendData.append("url_files[]", file_data[i]);
+                // дискйбл кнопки
+                let formData = form.serializeArray();
+                let sendData = new FormData();
+
+                $.each(formData, function (key, input) {
+                    sendData.append(input.name, input.value);
+                });
+                
+                var file_data = $('input[name="url_files"]')[0].files;
+
+                for (var i = 0; i < file_data.length; i++) {
+                    sendData.append("url_files[]", file_data[i]);
+                }
+
+                $.ajax({
+                    url: action,
+                    method: method,
+                    data: sendData,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'JSON',
+                    success: function(json){
+                        // обновить список работ
+                        
+                        if (json.success){
+                            // активировать кнопку
+                            $('#md-response .messsage').text(json.response.result);
+                        } else {
+                            $('#md-response .messsage').text(json.response.error);
+                        }
+
+                        UIkit.toggle('#md-response').toggle();
+                    },
+                    error :function( data ) {
+                        if( data.status === 422 ) {
+                            var errors = $.parseJSON(data.responseText);
+                            $.each(errors, function (key, value) {
+                                // console.log(key+ " " +value);
+                            $('#response').addClass("alert alert-danger");
+                
+                                if($.isPlainObject(value)) {
+                                    $.each(value, function (key, value) {                       
+                                        console.log(key+ " " +value);
+                                    $('#response').show().append(value+"<br/>");
+                
+                                    });
+                                }else{
+                                $('#response').show().append(value+"<br/>"); //this is my div with messages
+                                }
+                            });
+                        }
+                    }
+                })
             }
+            
             
             // console.log(file_data);
             // console.log(sendData);
-        
-            $.ajax({
-                url: action,
-                method: method,
-                data: sendData,
-                processData: false,
-                contentType: false,
-                dataType: 'JSON',
-                success: function(json){
-                    // обновить список работ
-                    console.log(json);
-                },
-                error :function( data ) {
-                    if( data.status === 422 ) {
-                        var errors = $.parseJSON(data.responseText);
-                        $.each(errors, function (key, value) {
-                            // console.log(key+ " " +value);
-                        $('#response').addClass("alert alert-danger");
             
-                            if($.isPlainObject(value)) {
-                                $.each(value, function (key, value) {                       
-                                    console.log(key+ " " +value);
-                                $('#response').show().append(value+"<br/>");
-            
-                                });
-                            }else{
-                            $('#response').show().append(value+"<br/>"); //this is my div with messages
-                            }
-                        });
-                    }
-                }
-            })
         }
     });
 

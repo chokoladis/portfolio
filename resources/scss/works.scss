@@ -23,13 +23,18 @@
     .content{
         z-index: 3;
 
-        .work_preview{
-            width: 20%;
+        .works_gallery{
+
             position: absolute;
             bottom: -5%;
-            filter: blur(1px) opacity(60%);
             display: block;
             z-index: -1;
+
+            img{
+                min-width: 40px;
+                width: 20%;
+                filter: blur(1px) opacity(60%);
+            }
         }
     }
     .work_actions{
