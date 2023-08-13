@@ -1,6 +1,6 @@
 import './bootstrap';
 
-import jQuery from 'jquery';
+import jQuery, { error } from 'jquery';
 window.$ = jQuery;
 
 $(function(){
@@ -114,6 +114,31 @@ $(function(){
         });
 
     });
+
+    $('.js_work_edit').on('click', function(){
+
+        let parent = $(this).parents('.work');
+        let workId = parent.attr('data-id');
+
+        $.ajax({
+            url: '/works/'+workId+'/edit/',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data){
+
+                if (data){
+                    // set id in new form
+                    UIkit.toggle('#md-work_edit').toggle();
+                } else {
+                    console.error('Ошибка в запросе при получении данных о примере работ');
+                }
+
+            }
+        });
+
+    });
+    
+    // js_work_edit_submit
 
     // $('.work').on('mouseover', function(){
     //     setTimeout(() => {$(this).addClass('hovered') }, 1000);

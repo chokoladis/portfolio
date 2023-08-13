@@ -8,3 +8,4 @@
 @endsection
 
 @include('inc.modal.work_create')
+@include('inc.modal.work_edit')
