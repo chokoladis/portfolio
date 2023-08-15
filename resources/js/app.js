@@ -7,6 +7,7 @@ $(function(){
 
     $('form [type="submit"]').on('click', function(e){
 
+        // console.log('submit');
         let form = $(this).parent('form');
         let ajax = form.find('input[name="AJAX"]');
         let formId = form.attr('id');
@@ -15,14 +16,12 @@ $(function(){
             
             e.preventDefault();
             
-            let action = form.attr('action');
-            let method = form.attr('method');
+            var action = form.attr('action');
+            var method = form.attr('method');
+            var formData = form.serializeArray();
+            var sendData = new FormData();
 
             if (formId == 'work_create'){
-
-                // дискйбл кнопки
-                let formData = form.serializeArray();
-                let sendData = new FormData();
 
                 $.each(formData, function (key, input) {
                     sendData.append(input.name, input.value);
@@ -34,50 +33,50 @@ $(function(){
                     sendData.append("url_files[]", file_data[i]);
                 }
 
-                $.ajax({
-                    url: action,
-                    method: method,
-                    data: sendData,
-                    processData: false,
-                    contentType: false,
-                    dataType: 'JSON',
-                    success: function(json){
-                        // обновить список работ
-                        
-                        if (json.success){
-                            // активировать кнопку
-                            $('#md-response .messsage').text(json.response.result);
-                        } else {
-                            $('#md-response .messsage').text(json.response.error);
-                        }
-
-                        UIkit.toggle('#md-response').toggle();
-                    },
-                    error :function( data ) {
-                        if( data.status === 422 ) {
-                            var errors = $.parseJSON(data.responseText);
-                            $.each(errors, function (key, value) {
-                                // console.log(key+ " " +value);
-                            $('#response').addClass("alert alert-danger");
-                
-                                if($.isPlainObject(value)) {
-                                    $.each(value, function (key, value) {                       
-                                        console.log(key+ " " +value);
-                                    $('#response').show().append(value+"<br/>");
-                
-                                    });
-                                }else{
-                                $('#response').show().append(value+"<br/>"); //this is my div with messages
-                                }
-                            });
-                        }
-                    }
-                })
+            } else if (formId == 'work_edit') {
+                action = '';
+                sendData = formData;
             }
+
+            $.ajax({
+                url: action,
+                method: method,
+                data: sendData,
+                processData: false,
+                contentType: false,
+                dataType: 'JSON',
+                success: function(json){
+                    // обновить список работ
+                    
+                    if (json.success){
+                        // активировать кнопку
+                        $('#md-response .messsage').text(json.response.result);
+                    } else {
+                        $('#md-response .messsage').text(json.response.error);
+                    }
+
+                    UIkit.modal('#md-response').show();
+                },
+                error :function( data ) {
+                    if( data.status === 422 ) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                            console.log(key+ " " +value);
+                        $('#response').addClass("alert alert-danger");
             
+                            if($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {                       
+                                    // console.log(key+ " " +value);
+                                $('#response').show().append(value+"<br/>");
             
-            // console.log(file_data);
-            // console.log(sendData);
+                                });
+                            }else{
+                            $('#response').show().append(value+"<br/>"); //this is my div with messages
+                            }
+                        });
+                    }
+                }
+            })
             
         }
     });
@@ -117,6 +116,7 @@ $(function(){
 
     $('.js_work_edit').on('click', function(){
 
+        // console.log('click edit');
         let parent = $(this).parents('.work');
         let workId = parent.attr('data-id');
 
@@ -128,7 +128,14 @@ $(function(){
 
                 if (data){
                     // set id in new form
-                    UIkit.toggle('#md-work_edit').toggle();
+                    let form = $('#md-work_edit');
+                    form.find('[name="id"]').val(workId);
+                    form.find('[name="title"]').val(data.title);
+                    form.find('[name="description"]').val(data.description);
+                    // form.find('input[name="url_files"]').val(data.url_files);
+                    form.find('[name="url_work"]').val(data.url_work);
+                    
+                    UIkit.modal('#md-work_edit').show();
                 } else {
                     console.error('Ошибка в запросе при получении данных о примере работ');
                 }
@@ -138,7 +145,7 @@ $(function(){
 
     });
     
-    // js_work_edit_submit
+    // 
 
     // $('.work').on('mouseover', function(){
     //     setTimeout(() => {$(this).addClass('hovered') }, 1000);

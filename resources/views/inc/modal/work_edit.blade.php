@@ -1,7 +1,6 @@
 <!-- This is the modal -->
 <div id="md-work_edit" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
-        <!-- route('work.update')  -->
         <form action="" method="POST" id="work_edit" accept-charset="multipart/form-data">
             <h2 class="uk-modal-title">Форма редактирования</h2>
             
@@ -15,9 +14,6 @@
             </div>
             <div class="uk-margin">
                 <textarea class="uk-textarea" name="description" placeholder="Описание"></textarea>
-            </div>
-            <div class="uk-margin">
-                <input type="file" name="url_files" multiple="multiple" accept="image/*">
             </div>
             <div class="uk-margin">
                 <input class="uk-input" type="text" name="url_work" placeholder="Ссылка на сайт">
