@@ -19,7 +19,7 @@
                 <input class="uk-input" type="text" name="url_work" placeholder="Ссылка на сайт">
             </div>
         
-            <input class="uk-button uk-button-secondary" type="submit" id="js_work_edit_submit" value="Добавить">
+            <input class="uk-button uk-button-secondary" type="submit" id="js_work_edit_submit" value="Обновить">
             <button class="uk-modal-close uk-button" type="button">Закрыть</button>
         </form>
     </div>

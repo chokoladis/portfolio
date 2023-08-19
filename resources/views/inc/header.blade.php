@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        
         <title>Portfolio on laravel</title>
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />

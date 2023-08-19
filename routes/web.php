@@ -26,7 +26,7 @@ Route::get('/works?ajax=worksList', 'App\Http\Controllers\ExampleWork@worksList'
 Route::post('/works', 'App\Http\Controllers\ExampleWork@store')->name('work.store');
 // Route::get('/works/{work}', 'App\Http\Controllers\ExampleWork@detail')->name('work.detail.index');
 Route::get('/works/{work}/edit/', 'App\Http\Controllers\ExampleWork@edit')->name('work.edit');
-Route::get('/works/{work}/update/', 'App\Http\Controllers\ExampleWork@update')->name('work.update');
+Route::post('/works/{work}/update/', 'App\Http\Controllers\ExampleWork@update')->name('work.update');
 Route::get('/works/{work}/delete/', 'App\Http\Controllers\ExampleWork@delete')->name('work.delete');
 Route::get('/works/deleteAll/', 'App\Http\Controllers\ExampleWork@deleteAll');
 

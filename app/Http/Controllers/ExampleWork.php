@@ -61,10 +61,6 @@ class ExampleWork extends Controller
         return HelperController::jsonRespose($success,$response);
     }
 
-    // public function create(){
-    //     return view('works.create');
-    // }
-
     public function edit(Example_work $work){
 
         $ar = [
@@ -80,49 +76,26 @@ class ExampleWork extends Controller
         return $json;
     }
 
-    public function update(Request $request){
+    public function update(Example_work $work){
         
         $success = true;
-        $url_files_path = '';
-
+        
         $data = request()->validate([
             'title' => 'string',
             'description' => 'string',
-            'url_files' => '',
             'url_work' => 'string',
         ]);
 
-        if ($request->hasFile('url_files')) {
-            $url_files = $request->file('url_files');
-            if (is_array($url_files)){
-                foreach ($url_files as $file) {
-                    $file->move(public_path() . '/storage/works/img/', $file->getClientOriginalName());
-                    $url_files_path .= '/storage/works/img/'.$file->getClientOriginalName().', ';
-                }
+        $res = $work->update($data);
 
-                $url_files_path = trim($url_files_path);
-                $url_files_path_len = mb_strlen($url_files_path);
-                $url_files_path = mb_substr($url_files_path, 0, $url_files_path_len - 1);
-            } else {
-                $url_files->move(public_path() . '/storage/works/img/', $url_files->getClientOriginalName());
-                $url_files_path = '/storage/works/img/'.$url_files->getClientOriginalName();
-            }
-            
+        if ($res){
+            $response = ['result' => 'Данные успешно обновлены'];
+        } else {
+            $success = false;
+            $response = ['error' => 'При изменении данных возникла ошибка'];
         }
-        $data['url_files'] = $url_files_path;
 
-        $res = Example_work::update($data);
-
-        echo 'sdas';
-
-        // if ($res->wasRecentlyCreated){
-        //     $response = ['result' => 'Данные успешно созданы'];
-        // } else {
-        //     $success = false;
-        //     $response = ['error' => 'Запись с данным заголовком уже есть в БД'];
-        // }
-
-        // return HelperController::jsonRespose($success,$response);
+        return HelperController::jsonRespose($success,$response);
     }
 
     public function delete(Example_work $work){

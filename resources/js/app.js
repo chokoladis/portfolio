@@ -20,12 +20,15 @@ $(function(){
             var method = form.attr('method');
             var formData = form.serializeArray();
             var sendData = new FormData();
+            var headers = {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            };
+
+            $.each(formData, function (key, input) {
+                sendData.append(input.name, input.value);
+            });
 
             if (formId == 'work_create'){
-
-                $.each(formData, function (key, input) {
-                    sendData.append(input.name, input.value);
-                });
                 
                 var file_data = $('input[name="url_files"]')[0].files;
 
@@ -34,8 +37,8 @@ $(function(){
                 }
 
             } else if (formId == 'work_edit') {
-                action = '';
-                sendData = formData;
+                var work_id = form.find('[name="id"]');
+                action = '/works/'+work_id.val()+'/update/';
             }
 
             $.ajax({
@@ -44,6 +47,7 @@ $(function(){
                 data: sendData,
                 processData: false,
                 contentType: false,
+                headers: headers,
                 dataType: 'JSON',
                 success: function(json){
                     // обновить список работ
