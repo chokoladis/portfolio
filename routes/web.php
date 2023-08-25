@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleWork;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,8 +31,9 @@ Route::post('/works/{work}/update/', 'App\Http\Controllers\ExampleWork@update')-
 Route::get('/works/{work}/delete/', 'App\Http\Controllers\ExampleWork@delete')->name('work.delete');
 Route::get('/works/deleteAll/', 'App\Http\Controllers\ExampleWork@deleteAll');
 
-Route::group(['namespace' => 'Admin'], function() {
-    Route::get('/admin/', 'App\Http\Controllers\AdminController@index');
+Route::group(['namespace' => 'App\\Http\\Controllers\\Admin'], function() {
+    Route::get('/admin/', 'AdminController@index');
+    Route::get('/admin/examples_work/', 'AdminController@ExamplesWork')->name('admin.examples_work');
 });
 
 
