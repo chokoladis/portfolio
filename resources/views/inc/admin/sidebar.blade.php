@@ -1,11 +1,11 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{ route('admin.works') }}" class="nav-link">
                 <i class="nav-icon fas fa-solid fa-briefcase"></i>
                 <p>
                     Examples work
-                    <span class="right badge badge-danger">New</span>
+                    <span class="right badge badge-info">New</span>
                 </p>
             </a>
         </li>

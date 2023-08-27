@@ -1,0 +1,45 @@
+.works_list{
+    margin: 20px;
+    padding-top: 20px;
+
+    .work{
+        box-shadow: -6px 0px 0px rgba(193, 193, 255, 0.646);
+
+        .work_actions{
+            flex-direction: row;
+            height: fit-content;
+            margin-top: auto;
+
+            .work_action{
+
+                margin: 0;                
+                margin-right: 5px;
+                padding: 5px;
+
+                &:last-of-type{
+                    margin: 0;
+                }
+
+                *{
+                    color: white;
+                }
+            }
+        }
+        
+        &::after, &::before{
+            content: none;
+        }
+        &:hover{
+            box-shadow: 6px 8px 0px rgba(85, 85, 248, 0.755);
+        }
+    }
+    &+button{
+        margin-left: 20px;
+        // color: white;
+
+        // &:hover{
+        //     color: ;
+        // }
+    }
+
+}

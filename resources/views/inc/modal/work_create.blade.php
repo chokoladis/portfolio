@@ -1,6 +1,6 @@
 <!-- This is the modal -->
 <div id="md-work_create" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
+    <div class="uk-modal-dialog uk-modal-body ">
         <form action="{{ route('work.store') }}" method="POST" id="work_create" accept-charset="multipart/form-data">
             <h2 class="uk-modal-title">Форма добавления</h2>
             

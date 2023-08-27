@@ -1,0 +1,29 @@
+$darkMode_bg: #343a40;
+$darkMode_clr: white;
+
+.clr-danger{
+    background: red;
+    color: unset;
+}
+.clr-primary{
+    background: #1e87f0;
+}
+body{
+     
+    .uk-modal{
+        z-index: 2000;
+    }
+
+    &.dark-mode{
+        
+        .uk-modal-body{
+            background: $darkMode_bg;
+            color: $darkMode_clr;
+        }
+    }
+    &.layout-footer-fixed{
+        .wrapper .content-wrapper{
+            padding-bottom: 20px;
+        }
+    }
+}

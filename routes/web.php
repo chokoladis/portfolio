@@ -32,8 +32,8 @@ Route::get('/works/{work}/delete/', 'App\Http\Controllers\ExampleWork@delete')->
 Route::get('/works/deleteAll/', 'App\Http\Controllers\ExampleWork@deleteAll');
 
 Route::group(['namespace' => 'App\\Http\\Controllers\\Admin'], function() {
-    Route::get('/admin/', 'AdminController@index');
-    Route::get('/admin/examples_work/', 'AdminController@ExamplesWork')->name('admin.examples_work');
+    Route::get('/admin/', 'AdminController@index')->name('admin.index');
+    Route::get('/admin/works/', 'AdminController@examplesWork')->name('admin.works');
 });
 
 
