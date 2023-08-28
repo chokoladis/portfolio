@@ -35,3 +35,6 @@
     @endforeach
 
 </div>
+<div class="paginastion">
+    {{$works->links()}}
+</div>

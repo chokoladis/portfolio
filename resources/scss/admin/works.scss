@@ -1,6 +1,6 @@
 .works_list{
-    margin: 20px;
-    padding-top: 20px;
+    margin: 10px;
+    // padding-top: 20px;
 
     .work{
         box-shadow: -6px 0px 0px rgba(193, 193, 255, 0.646);
@@ -32,14 +32,6 @@
         &:hover{
             box-shadow: 6px 8px 0px rgba(85, 85, 248, 0.755);
         }
-    }
-    &+button{
-        margin-left: 20px;
-        // color: white;
-
-        // &:hover{
-        //     color: ;
-        // }
     }
 
 }
