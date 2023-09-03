@@ -3,9 +3,24 @@ import './bootstrap';
 import jQuery, { error } from 'jquery';
 window.$ = jQuery;
 
+
+function updWorks(){
+    $.ajax({
+        url: location.href,
+        method: 'GET',
+        // dataType: 'JSON',
+        success: function(html){
+            let works = $(html).find('section.content .works_list > *');
+            let paginastion  = $(html).find('section.content .paginastion > *');
+            $('section.content .works_list').html(works);
+            $('section.content .paginastion').html(paginastion);
+        }
+    });
+};
+
 $(function(){
 
-    $('form [type="submit"]').on('click', function(e){
+    $(document).on('click','form [type="submit"]', function(e){
 
         // console.log('submit');
         let form = $(this).parent('form');
@@ -50,11 +65,11 @@ $(function(){
                 headers: headers,
                 dataType: 'JSON',
                 success: function(json){
-                    // обновить список работ
+                    
                     
                     if (json.success){
-                        // активировать кнопку
                         $('#md-response .messsage').text(json.response.result);
+                        updWorks();
                     } else {
                         $('#md-response .messsage').text(json.response.error);
                     }
@@ -71,11 +86,12 @@ $(function(){
                             if($.isPlainObject(value)) {
                                 $.each(value, function (key, value) {                       
                                     // console.log(key+ " " +value);
-                                $('#response').show().append(value+"<br/>");
+                                    $('#response').show().append(value+"<br/>");
             
                                 });
                             }else{
-                            $('#response').show().append(value+"<br/>"); //this is my div with messages
+                                $('#response').show();
+                                $('#response .messsage').html(data.error+"<br/>");
                             }
                         });
                     }
@@ -85,7 +101,7 @@ $(function(){
         }
     });
 
-    $('.js_work_del').on('click', function(){
+    $(document).on('click','.js_work_del', function(){
 
         let parent = $(this).parents('.work');
         let workId = parent.attr('data-id');
@@ -99,26 +115,19 @@ $(function(){
                 if (data.success){
                     
                     $('.works_list [data-id="'+workId+'"]').remove();
-
-                    // $.ajax({
-                    //     url: '/works?ajax=worksList',
-                    //     method: 'GET',
-                    //     success: function(data){
-                    //         if (data){
-                    //             $('.works_list .work').remove();
-                    //         }
-                    //     }
-                    // });  
+                    
+                    updWorks();
 
                 } else {
-                    // notification
+                    $('#response').show();
+                    $('#response .messsage').html(data.error+"<br/>");
                 }
             }
         });
 
     });
 
-    $('.js_work_edit').on('click', function(){
+    $(document).on('click','.js_work_edit', function(){
 
         // console.log('click edit');
         let parent = $(this).parents('.work');
@@ -141,7 +150,8 @@ $(function(){
                     
                     UIkit.modal('#md-work_edit').show();
                 } else {
-                    console.error('Ошибка в запросе при получении данных о примере работ');
+                    $('#response').show();
+                    $('#response .messsage').html('Ошибка в запросе при получении данных о примере работ <br/>');
                 }
 
             }
