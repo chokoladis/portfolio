@@ -14,7 +14,7 @@ class AdminController extends Controller
     }
 
     public function examplesWork(){
-        $works = Example_work::paginate(3);
+        $works = Example_work::paginate(5);
 
         return view('admin.works', compact('works'));
     }

@@ -1,5 +1,9 @@
 @extends('layout.main')
 
 @section('content')
-    это вот главная страница. на этом все
+    <main>
+        <div class="container">
+                это вот главная страница. на этом все
+        </div>
+    </main>
 @endsection

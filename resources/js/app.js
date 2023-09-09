@@ -3,8 +3,8 @@ import './bootstrap';
 import jQuery, { error } from 'jquery';
 window.$ = jQuery;
 
-
-function updWorks(){
+// make full script file special for admin
+function updWorksAdmin(){
     $.ajax({
         url: location.href,
         method: 'GET',
@@ -17,6 +17,21 @@ function updWorks(){
         }
     });
 };
+
+function updWorks(){
+    $.ajax({
+        url: location.href,
+        method: 'GET',
+        // dataType: 'JSON',
+        success: function(html){
+            let works = $(html).find('main .works_list > *');
+            let paginastion  = $(html).find('main .paginastion > *');
+            $('main .works_list').html(works);
+            $('main .paginastion').html(paginastion);
+        }
+    });
+};
+
 
 $(function(){
 

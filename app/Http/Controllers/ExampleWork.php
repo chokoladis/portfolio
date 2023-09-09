@@ -3,29 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\ExampleWork\StoreRequest;
+use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Models\Example_work;
 use App\Http\Controllers\HelperController;
 
 class ExampleWork extends Controller
 {
     public function index(){
-        $works = Example_work::all();
+        $works = Example_work::paginate(5);
 
         // 1 - pagename , 2 - var
         return view('works', compact('works'));
     }
 
-    public function store(Request $request){
+    public function store(StoreRequest $request){
         
         $success = true;
         $url_files_path = '';
 
-        $data = request()->validate([
-            'title' => 'string',
-            'description' => 'string',
-            'url_files' => '',
-            'url_work' => 'string',
-        ]);
+        $data = $request->validated();
 
         if ($request->hasFile('url_files')) {
             $url_files = $request->file('url_files');
@@ -76,15 +73,11 @@ class ExampleWork extends Controller
         return $json;
     }
 
-    public function update(Example_work $work){
+    public function update(UpdateRequest $request, Example_work $work){
         
         $success = true;
         
-        $data = request()->validate([
-            'title' => 'string',
-            'description' => 'string',
-            'url_work' => 'string',
-        ]);
+        $data = $request->validated(); 
 
         $res = $work->update($data);
 
