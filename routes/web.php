@@ -31,7 +31,7 @@ Route::post('/works/{work}/update/', 'App\Http\Controllers\ExampleWork@update')-
 Route::get('/works/{work}/delete/', 'App\Http\Controllers\ExampleWork@delete')->name('work.delete');
 Route::get('/works/deleteAll/', 'App\Http\Controllers\ExampleWork@deleteAll');
 
-Route::group(['namespace' => 'App\\Http\\Controllers\\Admin'], function() {
+Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'middleware' => 'admin'], function() {
     Route::get('/admin/', 'AdminController@index')->name('admin.index');
     Route::get('/admin/works/', 'AdminController@examplesWork')->name('admin.works');
 });
@@ -39,3 +39,7 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin'], function() {
 
 // about me -  мой путь в разработке
 // hobby - чем увлекаюсь
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
