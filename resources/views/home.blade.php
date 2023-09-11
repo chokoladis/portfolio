@@ -3,7 +3,7 @@
 @section('content')
     <main>
         <div class="container">
-            <div class="card-header">{{ __('Dashboard') }}</div>
+            <div class="card-header">{{ __('Wellcome') }}</div>
 
             <div class="card-body">
                 @if (session('status'))
@@ -11,8 +11,6 @@
                         {{ session('status') }}
                     </div>
                 @endif
-
-                {{ __('You are logged in!') }}
             </div>
         </div>
     </main>

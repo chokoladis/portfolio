@@ -36,9 +36,11 @@
   @vite(['resources/js/app.js'])
 
   @include('inc.modal.response')
+  <!-- поменять проверку на ? -->
   @if (Route::current()->getName() == 'admin.works')
     @include('inc.modal.work_create')
-    @include('inc.modal.work_edit')            
+    @include('inc.modal.work_edit')
+    @include('inc.modal.menu_add')
   @endif    
 </body>
 </html>

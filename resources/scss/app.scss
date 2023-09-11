@@ -70,11 +70,11 @@ ul,li,p{
                 padding: 20px 10px;
 
                 li{
+                    
                     display: block;
-                    position: relative;
-                    overflow: hidden;
                     padding-left: 10px;
                     padding-right: 5px;
+                    position: relative;
 
                     a{
                         text-transform: uppercase;
@@ -87,33 +87,39 @@ ul,li,p{
                         }
                     }
 
-                    &::after{
-                        content: '';
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        
-                        width: 4px;
-                        height: 4px;
-
-                        background: $header-link-color-visited;
-                    }
-
-                    &:hover{
-
-                        a{
-                            color: $header-link-color-hv;
-                        }
-
+                    &.animated{
+                        overflow: hidden;
+    
                         &::after{
-                            bottom: 0;
-                            top:unset;
-                            height: 2px;
-                            width: 50px;
-                            left: 70%;
+                            content: '';
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            
+                            width: 4px;
+                            height: 4px;
+    
+                            background: $header-link-color-visited;
                         }
-                        
+    
+                        &:hover{
+    
+                            a{
+                                color: $header-link-color-hv;
+                            }
+    
+                            &::after{
+                                bottom: 0;
+                                top:unset;
+                                height: 2px;
+                                width: 50px;
+                                left: 70%;
+                            }
+                            
+                        }
                     }
+                    
+                    
 
                 }
             }

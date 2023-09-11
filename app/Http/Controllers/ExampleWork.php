@@ -5,12 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ExampleWork\StoreRequest;
 use App\Http\Requests\ExampleWork\UpdateRequest;
+use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Http\Controllers\HelperController;
 
 class ExampleWork extends Controller
 {
-    public function index(){
+    public function index(FilterRequest $request){
+
+        $data = $request->validated();
+        
+        $query = Example_work::query();
+
+        // todo filter&search
+
         $works = Example_work::paginate(5);
 
         // 1 - pagename , 2 - var
