@@ -1,0 +1,54 @@
+@import 'variables';
+
+.list_link{
+    margin-bottom: 20px;
+
+    .link{
+        
+        display: flex;
+        background: $darkMode_bg;
+        padding: 10px;
+        margin-bottom: 5px;
+        position: relative;
+
+        .sort{
+            writing-mode: tb-rl;
+            // color: lighten($darkMode_bg, 10);
+            color: $work-hvr;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+
+            *{
+                margin: 0;
+            }
+        }
+
+        .content{
+            // flex: 1;
+            z-index: 5;
+            margin-left: 10px;
+
+            .title{
+                display: flex;
+                align-items: center;
+        
+                *{
+                    margin: 0;
+                }
+                i{
+                    margin-right: 10px;
+                }
+            }    
+        }
+
+        .area_actions{
+            margin-left: auto;
+        }
+        
+
+        &:not(.active){
+            opacity: 0.5;
+        }
+    }
+}

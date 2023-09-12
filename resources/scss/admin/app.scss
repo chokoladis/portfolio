@@ -1,5 +1,4 @@
-$darkMode_bg: #343a40;
-$darkMode_clr: white;
+@import 'variables';
 
 .clr-danger{
     background: red;
@@ -20,6 +19,13 @@ body{
             background: $darkMode_bg;
             color: $darkMode_clr;
         }
+    }
+
+    .area_actions{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
     }
     // &.layout-footer-fixed{
     //     .wrapper .content-wrapper{

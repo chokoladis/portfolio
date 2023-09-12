@@ -1,16 +1,13 @@
     </div>
     <!-- /.content-wrapper -->
 
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
     </aside>
-    <!-- /.control-sidebar -->
 
   </div>
   <!-- ./wrapper -->
 
-  <!-- REQUIRED SCRIPTS -->
   <!-- jQuery -->
   <script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
   <!-- Bootstrap -->
@@ -20,19 +17,6 @@
   <!-- AdminLTE App -->
   <script src="{{ asset('/dist/js/adminlte.js') }}"></script>
 
-  <!-- PAGE /PLUGINS -->
-  <!-- jQuery Mapael -->
-  <!-- <script src="{{ asset('/plugins/jquery-mousewheel/jquery.mousewheel.js') }}"></script>
-  <script src="{{ asset('/plugins/raphael/raphael.min.js') }}"></script>
-  <script src="{{ asset('/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
-  <script src="{{ asset('/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script> -->
-  <!-- ChartJS -->
-  <!-- <script src="{{ asset('/plugins/chart.js/Chart.min.js') }}"></script> -->
-
-  <!-- AdminLTE for demo purposes -->
-  <!-- <script src="{{ asset('/dist/js/demo.js') }}"></script> -->
-  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <!-- <script src="{{ asset('/dist/js/pages/dashboard2.js') }}"></script> -->
   @vite(['resources/js/app.js'])
 
   @include('inc.modal.response')
@@ -40,7 +24,10 @@
   @if (Route::current()->getName() == 'admin.works')
     @include('inc.modal.work_create')
     @include('inc.modal.work_edit')
-    @include('inc.modal.menu_add')
   @endif    
+  @if (Route::current()->getName() == 'admin.menu')
+    @include('inc.modal.menu_add')
+    @include('inc.modal.menu_edit')
+  @endif
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MenuNav;
 use Illuminate\Http\Request;
+use App\Http\Requests\MenuNav\StoreRequest;
 
 class MenuNavController extends Controller
 {
@@ -32,9 +33,21 @@ class MenuNavController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $response = MenuNav::firstOrCreate(
+            ['link' => $data['link']], 
+            [
+                'name' => $data['name'],
+                'link' => $data['link'],
+                'role' => $data['role'],
+                'active' => $data['active'],
+                'sort' => $data['sort']
+            ]
+        );
+        return $response;
     }
 
     /**

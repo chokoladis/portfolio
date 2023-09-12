@@ -69,7 +69,7 @@ $(function(){
             } else if (formId == 'work_edit') {
                 var work_id = form.find('[name="id"]');
                 action = '/works/'+work_id.val()+'/update/';
-            }
+            } 
 
             $.ajax({
                 url: action,

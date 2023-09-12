@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleWork;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\MenuNavController;;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +36,11 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'middleware' => 'a
     Route::get('/admin/', 'AdminController@index')->name('admin.index');
     Route::get('/admin/works/', 'AdminController@examplesWork')->name('admin.works');
     Route::get('/admin/menu/', 'AdminController@menu')->name('admin.menu');
+});
+
+Route::group(['middleware' => 'admin'], function() {
+    Route::post('/admin/menu/', [App\Http\Controllers\MenuNavController::class, 'store'])->name('menu.store');
+
 });
 
 

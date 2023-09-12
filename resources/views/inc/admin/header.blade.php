@@ -21,7 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
   @vite(['resources/scss/app.scss'])
   @vite(['resources/scss/admin/app.scss'])
-  @vite(['resources/scss/admin/works.scss'])
+  @stack('styles')
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">

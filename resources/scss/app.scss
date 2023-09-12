@@ -168,6 +168,13 @@ ul,li,p{
         padding: 10px 0;
         flex: 1;
     }
+
+    .area_actions{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
-@import 'works';
+// @import 'works';

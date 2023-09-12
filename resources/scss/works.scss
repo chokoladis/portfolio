@@ -1,3 +1,6 @@
+// Variables
+@import 'variables';
+
 .work{
     display: flex;
     position: relative;
@@ -37,13 +40,9 @@
             }
         }
     }
-    .work_actions{
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
+    .area_actions{
 
-        .work_action{
+        >div{
             margin-bottom: 5px;
 
             .btn_delete{

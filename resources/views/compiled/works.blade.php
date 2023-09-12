@@ -23,11 +23,11 @@
                     </div>
                 @endif
             </div>
-            <div class="work_actions">
-                <div class="work_action custom-btn clr-danger js_work_del">
+            <div class="area_actions">
+                <div class="custom-btn clr-danger js_work_del">
                     <span uk-icon="icon:trash" title="Удалить"></span>
                 </div>
-                <div class="work_action custom-btn clr-primary js_work_edit">
+                <div class="custom-btn clr-primary js_work_edit">
                     <span uk-icon="icon:pencil" title="Редактировать"></span>
                 </div>
             </div>

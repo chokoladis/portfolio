@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 
+@push('styles')
+    @vite(['resources/scss/works.scss'])
+    @vite(['resources/scss/admin/works.scss'])
+@endpush
+
 @section('content')
 
     <!-- Content Header (Page header) -->
