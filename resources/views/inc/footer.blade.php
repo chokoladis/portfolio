@@ -1,6 +1,12 @@
             <footer>
                 <div class="container">
-                    какой то текст в футере
+                    <div class="content">
+                        <ul class="socials">
+                            <li><a href="https://github.com/chokoladis/" uk-icon="icon: github; ratio:2;"></a></li>
+                        </ul>
+                        <div class="by_created">Сайт разработан на свободное время какого то разработчика с ником chokoladis</div>
+                    </div>
+                    <div class="copyrithg">© 2023 ******.com</div>
                 </div>
             </footer>
 

@@ -3,6 +3,7 @@
 
     foreach($listMenu as $item){
         $listMenuModifier[] = [
+            'id' => $item->id,
             'name' => $item->name,
             'link' => $item->link,
             'role' => $item->role,
@@ -19,14 +20,14 @@
     
 @endphp
 
-<div class="list_link">
+<div class="links_list">
     @foreach($listMenuModifier as $item)
         @php
             $active = ($item['active'] == 1)?'active':'';
             $imgRole = ($item['role'] == 'admin')?'fa-users-cog':'fa-users';
         @endphp
 
-        <div class="link {{ $active }}">
+        <div class="link {{ $active }}" data-id="{{ $item['id'] }}">
             <div class="sort">
                 <h4>{{ $item['sort'] }}</h4>
             </div>

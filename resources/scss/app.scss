@@ -162,6 +162,43 @@ ul,li,p{
         padding: 20px 0;
         background: $footer-bg;
         color:$main-clr-text;
+
+        a{
+
+            // color: lighten($header-link-color-visited, 30);
+
+            transition-duration: .2s;
+
+            &:hover{
+                color: lighten($header-link-color-visited, 10);
+                transition-duration: .2s;
+            }
+        }
+
+        .content{
+            // width: fit-content;
+            
+
+            .socials{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                li{
+                    display: block;
+
+                    a{
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        .copyrithg{
+            width: fit-content;
+            margin: 0 auto;
+            margin-top: 80px;
+        }
     }
 
     main{

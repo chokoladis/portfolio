@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\MenuNav;
 use Illuminate\Http\Request;
 use App\Http\Requests\MenuNav\StoreRequest;
+use App\Http\Requests\MenuNav\UpdateRequest;
+use App\Http\Controllers\HelperController;
 
 class MenuNavController extends Controller
 {
@@ -18,7 +20,7 @@ class MenuNavController extends Controller
 
     public function getActive(){
         $query = MenuNav::query();
-        $list = $query->where('active', 1);
+        $list = $query->where('active', 1)->get();
         return $list;
     }
 
@@ -35,9 +37,10 @@ class MenuNavController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $success = true;
         $data = $request->validated();
 
-        $response = MenuNav::firstOrCreate(
+        $res = MenuNav::firstOrCreate(
             ['link' => $data['link']], 
             [
                 'name' => $data['name'],
@@ -47,7 +50,15 @@ class MenuNavController extends Controller
                 'sort' => $data['sort']
             ]
         );
-        return $response;
+
+        if ($res->wasRecentlyCreated){
+            $response = ['result' => 'Данные успешно созданы'];
+        } else {
+            $success = false;
+            $response = ['error' => 'Запись с данным заголовком уже есть в БД'];
+        }
+
+        return HelperController::jsonRespose($success,$response);
     }
 
     /**
@@ -63,15 +74,51 @@ class MenuNavController extends Controller
      */
     public function edit(MenuNav $menuNav)
     {
-        //
+        $ar = [
+            'id' => $menuNav->id,
+            'name' => $menuNav->name,
+            'link' => $menuNav->link,
+            'role' => $menuNav->role,
+            'active' => $menuNav->active,
+            'sort' => $menuNav->sort
+        ];
+
+        $json = json_encode($ar); 
+
+        return $json;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, MenuNav $menuNav)
+    public function update(UpdateRequest $request, MenuNav $menuNav)
     {
-        //
+        $success = true;
+        
+        $data = $request->validated(); 
+
+        $res = $menuNav->update($data);
+
+        if ($res){
+            $response = ['result' => 'Данные успешно обновлены'];
+        } else {
+            $success = false;
+            $response = ['error' => 'При изменении данных возникла ошибка'];
+        }
+
+        return HelperController::jsonRespose($success,$response);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function delete(MenuNav $menuNav)
+    {        
+        if ($menuNav->delete()){
+            return HelperController::jsonRespose(true, ['result' => 'Запись успешно удаленна']);
+        } else {
+            return HelperController::jsonRespose(false, ['error' => 'Произошла ошибка при удалении']);
+        }
     }
 
     /**

@@ -40,7 +40,9 @@ Route::group(['namespace' => 'App\\Http\\Controllers\\Admin', 'middleware' => 'a
 
 Route::group(['middleware' => 'admin'], function() {
     Route::post('/admin/menu/', [App\Http\Controllers\MenuNavController::class, 'store'])->name('menu.store');
-
+    Route::get('/admin/menu/{menuNav}/edit/', [App\Http\Controllers\MenuNavController::class, 'edit'])->name('menu.edit');
+    Route::post('/admin/menu/{menuNav}/update', [App\Http\Controllers\MenuNavController::class, 'update'])->name('menu.update');
+    Route::get('/admin/menu/{menuNav}/delete/', [App\Http\Controllers\MenuNavController::class, 'delete'])->name('menu.delete');
 });
 
 

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
+use App\Http\Controllers\MenuNavController;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $menuNav = new MenuNavController();
+
+        View::share('G_menuNav', $menuNav->getActive());
 
         Paginator::defaultView('vendor.pagination.bootstrap-5');
     }

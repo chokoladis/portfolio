@@ -41,8 +41,9 @@
                     </div> -->
                     <ul class="header-main">
                         <li class='animated'><a href="/">home</a></li>
-                        <li class='animated'><a href="{{ route('work.index') }}">portfolio</a></li>
-                        <li class='animated'><a href="{{ __('#') }}">hobby</a></li>
+                        
+                        @include('compiled.menu_list_active')
+                        
                         @guest
                             @if (Route::has('login'))
                                 <li class='animated'>
@@ -73,10 +74,6 @@
                                 </div>
                             </li>
                         @endguest
-
-                        @can('view', auth()->user())
-                            <li class="animated"><a href="/admin/">Admin</a></li>
-                        @endcan 
                     </ul>
                 </div>
             </header>

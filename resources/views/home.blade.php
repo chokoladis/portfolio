@@ -6,11 +6,8 @@
             <div class="card-header">{{ __('Wellcome') }}</div>
 
             <div class="card-body">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
+                <h3>Это бесплатный сайт-проект обычного работяги</h3>
+                <p>Данный сервис будет давать возможность разместить своё портфолио и работы</p>
             </div>
         </div>
     </main>
