@@ -16,8 +16,8 @@
             </div>
             <div class="uk-margin">
                 <select class="uk-select" aria-label="Select" name="role">
-                    <option>User</option>
-                    <option>Admin</option>
+                    <option >user</option>
+                    <option >admin</option>
                 </select>
             </div>
             <div class="uk-margin">

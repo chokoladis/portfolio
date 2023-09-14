@@ -23,14 +23,18 @@
                     </div>
                 @endif
             </div>
-            <div class="area_actions">
-                <div class="custom-btn clr-danger js_work_del">
-                    <span uk-icon="icon:trash" title="Удалить"></span>
+            <!-- todo -->
+            <!-- how use multi can-methods ? -->
+            @can('viewAdmin', auth()->user())
+                <div class="area_actions">
+                    <div class="custom-btn clr-danger js_work_del">
+                        <span uk-icon="icon:trash" title="Удалить"></span>
+                    </div>
+                    <div class="custom-btn clr-primary js_work_edit">
+                        <span uk-icon="icon:pencil" title="Редактировать"></span>
+                    </div>
                 </div>
-                <div class="custom-btn clr-primary js_work_edit">
-                    <span uk-icon="icon:pencil" title="Редактировать"></span>
-                </div>
-            </div>
+            @endcan
         </div>
     @endforeach
 

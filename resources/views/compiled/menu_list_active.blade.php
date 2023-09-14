@@ -23,11 +23,10 @@
     @foreach($listMenuModifier as $item)
         @php
             $user = auth()->user();
-            $role = 'User';
+            $role = 'user';
             if ($user != null){
                 $role = $user->role;
             }
-            
 
             if ($role == 'admin'){
                 @endphp

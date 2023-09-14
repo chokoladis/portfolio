@@ -72,6 +72,8 @@ $(function(){
                 sendData.append(input.name, input.value);
             });
 
+            var itemId = form.find('[name="id"]');
+
             if (formId == 'work_create'){
                 
                 var file_data = $('input[name="url_files"]')[0].files;
@@ -81,9 +83,10 @@ $(function(){
                 }
 
             } else if (formId == 'work_edit') {
-                var work_id = form.find('[name="id"]');
-                action = '/works/'+work_id.val()+'/update/';
-            } 
+                action = '/works/'+itemId.val()+'/update/';
+            } else if (formId == 'menu_edit'){
+                action = '/admin/menu/'+itemId.val()+'/update/';
+            }
 
             $.ajax({
                 url: action,
@@ -256,8 +259,19 @@ $(function(){
 
     });
     
-    
-    // 
+    $(document).on('click','.header-filter .btn', function(){
+
+        let ul = $(this).parents('ul');
+        let li = $(this).parents('li');
+        li.toggleClass('active');
+
+        if (ul.find('li.active').length > 0){
+            ul.addClass('active');
+        } else {
+            ul.removeClass('active');
+        }        
+        
+    });
 
     // $('.work').on('mouseover', function(){
     //     setTimeout(() => {$(this).addClass('hovered') }, 1000);

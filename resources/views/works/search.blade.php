@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@push('styles')
+    @vite(['resources/scss/works.scss'])
+@endpush
+
 @section('content')
     
     <header class="header-filter">
@@ -11,7 +15,7 @@
                         <span uk-icon="search"></span>
                     </div>
                     <form action="" method="get">
-                        <input type="search" name="" id="">
+                        <input type="search" name="" id="" value="{{ $_GET['q'] }}">
                     </form>
                 </li>
                 <li>

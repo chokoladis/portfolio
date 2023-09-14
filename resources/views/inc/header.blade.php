@@ -12,7 +12,8 @@
         <!-- UIkit JS -->
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
-        @vite(['resources/scss/app.scss','resources/js/app.js'])
+        @vite(['resources/scss/app.scss'])
+        @stack('styles')
     </head>
     <body class="antialiased">
         <div class="root">

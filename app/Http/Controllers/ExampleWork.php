@@ -15,14 +15,24 @@ class ExampleWork extends Controller
 
         $data = $request->validated();
         
-        $query = Example_work::query();
-
         // todo filter&search
 
-        $works = Example_work::paginate(5);
+        $query = Example_work::query();
+
+        // dd($query);
+        
+        if (isset($data['q'])){
+            $query->where('title', 'like', '%'.$data['q'].'%')
+                ->orWhere('description', 'like', '%'.$data['q'].'%')
+                ->orWhere('url_work', 'like', '%'.$data['q'].'%');
+        }
+
+        $works = $query->paginate(5);
+
+        // $works = Example_work::paginate(5);
 
         // 1 - pagename , 2 - var
-        return view('works', compact('works'));
+        return view('works.index', compact('works'));
     }
 
     public function store(StoreRequest $request){

@@ -22,10 +22,11 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string',
-            'description' => 'string',
-            'url_files' => '',
-            'url_work' => 'string',
+            'q' => 'string'
+            // 'title' => 'string',
+            // 'description' => 'string',
+            // 'url_files' => '',
+            // 'url_work' => 'string',
         ];
     }
 }
