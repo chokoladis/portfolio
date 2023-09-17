@@ -22,7 +22,8 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => 'string'
+            'q' => 'string',
+            'user' => 'string',
             // 'title' => 'string',
             // 'description' => 'string',
             // 'url_files' => '',

@@ -23,9 +23,8 @@ Route::get('/works', 'App\Http\Controllers\ExampleWork@index')->name('work.index
 // Route::get('/works/search?q={q}', 'App\Http\Controllers\ExampleWork@search')->name('work.search');
 // ajax area
 Route::get('/works?ajax=worksList', 'App\Http\Controllers\ExampleWork@worksList');
-// Route::get('/works?ajax=workShow&id={work}', 'App\Http\Controllers\ExampleWork@edit')->name('work.edit');
 
-// Route::get('/works/create/', 'App\Http\Controllers\ExampleWork@create')->name('work.create');
+Route::get('/workers', 'App\Http\Controllers\Workers@index')->name('workers.index');
 
 Route::group(['middleware' => ['admin', 'user']], function(){
     Route::post('/works', 'App\Http\Controllers\ExampleWork@store')->name('work.store');

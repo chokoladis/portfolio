@@ -1,10 +1,6 @@
-<div class="works_list">
+<div class="workers_list">
     
-    @foreach($works as $work)
-        @php 
-            $addClass = (!empty($work->url_files))?' work_have_preview':'';
-            $imgclass = '';
-        @endphp
+    @foreach($workers as $worker)
         <div class="work {{ $addClass }}" data-id="{{ $work->id }}">
             <!-- <div class="border"></div> -->
             <div class="content">
@@ -39,5 +35,5 @@
 
 </div>
 <div class="paginastion">
-    {{$works->links()}}
+    {{$workers->links()}}
 </div>

@@ -26,6 +26,9 @@ class ExampleWork extends Controller
                 ->orWhere('description', 'like', '%'.$data['q'].'%')
                 ->orWhere('url_work', 'like', '%'.$data['q'].'%');
         }
+        if (isset($data['user'])){
+            $query->where('user', $data['user']);
+        }
 
         $works = $query->paginate(5);
 

@@ -1,17 +1,9 @@
 @extends('layouts.main')
 
 @push('styles')
-    @vite(['resources/scss/works.scss'])
+    @vite(['resources/scss/workers.scss'])
 @endpush
 
-@php
-    $f_search = false;
-    $search_val = '';
-    if (isset($_GET['q'])){
-        $f_search = false;
-        $search_val = $_GET['q'];
-    }
-@endphp
 @section('content')
     
     <header class="header-filter">
@@ -41,9 +33,11 @@
     
     <main>
         <div class="container">
-            @include('compiled.works')
+            @include('compiled.workers')
 
-            <button class="uk-button uk-button-default" uk-toggle="target: #md-work_create" type="button">Добавить</button>
+            <!-- сделать полицию - не отображать для гостей и тех у кого есть профиль воркерс  -->
+            <button class="uk-button uk-button-default" uk-toggle="target: #md-work_create" type="button">Создать Workers профиль</button>
+            <!-- если есть - кнопка перейти будет в шапке -->
         </div>
     </main>
 
