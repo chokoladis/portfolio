@@ -16,8 +16,9 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('link');
+            $table->string('role')->default('user');
             $table->boolean('active')->default(1);
-
+            $table->integer('sort')->default('100');
             $table->softDeletes();
         });
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\ExampleWork\StoreRequest;
 use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
+use App\Models\User;
 use App\Http\Controllers\HelperController;
 
 class ExampleWork extends Controller
@@ -15,24 +16,34 @@ class ExampleWork extends Controller
 
         $data = $request->validated();
         
-        // todo filter&search
-
         $query = Example_work::query();
+        $queryUser = User::query();
 
-        // dd($query);
-        
         if (isset($data['q'])){
             $query->where('title', 'like', '%'.$data['q'].'%')
                 ->orWhere('description', 'like', '%'.$data['q'].'%')
                 ->orWhere('url_work', 'like', '%'.$data['q'].'%');
         }
-        if (isset($data['user'])){
-            $query->where('user', $data['user']);
+        if (isset($data['profile'])){
+            
+            $queryUser->where('name', 'like', '%'.$data['profile'].'%')
+                ->orWhere('email', 'like', '%'.$data['profile'].'%');
+
+            $userFinder = $queryUser->get();
+
+            foreach($userFinder as $user){
+                $userID = $user->id;
+            }
+
+            if ($userID){
+                $query->where('user_id', $userID);
+            } else {
+                // empty search
+            }
+
         }
 
         $works = $query->paginate(5);
-
-        // $works = Example_work::paginate(5);
 
         // 1 - pagename , 2 - var
         return view('works.index', compact('works'));

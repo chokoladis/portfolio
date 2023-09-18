@@ -23,7 +23,7 @@ class FilterRequest extends FormRequest
     {
         return [
             'q' => 'string',
-            'user' => 'string',
+            'profile' => 'string',
             // 'title' => 'string',
             // 'description' => 'string',
             // 'url_files' => '',
