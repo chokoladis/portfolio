@@ -142,7 +142,7 @@ ul,li,p{
                             width: 30px;
                         }
                     }
-                    form{
+                    .inputs{
                         display: none;
                         flex: 1;
 
@@ -157,14 +157,34 @@ ul,li,p{
 
                     &.active{
 
-                        form{
+                        .inputs{
                             display: flex;
                         }
                     }
                 }
 
+                [type="submit"]{
+                    display: none;
+                }
+
+                &.one-row{
+                    
+                    li{
+                        margin-right: 10px;
+                    }
+                }
+
                 &.active{
-                    flex-direction: column;
+
+                    [type="submit"]{
+                        display: block;
+                    }
+                    &.one-row{
+
+                        >*.active{
+                            width: 32%;
+                        }
+                    }
                 }
             }
         }

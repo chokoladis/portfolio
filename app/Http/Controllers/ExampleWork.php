@@ -16,6 +16,9 @@ class ExampleWork extends Controller
 
         $data = $request->validated();
         
+        // // данные не очищаются
+        // dump($data);
+
         $query = Example_work::query();
         $queryUser = User::query();
 
@@ -30,12 +33,15 @@ class ExampleWork extends Controller
                 ->orWhere('email', 'like', '%'.$data['profile'].'%');
 
             $userFinder = $queryUser->get();
+            $userID = 0;
 
             foreach($userFinder as $user){
-                $userID = $user->id;
+                if ($user->role != 'admin'){
+                    $userID = $user->id;
+                }
             }
 
-            if ($userID){
+            if ($userID != 0){
                 $query->where('user_id', $userID);
             } else {
                 // empty search
