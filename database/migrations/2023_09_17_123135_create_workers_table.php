@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('about');
             $table->json('socials');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -20,8 +20,6 @@
         $f_profile = true;
         $profile_val = $_GET['profile'];
     }
-
-    $activeBtn = $f_profile || $f_search ? '': 'uk-hidden';
     
 @endphp
 @section('content')
@@ -46,7 +44,7 @@
                             <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" placeholder="Поиск по пользователю">
                         </div>
                     </li>
-                    <input type="submit" value="Поиск" class="uk-button uk-button-default {{ $activeBtn }}">
+                    <input type="submit" value="Поиск" class="uk-button uk-button-default">
                 </ul>
             </form>
         </div>

@@ -1,11 +1,37 @@
-// Body
-$body-bg: #f8fafc;
+// LIGHT theme - lt
+$body-bg-lt: #f8fafc;
+$main-clr-lt: rgb(88, 88, 255);
+$dual-clr-lt: rgb(240, 1, 1);
+// main content
+$shadow-clr-lt: rgba(91, 91, 255, 0.382);
+$main-clr-text-lt: black;
+// header
+$header-link-clr-visited-lt: lighten($dual-clr-lt, 10%);
+$header-link-clr-visited-lt-20: lighten($dual-clr-lt, 20%);
+// footer
+// $footer-bg: darken($main-clr, 5%);
 
-// Colors
-$main-clr: rgb(88, 88, 255);
-$dual-clr: rgb(240, 1, 1);
 
-$main-clr-text: white;
+// DARK theme - dark
+$body-bg-dark: rgb(23, 23, 23);
+$main-clr-dark: $main-clr-lt;
+$dual-clr-dark: rgb(9, 9, 13);
+// content
+// $shadow-clr-dark: rgba(210, 210, 210, 0.619);
+$shadow-clr-dark: $main-clr-lt;
+$main-clr-text-dark: white;
+// header
+$header-link-clr-visited-dark: lighten($dual-clr-dark, 10%);
+$header-link-clr-visited-dark-20: lighten($dual-clr-dark, 20%);
+// footer
+$footer-bg: darken($main-clr-dark, 5%);
+
+
+// no changes on themes
+$header-bg: $main-clr-lt;
+$header-link-color-hv: lighten($header-bg, 10%);
+// main content
+$action-el-clr: rgb(255, 157, 157);
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -14,17 +40,26 @@ $line-height-base: 1.6;
 
 // 
 $clr-danger: red;
-// $clr-
 
-// header
-$header-bg: $main-clr;
-$header-link-color: $main-clr-text;
-$header-link-color-hv: lighten($header-bg, 10%);
-$header-link-color-visited: lighten($dual-clr, 10%);
+// Default theme
+:root, :root.light{
+    --body-bg: #{$body-bg-lt};
+    --main-clr: #{$main-clr-lt};
+    --dual-clr: #{$dual-clr-lt};
+    --main-clr-text: #{$main-clr-text-lt};
+    --shadow-clr: #{$shadow-clr-lt};
+    --header-link-color: #{$main-clr-text-lt};
+    --header-link-clr-visited: #{$header-link-clr-visited-lt};
+    --header-link-clr-visited-lt: #{$header-link-clr-visited-lt-20};
+}
 
-// footer
-$footer-bg: darken($main-clr, 5%);
-
-// main content
-$shadow-clr: rgba(91, 91, 255, 0.382);
-$action-el-clr: rgb(255, 157, 157);
+:root.dark{
+    --body-bg: #{$body-bg-dark};
+    --main-clr: #{$main-clr-dark};
+    --dual-clr: #{$dual-clr-dark};
+    --main-clr-text: #{$main-clr-text-dark};
+    --shadow-clr: #{$shadow-clr-dark};
+    --header-link-color: #{$main-clr-text-dark};
+    --header-link-clr-visited: #{$header-link-clr-visited-dark};
+    --header-link-clr-visited-lt: #{$header-link-clr-visited-dark-20};
+}

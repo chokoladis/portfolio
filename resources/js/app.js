@@ -49,6 +49,10 @@ function updWorks(){
 
 $(function(){
 
+    $('.theme-toggle').on('click', function(){
+        $(this).toggleClass('active');
+        $(':root').toggleClass('dark');
+    })
     $(document).on('click','form [type="submit"]', function(e){
 
         // console.log('submit');

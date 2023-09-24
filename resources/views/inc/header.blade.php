@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,6 +40,7 @@
                         </form>
                         <img src="icon.png" alt="" class='search-placeholder'>
                     </div> -->
+                    <div class="theme-toggle"></div>
                     <ul class="header-main">
                         <li class='animated'><a href="/">home</a></li>
                         
@@ -77,5 +78,8 @@
                         @endguest
                     </ul>
                 </div>
+                
             </header>
-            
+            <!-- <div class="theme-toggle">
+                <img src="/storage/general/switch.png" alt="">
+            </div> -->
