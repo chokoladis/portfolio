@@ -50,8 +50,29 @@ function updWorks(){
 $(function(){
 
     $('.theme-toggle').on('click', function(){
+        
         $(this).toggleClass('active');
         $(':root').toggleClass('dark');
+
+        let f_htmlDark = $('html').hasClass('dark');
+        var activeTheme = '';
+
+        activeTheme = f_htmlDark ? 'dark' : 'light';
+        
+        $.ajax({
+            url: '/ajax/changeTheme/',
+            data: {
+                'activeTheme' : activeTheme
+            },
+            method: 'GET',
+            headers: {            
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')        
+            },
+            success: function(data){
+                console.log(data);
+            }
+        });
+        
     })
     $(document).on('click','form [type="submit"]', function(e){
 
@@ -275,6 +296,16 @@ $(function(){
             ul.removeClass('active');
         }        
         
+    });
+
+    $('.socials input').on('focus', function(){
+        let label = $(this).parents('label');
+        label.addClass('focus');
+    });
+
+    $('.socials input').on('blur', function(){
+        let label = $(this).parents('label');
+        label.removeClass('focus');
     });
 
     // $('.work').on('mouseover', function(){

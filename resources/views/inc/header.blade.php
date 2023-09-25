@@ -1,5 +1,17 @@
+@php
+    $theme = null;
+
+    if(isset($_COOKIE['theme'])){
+        $theme = $_COOKIE['theme'];
+    }
+
+    if (!$theme){
+        $theme = 'dark';
+        setcookie('theme', $theme, time()+60*60*30, '/' );
+    }    
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{$theme}}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">

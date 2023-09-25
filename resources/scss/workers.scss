@@ -1,0 +1,51 @@
+#md-worker_new{
+
+    .socials{
+
+
+        .links{
+            display: flex;
+            flex-wrap: wrap;
+
+
+            label{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-right: 10px;
+                position: relative;
+
+                img, [uk-icon]{
+                    width: 30px;
+                    height: 30px;
+                    position: absolute;
+                    left: 5px;
+                    top: 5px;
+                    filter: saturate(0%);
+                }
+
+                input{
+                    padding-left: 40px;
+                }
+
+
+                &.focus{
+                    img,[uk-icon]{
+                        filter: saturate(100%);
+                    }
+                }
+
+                &:nth-child(-n+2){
+                    margin-bottom: 10px;
+                }
+
+                &:nth-child(2n){
+                    padding: 0;
+                }
+                
+            }
+        }
+
+    }
+    
+}

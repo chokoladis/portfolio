@@ -1,6 +1,9 @@
-<!-- This is the modal -->
+@php
+    $theme = $_COOKIE['theme'];
+@endphp
 <div id="md-menu_edit" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
+        <div class="custom-close-icon uk-modal-close">X</div>
         <form action="" method="POST" id="menu_edit" accept-charset="multipart/form-data">
             <h2 class="uk-modal-title">Форма редактирования</h2>
             
@@ -29,8 +32,7 @@
                 <input class="uk-input" type="text" name="sort" placeholder="Сортировка">
             </div>
         
-            <input class="uk-button uk-button-secondary" type="submit" id="js_menu_edit_submit" value="Обновить">
-            <button class="uk-modal-close uk-button" type="button">Закрыть</button>
+            <input class="uk-button {{ $theme == 'dark' ? 'uk-button-default': 'uk-button-secondary' }}" type="submit" id="js_menu_edit_submit" value="Обновить">
         </form>
     </div>
 </div>

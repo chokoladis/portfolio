@@ -168,9 +168,4 @@ class ExampleWork extends Controller
         }
         
     }
-
-    public function worksList(){
-        $works = Example_work::all();
-        return view('compiled.works', compact('works'));
-    }
 }

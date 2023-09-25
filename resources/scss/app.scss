@@ -55,6 +55,15 @@ ul,li,p{
 .clr-danger{
     color: $clr-danger;
 }
+.custom-close-icon{
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 10px;
+    background: $clr-danger;
+    color: var(--body-bg);
+    cursor: pointer;
+}
 
 .root{
     display: flex;
@@ -131,16 +140,21 @@ ul,li,p{
 
             .theme-toggle{
 
-                position: absolute;
-                left: 30px;
-                bottom: -40px;
+                top: 80px;
+                left: 70px;
                 width: 30px;
                 height: 30px;
                 cursor: pointer;
                 background: white;
-                border: 1px solid rgba(black, 0.5);
+                border: 1px solid rgba(0, 0, 0, 0.5);
                 z-index: 120;
                 overflow: hidden;
+                position: fixed;
+                opacity: 0.4;
+                
+                &:hover{
+                    opacity: 1;
+                }
 
                 &::after{
                     content: '';
@@ -163,7 +177,7 @@ ul,li,p{
 
         &.header-filter{
 
-            background: var(--header-link-clr-visited-light);
+            background: var(--header-link-clr-visited-lt);
 
             ul{
                 display: flex;
@@ -227,10 +241,6 @@ ul,li,p{
         }
     }
 
-    // .theme-toggle{
-        
-    // }
-
     footer{
         padding: 20px 0;
         background: $footer-bg;
@@ -244,7 +254,7 @@ ul,li,p{
             transition-duration: .2s;
 
             &:hover{
-                color:  var(--header-link-clr-visited-light);
+                color:  var(--header-link-clr-visited-lt);
                 transition-duration: .2s;
             }
         }
@@ -288,4 +298,16 @@ ul,li,p{
     }
 }
 
-// @import 'works';
+
+.uk-modal-dialog{
+    background: var(--body-bg);
+    color: var(--main-clr-text);
+}
+.uk-button-default{
+    color: var(--main-clr-text);
+    border: 1px solid var(--btn-default-border-clr);
+
+    &:hover{
+        color: var(--main-clr-text-hv);
+    }
+}

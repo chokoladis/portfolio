@@ -5,6 +5,7 @@ $dual-clr-lt: rgb(240, 1, 1);
 // main content
 $shadow-clr-lt: rgba(91, 91, 255, 0.382);
 $main-clr-text-lt: black;
+$btn-default-border-lt: #e5e5e5;
 // header
 $header-link-clr-visited-lt: lighten($dual-clr-lt, 10%);
 $header-link-clr-visited-lt-20: lighten($dual-clr-lt, 20%);
@@ -20,6 +21,8 @@ $dual-clr-dark: rgb(9, 9, 13);
 // $shadow-clr-dark: rgba(210, 210, 210, 0.619);
 $shadow-clr-dark: $main-clr-lt;
 $main-clr-text-dark: white;
+$main-clr-text-hv-dark: rgb(207, 207, 207);
+$btn-default-border-dark: #494949;
 // header
 $header-link-clr-visited-dark: lighten($dual-clr-dark, 10%);
 $header-link-clr-visited-dark-20: lighten($dual-clr-dark, 20%);
@@ -47,6 +50,8 @@ $clr-danger: red;
     --main-clr: #{$main-clr-lt};
     --dual-clr: #{$dual-clr-lt};
     --main-clr-text: #{$main-clr-text-lt};
+    --main-clr-text-hv: #{$main-clr-text-lt};
+    --btn-default-border-clr: #{$btn-default-border-lt};
     --shadow-clr: #{$shadow-clr-lt};
     --header-link-color: #{$main-clr-text-lt};
     --header-link-clr-visited: #{$header-link-clr-visited-lt};
@@ -58,6 +63,8 @@ $clr-danger: red;
     --main-clr: #{$main-clr-dark};
     --dual-clr: #{$dual-clr-dark};
     --main-clr-text: #{$main-clr-text-dark};
+    --main-clr-text-hv: #{$main-clr-text-hv-dark};
+    --btn-default-border-clr: #{$btn-default-border-dark};
     --shadow-clr: #{$shadow-clr-dark};
     --header-link-color: #{$main-clr-text-dark};
     --header-link-clr-visited: #{$header-link-clr-visited-dark};

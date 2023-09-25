@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
+use App\Http\Controllers\HelperController;
 use App\Http\Controllers\ExampleWork;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MenuNavController;
@@ -27,8 +28,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::get('/works', 'ExampleWork@index')->name('work.index');
     Route::get('/workers', 'WorkersController@index')->name('workers.index');
     // Route::get('/works/search?q={q}', 'ExampleWork@search')->name('work.search');
-    // ajax area
-    Route::get('/works?ajax=worksList', 'ExampleWork@worksList');
+
+    // ajax requests
+    Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
 
     Route::middleware(['admin', 'user'])->group( function() {
         Route::post('/works', 'ExampleWork@store')->name('work.store');
