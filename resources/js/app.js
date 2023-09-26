@@ -1,54 +1,10 @@
-import './bootstrap';
+import './variables';
+// import './jquery.mask';
+import 'jquery-mask-plugin';
 
-import jQuery, { error } from 'jquery';
-window.$ = jQuery;
-
-// make full script file special for admin
-function updWorksAdmin(){
-    $.ajax({
-        url: location.href,
-        method: 'GET',
-        // dataType: 'JSON',
-        success: function(html){
-            let works = $(html).find('section.content .works_list > *');
-            let paginastion  = $(html).find('section.content .paginastion > *');
-            $('section.content .works_list').html(works);
-            $('section.content .paginastion').html(paginastion);
-        }
-    });
-};
-
-function updMenuAdmin(){
-    $.ajax({
-        url: location.href,
-        method: 'GET',
-        // dataType: 'JSON',
-        success: function(html){
-            let works = $(html).find('section.content .links_list > *');
-            // let paginastion  = $(html).find('section.content .paginastion > *');
-            $('section.content .links_list').html(works);
-            // $('section.content .paginastion').html(paginastion);
-        }
-    });
-};
-
-function updWorks(){
-    $.ajax({
-        url: location.href,
-        method: 'GET',
-        // dataType: 'JSON',
-        success: function(html){
-            let works = $(html).find('main .works_list > *');
-            let paginastion  = $(html).find('main .paginastion > *');
-            $('main .works_list').html(works);
-            $('main .paginastion').html(paginastion);
-        }
-    });
-};
-
+$('.js-phone-mask').mask('+9 (999) 9999-999');
 
 $(function(){
-
     $('.theme-toggle').on('click', function(){
         
         $(this).toggleClass('active');
@@ -73,7 +29,8 @@ $(function(){
             }
         });
         
-    })
+    });
+
     $(document).on('click','form [type="submit"]', function(e){
 
         // console.log('submit');
@@ -167,64 +124,6 @@ $(function(){
         }
     });
 
-    $(document).on('click','.js_work_del', function(){
-
-        let parent = $(this).parents('.work');
-        let workId = parent.attr('data-id');
-
-        $.ajax({
-            url: '/works/'+workId+'/delete/',
-            method: 'GET',
-            dataType: 'json',
-            success: function(data){
-
-                if (data.success){
-                    
-                    $('.works_list [data-id="'+workId+'"]').remove();
-                    
-                    updWorks();
-
-                } else {
-                    $('#response').show();
-                    $('#response .messsage').html(data.error+"<br/>");
-                }
-            }
-        });
-
-    });
-
-    $(document).on('click','.js_work_edit', function(){
-
-        // console.log('click edit');
-        let parent = $(this).parents('.work');
-        let workId = parent.attr('data-id');
-
-        $.ajax({
-            url: '/works/'+workId+'/edit/',
-            method: 'GET',
-            dataType: 'json',
-            success: function(data){
-
-                if (data){
-                    // set id in new form
-                    let form = $('#md-work_edit');
-                    form.find('[name="id"]').val(workId);
-                    form.find('[name="title"]').val(data.title);
-                    form.find('[name="description"]').val(data.description);
-                    // form.find('input[name="url_files"]').val(data.url_files);
-                    form.find('[name="url_work"]').val(data.url_work);
-                    
-                    UIkit.modal('#md-work_edit').show();
-                } else {
-                    $('#response').show();
-                    $('#response .messsage').html('Ошибка в запросе при получении данных <br/>');
-                }
-
-            }
-        });
-
-    });
-
     $(document).on('click','.js_menu_del', function(){
 
         let parent = $(this).parents('.link');
@@ -296,26 +195,5 @@ $(function(){
             ul.removeClass('active');
         }        
         
-    });
-
-    $('.socials input').on('focus', function(){
-        let label = $(this).parents('label');
-        label.addClass('focus');
-    });
-
-    $('.socials input').on('blur', function(){
-        let label = $(this).parents('label');
-        label.removeClass('focus');
-    });
-
-    // $('.work').on('mouseover', function(){
-    //     setTimeout(() => {$(this).addClass('hovered') }, 1000);
-    // });
-
-    // $('.work').on('mouseout', function(){
-    //     setTimeout(() => {$(this).removeClass('hovered')}, 1000);
-    // });
-
-    
-
+    });    
 });

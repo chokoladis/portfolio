@@ -1,5 +1,17 @@
 #md-worker_new{
 
+
+    label{
+
+        &.photo{
+
+            input{
+                display: none;
+            }
+        }
+    }
+
+
     .socials{
 
 
@@ -28,8 +40,7 @@
                     padding-left: 40px;
                 }
 
-
-                &.focus{
+                &.focus, &.fill{
                     img,[uk-icon]{
                         filter: saturate(100%);
                     }

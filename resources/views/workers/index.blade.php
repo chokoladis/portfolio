@@ -3,6 +3,9 @@
 @push('styles')
     @vite(['resources/scss/workers.scss'])
 @endpush
+@push('scripts')
+    @vite(['resources/js/workers.js'])
+@endpush
 
 @section('content')
     

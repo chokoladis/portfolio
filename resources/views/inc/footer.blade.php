@@ -13,7 +13,8 @@
         </div>
 
         @vite(['resources/js/app.js'])
-        
+        @stack('scripts')
+
         @include('inc.modal.response')
         @if (Route::current()->getName() == 'work.index')
             @include('inc.modal.work_create')

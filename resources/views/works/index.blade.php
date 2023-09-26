@@ -3,6 +3,9 @@
 @push('styles')
     @vite(['resources/scss/works.scss'])
 @endpush
+@push('scripts')
+    @vite(['resources/js/works.js'])
+@endpush
 
 @php
     $f_search = false;
