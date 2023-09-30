@@ -18,8 +18,9 @@ class ExampleWork extends Controller
 
         $data = $request->validated();
         
-        // // данные не очищаются
-        // dump($data);
+        // данные не очищаются
+        // dump(request());
+        // dd(session());
 
         $query = Example_work::query();
         $queryUser = User::query();

@@ -25,7 +25,7 @@ $(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')        
             },
             success: function(data){
-                console.log(data);
+                // console.log(data);
             }
         });
         

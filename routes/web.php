@@ -33,11 +33,15 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
 
     Route::middleware(['admin', 'user'])->group( function() {
+        // works
         Route::post('/works', 'ExampleWork@store')->name('work.store');
         Route::get('/works/{work}/edit/', 'ExampleWork@edit')->name('work.edit');
         Route::post('/works/{work}/update/', 'ExampleWork@update')->name('work.update');
         Route::get('/works/{work}/delete/', 'ExampleWork@delete')->name('work.delete');
         Route::get('/works/deleteAll/', 'ExampleWork@deleteAll');
+
+        // workers
+        Route::post('/workers', 'WorkersController@store')->name('workers.store');
     });    
 
     Route::group(['middleware' => 'admin'], function() {

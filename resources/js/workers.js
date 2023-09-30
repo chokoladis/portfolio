@@ -33,4 +33,73 @@ $(function(){
         }
     });
 
+    $('#js_workers_add_submit').on('click', function(){
+        
+        // console.log('submit');
+        let form = $(this).parent('form');
+        let ajax = form.find('input[name="AJAX"]');
+        
+        if (ajax.length && ajax.val() == 'Y' ){
+            
+            e.preventDefault();
+            
+            var action = form.attr('action');
+            var method = form.attr('method');
+            var formData = form.serializeArray();
+            var sendData = new FormData();
+            var headers = {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            };
+
+            $.each(formData, function (key, input) {
+                sendData.append(input.name, input.value);
+            });
+
+            $.ajax({
+                url: action,
+                method: method,
+                data: sendData,
+                processData: false,
+                contentType: false,
+                headers: headers,
+                dataType: 'JSON',
+                success: function(json){
+                    
+                    if (json.success){
+                        $('#md-response .messsage').text(json.response.result);
+
+                        // worksUpd()
+                        
+                    } else {
+                        $('#md-response .messsage').text(json.response.error);
+                    }
+
+                    UIkit.modal('#md-response').show();
+                },
+                error :function( data ) {
+                    if( data.status === 422 ) {
+                        var errors = $.parseJSON(data.responseText);
+                        $.each(errors, function (key, value) {
+                            console.log(key+ " " +value);
+
+                            $('#response').addClass("alert alert-danger");
+            
+                            if($.isPlainObject(value)) {
+                                $.each(value, function (key, value) {                       
+                                    // console.log(key+ " " +value);
+                                    $('#response').show().append(value+"<br/>");
+            
+                                });
+                            }else{
+                                $('#response').show();
+                                $('#response .messsage').html(data.error+"<br/>");
+                            }
+                        });
+                    }
+                }
+            })
+        }
+        
+    });
+
 });

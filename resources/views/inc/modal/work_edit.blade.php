@@ -1,5 +1,5 @@
 @php
-    $theme = $_COOKIE['theme'];
+    $theme = request()->cookie('theme');
 @endphp
 <div id="md-work_edit" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">

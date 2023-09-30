@@ -29,7 +29,7 @@
     
     <header class="header-filter">
         <div class="container">
-            <form action="" method="get">
+            <form action="{{ route('work.index') }}" method="GET" id="work-filter" accept-charset="multipart/form-data">
                 <ul class="one-row {{ $f_profile || $f_search ? 'active' : '' }} ">
                     <li class="search {{ $f_search ? 'active' : '' }}">
                         <div class="btn">

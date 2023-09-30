@@ -5,7 +5,7 @@
 <div id="md-worker_new" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
         <div class="custom-close-icon uk-modal-close">X</div>
-        <form action="" method="POST" id="worker_new" accept-charset="multipart/form-data">
+        <form action="{{ route('workers.store') }}" method="POST" id="worker_new" accept-charset="multipart/form-data">
             <h2 class="uk-modal-title">Форма создания</h2>
             
             @csrf
@@ -48,7 +48,7 @@
                 
             </div>
         
-            <input class="uk-button {{ $theme == 'dark' ? 'uk-button-default': 'uk-button-secondary' }}" type="submit" id="js_work_edit_submit" value="Обновить">
+            <input class="uk-button {{ $theme == 'dark' ? 'uk-button-default': 'uk-button-secondary' }}" type="submit" id="js_workers_add_submit" value="Создать">
         </form>
     </div>
 </div>

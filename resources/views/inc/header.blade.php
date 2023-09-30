@@ -1,13 +1,8 @@
 @php
-    $theme = null;
+    $theme = request()->cookie('theme');
 
-    if(isset($_COOKIE['theme'])){
-        $theme = $_COOKIE['theme'];
-    }
-
-    if (!$theme){
+    if(!$theme){
         $theme = 'dark';
-        setcookie('theme', $theme, time()+60*60*30, '/' );
     }    
 @endphp
 <!DOCTYPE html>

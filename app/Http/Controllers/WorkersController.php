@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Workers;
 use Illuminate\Http\Request;
+use App\Http\Requests\Workers\StoreRequest;
 
 class WorkersController extends Controller
 {
@@ -28,9 +29,11 @@ class WorkersController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        dd($data);
     }
 
     /**
