@@ -9,6 +9,7 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
 use App\Http\Controllers\HelperController;
+use App\Http\Resources\ExampleWork\WorkResource;
 
 class ExampleWork extends Controller
 {
@@ -17,10 +18,10 @@ class ExampleWork extends Controller
     public function index(FilterRequest $request){
 
         $data = $request->validated();
+
+        $page = $data['page'] ?? 1;
+        $perPage = $data['per_page'] ?? 10;
         
-        // данные не очищаются
-        // dump(request());
-        // dd(session());
 
         $query = Example_work::query();
         $queryUser = User::query();
@@ -52,8 +53,13 @@ class ExampleWork extends Controller
 
         }
 
-        $works = $query->paginate(5);
+        $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
+            
 
+        // $works->appends(Input::except('page'));
+        // $works = $query->paginate(10);
+
+        // return WorkResource::collection($works);
         // 1 - pagename , 2 - var
         return view('works.index', compact('works'));
     }

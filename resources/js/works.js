@@ -1,5 +1,29 @@
 import './variables';
 
+
+function updWorks(data = null){
+
+    if (data){
+        let works = $(data).find('main .works_list > *');
+        let paginastion  = $(data).find('main .paginastion > *');
+        $('main .works_list').html(works);
+        $('main .paginastion').html(paginastion);
+    } else {
+        $.ajax({
+            url: location.href,
+            method: 'GET',
+            // dataType: 'JSON',
+            success: function(html){
+                let works = $(html).find('main .works_list > *');
+                let paginastion  = $(html).find('main .paginastion > *');
+                $('main .works_list').html(works);
+                $('main .paginastion').html(paginastion);
+            }
+        });
+    }
+    
+};
+
 $(function(){
 
     $(document).on('click','.js_work_del', function(){
@@ -64,11 +88,11 @@ $(function(){
         e.preventDefault();
 
         var action = $(this).attr('action');
-        var method = $(this).attr('method');
+        // var method = $(this).attr('method');
         var formData = $(this).serializeArray();
-        var headers = {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        };
+        // var headers = {
+        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // };
 
         let url = new URL(action);
         for (let key in formData){
@@ -80,50 +104,52 @@ $(function(){
             }
         }
 
-        $.ajax({
-            url: url,
-            method: method,
-            data: formData,
-            processData: false,
-            contentType: false,
-            headers: headers,
-            dataType: 'html',
-            success: function(html){
-                
-                
-                if (html){
-                    // $('#md-response .messsage').text(json.response.result);
+        location.href = url;
 
-                    updWorks(html);
+        // $.ajax({
+        //     url: url,
+        //     method: method,
+        //     data: formData,
+        //     processData: false,
+        //     contentType: false,
+        //     headers: headers,
+        //     dataType: 'html',
+        //     success: function(html){
+                
+                
+        //         if (html){
+        //             // $('#md-response .messsage').text(json.response.result);
+
+        //             updWorks(html);
                     
-                } else {
-                    // $('#md-response .messsage').text(json.response.error);
-                }
+        //         } else {
+        //             // $('#md-response .messsage').text(json.response.error);
+        //         }
 
-                // UIkit.modal('#md-response').show();
-            },
-            error :function( data ) {
-                if( data.status === 422 ) {
-                    var errors = $.parseJSON(data.responseText);
-                    $.each(errors, function (key, value) {
-                        console.log(key+ " " +value);
+        //         // UIkit.modal('#md-response').show();
+        //     },
+        //     error :function( data ) {
+        //         if( data.status === 422 ) {
+        //             var errors = $.parseJSON(data.responseText);
+        //             $.each(errors, function (key, value) {
+        //                 console.log(key+ " " +value);
 
-                        $('#response').addClass("alert alert-danger");
+        //                 $('#response').addClass("alert alert-danger");
         
-                        if($.isPlainObject(value)) {
-                            $.each(value, function (key, value) {                       
-                                // console.log(key+ " " +value);
-                                $('#response').show().append(value+"<br/>");
+        //                 if($.isPlainObject(value)) {
+        //                     $.each(value, function (key, value) {                       
+        //                         // console.log(key+ " " +value);
+        //                         $('#response').show().append(value+"<br/>");
         
-                            });
-                        }else{
-                            $('#response').show();
-                            $('#response .messsage').html(data.error+"<br/>");
-                        }
-                    });
-                }
-            }
-        })
+        //                     });
+        //                 }else{
+        //                     $('#response').show();
+        //                     $('#response .messsage').html(data.error+"<br/>");
+        //                 }
+        //             });
+        //         }
+        //     }
+        // })
 
     });
 
