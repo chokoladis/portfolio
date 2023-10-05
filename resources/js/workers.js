@@ -33,16 +33,17 @@ $(function(){
         }
     });
 
-    $('#js_workers_add_submit').on('click', function(){
+    $('#js_workers_add_submit').on('click', function(e){
         
         // console.log('submit');
         let form = $(this).parent('form');
-        let ajax = form.find('input[name="AJAX"]');
+        // let ajax = form.find('input[name="AJAX"]');
         
-        if (ajax.length && ajax.val() == 'Y' ){
+        // if (ajax.length && ajax.val() == 'Y' ){
             
             e.preventDefault();
             
+            // console.log();
             var action = form.attr('action');
             var method = form.attr('method');
             var formData = form.serializeArray();
@@ -52,8 +53,19 @@ $(function(){
             };
 
             $.each(formData, function (key, input) {
-                sendData.append(input.name, input.value);
+                if (input.name != 'socials'){
+                    sendData.set(input.name, input.value);
+                }
             });
+
+            // var socials = $('.socials input');
+
+            // console.log(socials);
+            // for (var i = 0; i < socials.length; i++) {
+            //     sendData.append("socials[]", socials[i]);
+            // }
+            // console.log(sendData);
+            // console.log(formData);
 
             $.ajax({
                 url: action,
@@ -65,6 +77,7 @@ $(function(){
                 dataType: 'JSON',
                 success: function(json){
                     
+                    console.log(json);
                     if (json.success){
                         $('#md-response .messsage').text(json.response.result);
 
@@ -98,7 +111,7 @@ $(function(){
                     }
                 }
             })
-        }
+        // }
         
     });
 

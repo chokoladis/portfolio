@@ -1,5 +1,8 @@
 <div class="works_list">
     
+    @php
+        dump(count($works));
+    @endphp
     @foreach($works as $work)
         @php 
             $addClass = (!empty($work->url_files))?' work_have_preview':'';

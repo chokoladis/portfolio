@@ -19,37 +19,46 @@ class HelperController extends Controller
     }
 
     // public function setCookie($name, $value, $minutes = 60){
-    //     // $cookie = Cookie($name, $value, $minutes);
+    // //     // $cookie = Cookie($name, $value, $minutes);
 
-    //     // return $cookie;
-    //     // return response('setter cookie')->withCookie(cookie($name, $value, $minutes));
-    //     // $response->cookie(cookie($name, $value, $minutes));
-    //     // return $response;
+    // //     // return $cookie;
+    // //     // return response('setter cookie')->withCookie(cookie($name, $value, $minutes));
+    //         return response('Welcome')->cookie($name, $value, $minutes);
+
+    // //     // $response->cookie(cookie($name, $value, $minutes));
+    // //     // return $response;
     // }
 
-    // public function getCookie(Request $request, $name){
-    //     $value = $request->cookie($name);
-    //     echo $value.'<br>';
-    //     $value = Cookie::get($name);
-    //     echo $value;
+    // public function getCookie($name){
+    //     $themeReq = new Request;
+    //     $value = $themeReq->cookie($name);
+    //     // echo $value.'<br>';
+    //     // dump($_COOKIE);
+    //     // $value = $_COOKIE["$name"] ?? 'dark';
+    //     return $value;
     //  }
 
-    public function changeTheme(Request $themeReq){
-        $data = $themeReq->validate([
-            'activeTheme'=> 'string'
-        ]);
+    // public function changeTheme(Request $themeReq){
+    //     $data = $themeReq->validate([
+    //         'activeTheme'=> 'string'
+    //     ]);
 
-        $theme = $data['activeTheme'];
+    //     $theme = $data['activeTheme'];
 
-        // if ($theme){
-        //     $res = self::setCookie('theme', $theme, 60*24*30);
-        //     // return self::jsonRespose(true, ['message' => 'Тема изменена на '.$theme]);
-        // } else {
-        //     $res = self::setCookie('theme', 'dark', 60*24*30);
-        //     // return self::jsonRespose(false, ['message' => 'Ошибка при задании темы, установилась стандартная тема - dark']);
-        // }
+    //     dump(self::getCookie($themeReq, 'theme'));
+    //     // $boolSetter = setcookie('theme', $theme, time()+60*60*24*30 );
 
-        // dd(self::getCookie($themeReq, 'theme'));
-        // dd($res);
-    }
+    //     // dump($boolSetter);
+    //     // dump($_COOKIE);
+    //     // if ($theme){
+    //         $res = self::setCookie('theme', $theme, 60*24*30);
+    //     //     // return self::jsonRespose(true, ['message' => 'Тема изменена на '.$theme]);
+    //     // } else {
+    //     //     $res = self::setCookie('theme', 'dark', 60*24*30);
+    //     //     // return self::jsonRespose(false, ['message' => 'Ошибка при задании темы, установилась стандартная тема - dark']);
+    //     // }
+
+    //     dump(self::getCookie($themeReq, 'theme'));
+    //     dd($res);
+    // }
 }

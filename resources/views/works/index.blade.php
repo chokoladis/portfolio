@@ -57,7 +57,9 @@
         <div class="container">
             @include('compiled.works')
 
-            <button class="uk-button uk-button-default" uk-toggle="target: #md-work_create" type="button">Добавить</button>
+            @if(auth()->user() !== null)
+                <button class="uk-button uk-button-default" uk-toggle="target: #md-work_create" type="button">Добавить</button>
+            @endif
         </div>
     </main>
 

@@ -31,6 +31,8 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        dd($request->all());
+
         $data = $request->validated();
 
         dd($data);

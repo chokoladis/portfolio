@@ -16,13 +16,15 @@
         @stack('scripts')
 
         @include('inc.modal.response')
-        @if (Route::current()->getName() == 'work.index')
-            @include('inc.modal.work_create')
-            @include('inc.modal.work_edit')            
-        @endif        
-        @if (Route::current()->getName() == 'workers.index')
-            @include('inc.modal.worker_new')            
-        @endif        
+        @if(auth()->user() !== null) 
+            @if (Route::current()->getName() == 'work.index')
+                @include('inc.modal.work_create')
+                @include('inc.modal.work_edit')            
+            @endif        
+            @if (Route::current()->getName() == 'workers.index')
+                @include('inc.modal.worker_new')            
+            @endif        
+        @endif
         <!-- <a href="https://www.flaticon.com/free-icons/portfolio" title="portfolio icons">Portfolio icons created by Freepik - Flaticon</a> -->
     </body>
 </html>

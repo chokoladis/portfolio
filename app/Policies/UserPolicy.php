@@ -28,6 +28,12 @@ class UserPolicy
         return $model->role == 'admin';
     }
 
+    public function auth(User $user, User $model): bool
+    {
+        dd($model);
+        // return $model;
+    }
+
     /**
      * Determine whether the user can create models.
      */

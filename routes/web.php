@@ -32,7 +32,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     // ajax requests
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
 
-    Route::middleware(['admin', 'user'])->group( function() {
+    Route::middleware(['user'])->group( function() {
         // works
         Route::post('/works', 'ExampleWork@store')->name('work.store');
         Route::get('/works/{work}/edit/', 'ExampleWork@edit')->name('work.edit');

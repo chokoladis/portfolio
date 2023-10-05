@@ -37,9 +37,9 @@
         <div class="container">
             @include('compiled.workers')
 
-            <!-- сделать полицию - не отображать для гостей и тех у кого есть профиль воркерс  -->
-            <button class="uk-button uk-button-default" uk-toggle="target: #md-worker_new" type="button">Создать Workers профиль</button>
-            <!-- если есть - кнопка перейти будет в шапке -->
+            @if(auth()->user() !== null)
+                <button class="uk-button uk-button-default" uk-toggle="target: #md-worker_new" type="button">Создать Workers профиль</button>            
+            @endif
         </div>
     </main>
 
