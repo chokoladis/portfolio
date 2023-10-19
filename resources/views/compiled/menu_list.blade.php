@@ -24,7 +24,20 @@
     @foreach($listMenuModifier as $item)
         @php
             $active = ($item['active'] == 1)?'active':'';
-            $imgRole = ($item['role'] == 'admin')?'fa-users-cog':'fa-users';
+
+            switch($item['role']){
+                case 'admin':
+                    $imgRole = 'fa-users-cog';
+                    break;
+                case 'user':
+                    $imgRole = 'fa-users';
+                    break;
+                default:
+                    $imgRole = 'fa-user-clock';
+                    break;
+            }
+
+            //fa-person-circle-question
         @endphp
 
         <div class="link {{ $active }}" data-id="{{ $item['id'] }}">

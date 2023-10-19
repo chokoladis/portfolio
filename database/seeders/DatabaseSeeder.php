@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Example_work;
 use App\Models\MenuNav;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {

@@ -68,6 +68,8 @@ $(function(){
                 action = '/works/'+itemId.val()+'/update/';
             } else if (formId == 'menu_edit'){
                 action = '/admin/menu/'+itemId.val()+'/update/';
+            } else if (formId == 'worker_new'){
+                return; // todo
             }
 
             $.ajax({

@@ -35,7 +35,6 @@ $(function(){
 
     $('#js_workers_add_submit').on('click', function(e){
         
-        // console.log('submit');
         let form = $(this).parent('form');
         // let ajax = form.find('input[name="AJAX"]');
         
@@ -58,14 +57,16 @@ $(function(){
                 }
             });
 
-            // var socials = $('.socials input');
+            var socials = $('.socials input');
 
-            // console.log(socials);
-            // for (var i = 0; i < socials.length; i++) {
-            //     sendData.append("socials[]", socials[i]);
-            // }
-            // console.log(sendData);
-            // console.log(formData);
+            for (var i = 0; i < socials.length; i++) {
+                let id = $(socials[i]).attr('id');
+                let val = $(socials[i]).val();
+                if (val){
+                    let obj = {name:id, value:val};
+                    sendData.append("socials[]",  JSON.stringify(obj));
+                }                
+            }
 
             $.ajax({
                 url: action,

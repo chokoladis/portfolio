@@ -17,29 +17,30 @@
         return $a['sort'] < $b['sort']?1:-1;
     });
     
+    $user = auth()->user();
+    $role = 'guest';
+    if ($user != null){
+        $role = $user->role;
+    }
 @endphp
 
 
     @foreach($listMenuModifier as $item)
         @php
-            $user = auth()->user();
-            $role = 'user';
-            if ($user != null){
-                $role = $user->role;
+            $viewLink = false;
+
+            if($role == 'guest' && $role == $item['role']){
+                $viewLink = true;
+            } elseif ($role == 'admin' || $item['role'] == $role || $item['role'] == 'guest'){
+                $viewLink = true;
             }
 
-            if ($role == 'admin'){
+            if ($viewLink){
                 @endphp
                     <li class='animated'><a href="{{ $item['link'] }}">{{ $item['name'] }}</a></li>
                 @php
-            } elseif ($item['role'] == $role){
-                
-                @endphp
-                    <li class='animated'><a href="{{ $item['link'] }}">{{ $item['name'] }}</a></li>
-                @php
-            } 
+            }            
         @endphp
-        <!-- dump($role); -->
 
     @endforeach
 

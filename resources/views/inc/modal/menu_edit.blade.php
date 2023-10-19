@@ -1,5 +1,5 @@
 @php
-    $theme = $_COOKIE['theme'];
+$theme = request()->cookie('theme');
 @endphp
 <div id="md-menu_edit" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
@@ -20,6 +20,7 @@
             </div>
             <div class="uk-margin">
                 <select class="uk-select" aria-label="Select" name="role">
+                    <option >guest</option>
                     <option >user</option>
                     <option >admin</option>
                 </select>

@@ -26,7 +26,8 @@ class StoreRequest extends FormRequest
             'photo' => 'string',
             'phone' => 'string',
             'about' => 'string',
-            'socials' => 'string',
+            "socials"    => "array",
+            "socials.*"  => "string|nullable",
         ];
     }
 }
