@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Workers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreRequest extends FormRequest
 {
@@ -23,10 +24,10 @@ class StoreRequest extends FormRequest
     {
         return [
             'id' => '',
-            'photo' => 'string',
+            'photo' => 'image|nullable',
             'phone' => 'string',
-            'about' => 'string',
-            "socials"    => "array",
+            'about' => 'string|nullable',
+            "socials"    => "array|nullable",
             "socials.*"  => "string|nullable",
         ];
     }

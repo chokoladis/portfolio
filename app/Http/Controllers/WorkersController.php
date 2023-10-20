@@ -31,7 +31,13 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        // dd($request->all());
         $data = $request->validated();
+        // path: "/private/var/folders/nl/50_tm4b52js54g_5308m8jzr0000gn/T"
+        // filename: "phpKd8sPI"
+        // basename: "phpKd8sPI"
+        // pathname: "/private/var/folders/nl/50_tm4b52js54g_5308m8jzr0000gn/T/phpKd8sPI"
+        dd($data);
         // todo
     }
 

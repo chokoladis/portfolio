@@ -51,21 +51,28 @@ $(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             };
 
+            // добавление стандартных полей
             $.each(formData, function (key, input) {
-                if (input.name != 'socials'){
+                if (input.name != 'socials' && input.value != ''){
                     sendData.set(input.name, input.value);
                 }
             });
 
+            // добавление аватарки
+            var file_data = form.find('[name="photo"]')[0].files;
+            if (file_data.length > 0 ){
+                sendData.append("photo", file_data[0]);
+            }
+
+            // добавление соцсетей
             var socials = $('.socials input');
 
             for (var i = 0; i < socials.length; i++) {
                 let id = $(socials[i]).attr('id');
                 let val = $(socials[i]).val();
                 if (val){
-                    let obj = {name:id, value:val};
-                    sendData.append("socials[]",  JSON.stringify(obj));
-                }                
+                    sendData.append("socials["+id+"]",  val);
+                }
             }
 
             $.ajax({
