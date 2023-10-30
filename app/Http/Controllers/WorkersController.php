@@ -8,6 +8,8 @@ use App\Http\Requests\Workers\StoreRequest;
 
 class WorkersController extends Controller
 {
+    static $defaultFolderImg = '/storage/workers/img/';
+
     /**
      * Display a listing of the resource.
      */
@@ -31,14 +33,45 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        // dd($request->all());
         $data = $request->validated();
-        // path: "/private/var/folders/nl/50_tm4b52js54g_5308m8jzr0000gn/T"
-        // filename: "phpKd8sPI"
-        // basename: "phpKd8sPI"
-        // pathname: "/private/var/folders/nl/50_tm4b52js54g_5308m8jzr0000gn/T/phpKd8sPI"
-        dd($data);
-        // todo
+
+        if (isset($data['photo'])){
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+            
+                $photo->move(public_path() . self::$defaultFolderImg, $photo->getClientOriginalName());
+                $photo_path = self::$defaultFolderImg.$photo->getClientOriginalName();
+            }
+            $data['url_avatar'] = $data['photo'];
+            unset($data['photo']);
+        }
+
+        if (isset($data['phone'])){
+            $nubmers = preg_replace('/\D/','',$data['phone']);
+            if (strlen($nubmers) !== 11){
+                $success = false;
+                $response = ['error' => 'mess'];
+            }
+        }
+
+        if ($success === null){
+
+            $success = true;
+            $res = Workers::firstOrCreate(
+                [ 'user_id' => auth()->user()->id ],
+                $data
+            );
+
+            if ($res->wasRecentlyCreated){
+                $response = ['result' => 'Профиль Workers создан'];
+            } else {
+                $success = false;
+                $response = ['error' => 'Профиль Workers с такими данными уже есть в БД'];
+            }
+        }
+
+        return HelperController::jsonRespose($success,$response);
+        // dd($data);
     }
 
     /**

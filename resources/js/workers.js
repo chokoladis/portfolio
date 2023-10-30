@@ -1,3 +1,4 @@
+import {Helper} from './variables';
 
 $(function(){
 
@@ -35,6 +36,7 @@ $(function(){
 
     $('#js_workers_add_submit').on('click', function(e){
         
+        let error = 0;
         let form = $(this).parent('form');
         // let ajax = form.find('input[name="AJAX"]');
         
@@ -42,7 +44,6 @@ $(function(){
             
             e.preventDefault();
             
-            // console.log();
             var action = form.attr('action');
             var method = form.attr('method');
             var formData = form.serializeArray();
@@ -53,6 +54,13 @@ $(function(){
 
             // добавление стандартных полей
             $.each(formData, function (key, input) {
+                let form_input = form.find('input[name="'+input.name+'"]');
+                
+                Helper.resetInput(form_input);
+                if (form_input.length && form_input.attr('require') && input.value.length < 1){
+                    Helper.showError(form_input, 'Вы не заполнили обязательное поле');
+                    error++;
+                }
                 if (input.name != 'socials' && input.value != ''){
                     sendData.set(input.name, input.value);
                 }
@@ -74,6 +82,9 @@ $(function(){
                     sendData.append("socials["+id+"]",  val);
                 }
             }
+
+            if (error)
+                return;
 
             $.ajax({
                 url: action,

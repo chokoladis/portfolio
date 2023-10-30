@@ -40,12 +40,12 @@ class ExampleWork extends Controller
             $userID = 0;
 
             foreach($userFinder as $user){
-                if ($user->role != 'admin'){
+                if ($user->role !== 'admin'){
                     $userID = $user->id;
                 }
             }
 
-            if ($userID != 0){
+            if ($userID !== 0){
                 $query->where('user_id', $userID);
             } else {
                 // empty search
@@ -53,7 +53,8 @@ class ExampleWork extends Controller
 
         }
 
-        $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
+        $works = $query->paginate($perPage)->appends(request()->query());
+        // $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
             
 
         // $works->appends(Input::except('page'));

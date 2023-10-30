@@ -24,8 +24,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'id' => '',
-            'photo' => 'image|nullable',
-            'phone' => 'string',
+            'url_avatar' => 'image|nullable',
+            'phone' => 'required|string|min:17',
             'about' => 'string|nullable',
             "socials"    => "array|nullable",
             "socials.*"  => "string|nullable",

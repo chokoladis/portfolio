@@ -20,29 +20,29 @@
                 </label>                
             </div>
             <div class="uk-margin">
-                <input class="uk-input js-phone-mask" name="phone" placeholder="Телефон">
+                <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="Телефон">
             </div>
             <div class="uk-margin">
-                <textarea class="uk-textarea" name="about" placeholder="Текст о вас"></textarea>
+                <textarea class="uk-textarea" name="about" autocomplete="on" placeholder="Текст о вас"></textarea>
             </div>
             <div class="uk-margin socials">
                 <h4 class='uk-heading-bullet'>Ссылки</h4>
                 <div class="links uk-child-width-1-2@s uk-child-width-1-1">
                     <label>
                         <img src="/storage/general/links/telegram.svg" alt="telegram"> 
-                        <input class="uk-input" name="socials[]" id="telegram" placeholder="telegram">
+                        <input class="uk-input" name="socials" id="telegram" placeholder="telegram">
                     </label>
                     <label>
                         <img src="/storage/general/links/github.svg" alt="github"> 
-                        <input class="uk-input" name="socials[]" id="github" placeholder="github">
+                        <input class="uk-input" name="socials" id="github" placeholder="github">
                     </label>
                     <label>
                         <img src="/storage/general/links/hh-red.png" alt="hh.ru">
-                        <input class="uk-input" name="socials[]" id="hh_ru" placeholder="hh.ru">
+                        <input class="uk-input" name="socials" id="hh_ru" placeholder="hh.ru">
                     </label>
                     <label>
                         <img src="/storage/general/links/kwork.png" alt="kwork.com">
-                        <input class="uk-input" name="socials[]" id="kwork" placeholder="kwork.com">
+                        <input class="uk-input" name="socials" id="kwork" placeholder="kwork.com">
                     </label>
                 </div>
                 
