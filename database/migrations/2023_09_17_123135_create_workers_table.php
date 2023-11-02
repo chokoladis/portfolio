@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('url_avatar')->nullable();
             $table->string('phone');
             $table->text('about')->nullable();
-            $table->json('socials')->nullable();
+            $table->json('socials')->default([]);
             $table->timestamps();
             $table->softDeletes();
         });

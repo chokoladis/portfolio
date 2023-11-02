@@ -24,11 +24,17 @@ class StoreRequest extends FormRequest
     {
         return [
             'id' => '',
-            'url_avatar' => 'image|nullable',
+            'url_avatar' => 'string|nullable',
             'phone' => 'required|string|min:17',
             'about' => 'string|nullable',
             "socials"    => "array|nullable",
             "socials.*"  => "string|nullable",
+        ];
+    }
+
+    public function messages(){
+        return [
+            'phone.min' => 'Поле телефон не заполнено полностью'
         ];
     }
 }

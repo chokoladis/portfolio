@@ -26,7 +26,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     // сделать доступным и для обычных авториз. пользователей
     Route::get('/works', 'ExampleWork@index')->name('work.index');
-    Route::get('/workers', 'WorkersController@index')->name('workers.index');
     // Route::get('/works/search?q={q}', 'ExampleWork@search')->name('work.search');
 
     // ajax requests
@@ -41,6 +40,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         Route::get('/works/deleteAll/', 'ExampleWork@deleteAll');
 
         // workers
+        Route::get('/workers', 'WorkersController@index')->name('workers.index');
         Route::post('/workers', 'WorkersController@store')->name('workers.store');
     });    
 

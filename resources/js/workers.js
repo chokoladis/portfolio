@@ -96,35 +96,29 @@ $(function(){
                 dataType: 'JSON',
                 success: function(json){
                     
-                    console.log(json);
-                    if (json.success){
+                    // console.log(json);
+                    if (json.errors){
+                        $('#md-response .messsage').text(json.message);
+                    } else if(json.success){
                         $('#md-response .messsage').text(json.response.result);
 
-                        // worksUpd()
-                        
-                    } else {
-                        $('#md-response .messsage').text(json.response.error);
-                    }
+                        // worksUpd()  
+                    } 
 
                     UIkit.modal('#md-response').show();
                 },
                 error :function( data ) {
                     if( data.status === 422 ) {
-                        var errors = $.parseJSON(data.responseText);
+                        var errors = $.parseJSON(data.responseText).errors;
+                        
+                        console.log(errors);
                         $.each(errors, function (key, value) {
+                            let input = form.find('[name="'+key+'"]');
                             console.log(key+ " " +value);
+                            console.log(input);
 
-                            $('#response').addClass("alert alert-danger");
-            
-                            if($.isPlainObject(value)) {
-                                $.each(value, function (key, value) {                       
-                                    // console.log(key+ " " +value);
-                                    $('#response').show().append(value+"<br/>");
-            
-                                });
-                            }else{
-                                $('#response').show();
-                                $('#response .messsage').html(data.error+"<br/>");
+                            if (input.length){
+                                Helper.showError(input, value);
                             }
                         });
                     }

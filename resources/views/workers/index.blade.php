@@ -37,7 +37,7 @@
         <div class="container">
             @include('compiled.workers')
 
-            @if(auth()->user() !== null)
+            @if (empty($workerById))
                 <button class="uk-button uk-button-default" uk-toggle="target: #md-worker_new" type="button">Создать Workers профиль</button>            
             @endif
         </div>

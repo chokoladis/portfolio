@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Workers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Workers\StoreRequest;
+
 
 class WorkersController extends Controller
 {
@@ -15,9 +17,18 @@ class WorkersController extends Controller
      */
     public function index()
     {
-        $workers = Workers::paginate(5);
+        $workerById = null;
+        if (auth()->user()){
+            $userId = auth()->user()->id;
+            $workerById = Workers::where('user_id', '=', $userId)->first();
+        }
 
-        return view('workers.index', compact('workers'));
+        $workers = DB::table('workers')
+                    ->join('users', 'workers.user_id', '=', 'users.id')
+                    ->select('users.name', 'workers.*')
+                    ->paginate(5);
+
+        return view('workers.index', compact('workers', 'workerById'));
     }
 
     /**
@@ -33,18 +44,18 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $success = null;
         $data = $request->validated();
-
-        if (isset($data['photo'])){
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo');
             
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            
+            $photo_path = self::$defaultFolderImg.$photo->getClientOriginalName();
+            if (!file_exists(public_path() . $photo_path)){
                 $photo->move(public_path() . self::$defaultFolderImg, $photo->getClientOriginalName());
-                $photo_path = self::$defaultFolderImg.$photo->getClientOriginalName();
             }
-            $data['url_avatar'] = $data['photo'];
-            unset($data['photo']);
         }
+        $data['url_avatar'] = $photo_path;
 
         if (isset($data['phone'])){
             $nubmers = preg_replace('/\D/','',$data['phone']);
@@ -53,6 +64,9 @@ class WorkersController extends Controller
                 $response = ['error' => 'mess'];
             }
         }
+
+    
+        $data['socials'] = !empty($data['socials']) ? json_encode($data['socials']) : null;
 
         if ($success === null){
 
