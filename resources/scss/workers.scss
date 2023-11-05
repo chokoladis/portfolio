@@ -91,29 +91,73 @@
                 display: block;
 
                 a{
-                    position: relative;
                     color: var(--main-clr-text);
-                    padding-left: 15px;
-
-                    // img{
-
-                    // }
+                    padding-left: 5px;
+                    text-transform: uppercase;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    
                     &:hover{
                         color: rgb(188, 188, 222);
                     }
 
                     &[href^='tel:']::before{
                         content: '';
-
-                        background-image: url('/storage/general/vibrating-phone.png');
+                        
+                        background-image: url('/public/storage/general/vibrating-phone.png');
+                        background-size: cover;
                         display: block;
-                        position: absolute;
-                        left: 0;
-                        top: 0;
+                        margin-right: 10px;
                         width: 20px;
                         height: 20px;
                         filter: invert(1);
-                    }                    
+                    }
+                }
+
+                &.github a::before{
+                    content: '';
+                    
+                    background-image: url('/public/storage/general/links/github-mark-white.png');
+                    background-size: cover;
+                    display: block;
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    // filter: invert(1);
+                }
+                &.telegram a::before{
+                    content: '';
+                    
+                    background-image: url('/public/storage/general/links/telegram.svg');
+                    background-size: cover;
+                    display: block;
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    // filter: invert(1);
+                }
+                &.hh a::before{
+                    content: '';
+                    
+                    background-image: url('/public/storage/general/links/hh-red.png');
+                    background-size: cover;
+                    display: block;
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    // filter: invert(1);
+                }
+                &.kwork a::before{
+                    content: '';
+                    
+                    background-image: url('/public/storage/general/links/kwork.png');
+                    background-size: cover;
+                    display: block;
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    // filter: invert(1);
                 }
             }
             

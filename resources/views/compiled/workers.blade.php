@@ -18,10 +18,18 @@
                     <h4>{{ $worker->name }}</h4>
                     <p>{{ $worker->about }}</p>
                     <ul class="links">
-                        <li class='tel'>
+                        <li class='link-tel'>
                             <!-- <img src="/storage/general/vibrating-phone.png" alt="vibrating-phone"> -->
                             <a href="tel:{{ $worker->phone }}">{{ $worker->phone }}</a></li>
-                        <!-- socials -->
+                        @php
+                            if ($worker->socials !== null){
+                                $arSocials = json_decode($worker->socials, 1);
+
+                                foreach($arSocials as $socialKey => $link){
+                                    echo '<li class="social '.$socialKey.'"><a href="'.$link.'">'.$socialKey.'</a></li>';
+                                }
+                            }
+                        @endphp
                     </ul>                    
                 </div>
                 <div class="bg" style="background-image: url({{ $worker->url_avatar ?? '/storage/general/users2.png' }})"></div>

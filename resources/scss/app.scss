@@ -64,6 +64,11 @@ ul,li,p{
     color: var(--body-bg);
     cursor: pointer;
 }
+.link-tel img{
+    width: 20px;
+    height: 20px;
+    filter: invert(1);
+}
 
 .root{
     display: flex;
