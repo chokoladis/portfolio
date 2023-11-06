@@ -92,72 +92,57 @@
 
                 a{
                     color: var(--main-clr-text);
-                    padding-left: 5px;
                     text-transform: uppercase;
                     display: flex;
                     align-items: center;
                     position: relative;
+                    text-decoration: none;
+                    opacity: 1;
                     
                     &:hover{
-                        color: rgb(188, 188, 222);
+                        text-decoration: underline;
+                        opacity: 0.7;                        
+                    }
+
+                    &::before{
+                        content: '';
+                        background-size: cover;
+                        display: block;
+                        width: 20px;
+                        height: 20px;
                     }
 
                     &[href^='tel:']::before{
-                        content: '';
-                        
+
                         background-image: url('/public/storage/general/vibrating-phone.png');
-                        background-size: cover;
-                        display: block;
                         margin-right: 10px;
-                        width: 20px;
-                        height: 20px;
                         filter: invert(1);
                     }
                 }
 
-                &.github a::before{
-                    content: '';
-                    
-                    background-image: url('/public/storage/general/links/github-mark-white.png');
-                    background-size: cover;
-                    display: block;
-                    margin-right: 10px;
-                    width: 20px;
-                    height: 20px;
-                    // filter: invert(1);
-                }
-                &.telegram a::before{
-                    content: '';
-                    
-                    background-image: url('/public/storage/general/links/telegram.svg');
-                    background-size: cover;
-                    display: block;
-                    margin-right: 10px;
-                    width: 20px;
-                    height: 20px;
-                    // filter: invert(1);
-                }
-                &.hh a::before{
-                    content: '';
-                    
-                    background-image: url('/public/storage/general/links/hh-red.png');
-                    background-size: cover;
-                    display: block;
-                    margin-right: 10px;
-                    width: 20px;
-                    height: 20px;
-                    // filter: invert(1);
-                }
-                &.kwork a::before{
-                    content: '';
-                    
-                    background-image: url('/public/storage/general/links/kwork.png');
-                    background-size: cover;
-                    display: block;
-                    margin-right: 10px;
-                    width: 20px;
-                    height: 20px;
-                    // filter: invert(1);
+                &.social{
+
+                    margin-right: 5px;
+
+                    a::before{
+                        width: 25px;
+                        height: 25px;
+                    }
+
+                    &.github a::before{
+                        background-image: url('/public/storage/general/links/github-mark-white.png');
+                    }
+                    &.telegram a::before{
+                        background-image: url('/public/storage/general/links/telegram.svg');
+                    }
+                    &.hh a::before{                        
+                        background-image: url('/public/storage/general/links/hh-red.png');
+                    }
+                    &.kwork a::before{                        
+                        background-image: url('/public/storage/general/links/kwork.png');
+                    }
+
+
                 }
             }
             

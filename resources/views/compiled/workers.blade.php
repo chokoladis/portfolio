@@ -26,7 +26,9 @@
                                 $arSocials = json_decode($worker->socials, 1);
 
                                 foreach($arSocials as $socialKey => $link){
-                                    echo '<li class="social '.$socialKey.'"><a href="'.$link.'">'.$socialKey.'</a></li>';
+                                    $link = htmlspecialchars($link);
+                                    $socialKey = htmlspecialchars($socialKey);
+                                    echo '<li class="social '.$socialKey.'"><a href="'.$link.'" title="'.$link.'"></a></li>';
                                 }
                             }
                         @endphp

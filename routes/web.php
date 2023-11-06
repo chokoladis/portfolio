@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
-use App\Http\Controllers\HelperController;
-use App\Http\Controllers\ExampleWork;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\MenuNavController;
-use App\Http\Controllers\WorkersController;
+use App\Http\Controllers\HelperController,
+    App\Http\Controllers\ExampleWork,
+    App\Http\Controllers\AdminController,
+    App\Http\Controllers\MenuNavController,
+    App\Http\Controllers\WorkersController,
+    App\Http\Controllers\ProfileController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +43,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         // workers
         Route::get('/workers', 'WorkersController@index')->name('workers.index');
         Route::post('/workers', 'WorkersController@store')->name('workers.store');
+
+        // profile
+        Route::get('/profile', 'ProfileController@index')->name('profile.index');
     });    
 
     Route::group(['middleware' => 'admin'], function() {

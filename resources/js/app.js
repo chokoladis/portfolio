@@ -86,14 +86,14 @@ $(function(){
                     
                     
                     if (json.success){
-                        $('#md-response .messsage').text(json.response.result);
+                        $('#md-response .messsage').text(json.response.result); // change todo
 
                         if (location.href == '/admin/menu'){
-                            updMenuAdmin();
+                            Helper.updMenuAdmin();
                         } else if (location.href == '/admin/works') {
-                            updWorksAdmin();
+                            Helper.updWorksAdmin();
                         } else{
-                            updWorks();
+                            Helper.updWorks();
                         }
                         
                     } else {
