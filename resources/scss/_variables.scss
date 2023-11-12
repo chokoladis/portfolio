@@ -56,6 +56,7 @@ $clr-danger: red;
     --header-link-color: #{$main-clr-text-lt};
     --header-link-clr-visited: #{$header-link-clr-visited-lt};
     --header-link-clr-visited-lt: #{$header-link-clr-visited-lt-20};
+    --clr-disable: rgba(218, 218, 218, 0.772);
 }
 
 :root.dark{

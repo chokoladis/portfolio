@@ -37,7 +37,7 @@
                         <input class="uk-input" name="socials" id="github" placeholder="github">
                     </label>
                     <label>
-                        <img src="/storage/general/links/hh-red.png" alt="hh.ru">
+                        <img src="/storage/general/links/hh.png" alt="hh.ru">
                         <input class="uk-input" name="socials" id="hh_ru" placeholder="hh.ru">
                     </label>
                     <label>

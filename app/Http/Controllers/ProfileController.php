@@ -21,16 +21,16 @@ class ProfileController extends Controller
         return view('profile.index', compact('worker', 'works'));
     }
 
-    private function userWorks(int $userId){
+    public static function userWorks(int $userId){
         $perPage = 5;
         $query = Example_work::query()->where('user_id', $userId);
         return $query->paginate($perPage);
     }
 
-    private function userWorker(int $userId){
+    public static function userWorker(int $userId){
         return DB::table('workers')
                 ->join('users', 'workers.user_id', '=', 'users.id')
                 ->select('users.name', 'workers.*')
-                ->where('workers.user_id', '=', $userId);
+                ->where('workers.user_id', '=', $userId)->first();
     }
 }

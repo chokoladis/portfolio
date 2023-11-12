@@ -43,6 +43,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         // workers
         Route::get('/workers', 'WorkersController@index')->name('workers.index');
         Route::post('/workers', 'WorkersController@store')->name('workers.store');
+        Route::get('/workers/{worker}/', 'WorkersController@detail')->name('workers.detail');
+        // Route::get('/workers/{worker}/works/', 'WorkersController@works')->name('workers.works'); todo
 
         // profile
         Route::get('/profile', 'ProfileController@index')->name('profile.index');

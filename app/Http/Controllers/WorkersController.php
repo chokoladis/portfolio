@@ -6,6 +6,7 @@ use App\Models\Workers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Workers\StoreRequest;
+// use App\Http\Requests\Workers\DetailRequest;
 
 
 class WorkersController extends Controller
@@ -85,7 +86,25 @@ class WorkersController extends Controller
         }
 
         return HelperController::jsonRespose($success,$response);
-        // dd($data);
+    }
+
+    public function detail(Workers $worker)
+    {
+        $workerNew = DB::table('workers')
+                ->join('users', 'workers.user_id', '=', 'users.id')
+                ->select('users.name', 'workers.*')
+                ->where('workers.id', '=', $worker->id)->first();
+                
+        $worker = [
+            'id' => $workerNew->id,
+            'name' => $workerNew->name,
+            'url_avatar' => $workerNew->url_avatar,
+            'phone' => $workerNew->phone,
+            'about' => $workerNew->about,
+            'socials' => $workerNew->socials
+        ];
+
+        return view('workers.detail', compact('worker'));
     }
 
     /**

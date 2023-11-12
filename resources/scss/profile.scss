@@ -1,0 +1,110 @@
+// @import 'variables';
+
+main{
+
+    .worker{
+        display: flex;
+        margin-top: 30px;
+        // justify-content: space-between;
+
+        .small_info{
+            width: 25%;
+            min-width: 100px;
+            max-width: 200px;
+            margin-right: 20px;
+
+            .img{
+                // width: 100%;
+                width: fit-content;
+                max-width: 200px;
+                border-radius: 100px;
+                overflow: hidden;
+                position: relative;
+                cursor: pointer;
+
+                input{
+                    display: none;
+                }
+
+                .file_change{
+                    position: absolute;
+                    width: 100%;
+                    text-align: center;
+                    padding: 10px 0px;
+                    // font-size: 14px;
+                    background: var(--main-clr);
+                    opacity: 0.6;
+                    bottom: -50px;
+                }
+
+                &:hover{
+                    .file_change{
+                        bottom: 0;
+                    }
+                }
+                
+            }
+
+            .name{
+                margin-top: 20px;
+            }
+        }
+
+        .big_info{
+
+            .about{
+                margin-bottom: 30px;
+                padding: 10px;
+                border: 2px dashed var(--main-clr);
+            }
+
+            .socials{
+                // border: 2px dashed var(--header-link-clr-visited-lt);
+                display: flex;
+
+                li{
+                    display: block;
+
+                    color: var(--main-clr-text);
+                    text-transform: uppercase;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    text-decoration: none;
+                    margin-right: 10px;
+                    opacity: 1;
+                    
+                    &:last-of-type{
+                        margin: 0;
+                    }
+                    &:hover{
+                        text-decoration: underline;
+                        opacity: 0.7;                        
+                    }
+
+                    a::before{
+                        content: '';
+                        background-size: cover;
+                        display: block;
+                        width: 30px;
+                        height: 30px;
+                    }
+
+                    &.github a::before{
+                        background-image: url('/public/storage/general/links/github-mark-white.png');
+                    }
+                    &.telegram a::before{
+                        background-image: url('/public/storage/general/links/telegram.svg');
+                    }
+                    &.hh a::before{                        
+                        background-image: url('/public/storage/general/links/hh-red.png');
+                    }
+                    &.kwork a::before{                        
+                        background-image: url('/public/storage/general/links/kwork.png');
+                    }
+                }
+            }
+            
+        }
+    }
+}
