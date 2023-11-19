@@ -3,6 +3,9 @@
 @push('styles')
     @vite(['resources/scss/profile.scss'])
 @endpush
+@push('scripts')
+    @vite(['resources/js/profile.js'])
+@endpush
 
 @section('content')
     
@@ -45,10 +48,10 @@
                     }
                 @endphp
                 <div class="small_info">
-                    <form class="img" action='' method="POST">
+                    <form class="form_change_img" action='{{ route("profile.change_avatar") }}' method="POST">
                         <img src="{{ $imgUrl }}" alt="user avatar">
                         <div class="file_change">Изменить</div>
-                        <input type="file" name="file" class="file">
+                        <input type="file" name="new_user_avatar" accept="image/*">
                         <input type="submit" value="Изменить">
                     </form>
                     <h3 class="name">{{ $worker->name }}</h3>

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Cookie;
 
 class HelperController extends Controller
 {
+    public static $acceptFileSize = 3150000;
+
     public static function jsonRespose(bool $success = true,$response = []){
         $res = [
             'success' => $success,

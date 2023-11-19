@@ -48,6 +48,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
         // profile
         Route::get('/profile', 'ProfileController@index')->name('profile.index');
+        Route::post('/ajax/profile/change_avatar', 'ProfileController@changeAvatar')->name('profile.change_avatar');
     });    
 
     Route::group(['middleware' => 'admin'], function() {

@@ -141,6 +141,13 @@ ul,li,p{
                         }
                     }
                     
+                    .dropdown-menu a{
+                        color: $header-bg;
+
+                        &:hover{
+                            color: $header-link-color-hv;
+                        }
+                    }
 
                 }
             }
