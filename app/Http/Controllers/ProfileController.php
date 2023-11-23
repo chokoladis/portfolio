@@ -42,8 +42,6 @@ class ProfileController extends Controller
     public static function changeAvatar(Request $request){
     
         if (auth()->user() === null) return false;
-
-        $success = false;
     
         $userId = auth()->user()->id;
 
@@ -69,35 +67,34 @@ class ProfileController extends Controller
 
             $data['url_avatar'] = $photo_path;
 
-            $workerQuery = Workers::query()
+            $workerFind = Workers::query()
                 ->where('user_id', '=', $userId)
                 ->where('url_avatar', '<>', null)
                 ->select('url_avatar')
                 ->first();
 
-            $data['old_url_avatar'] = $workerQuery->url_avatar;
+            $data['old_url_avatar'] = $workerFind->url_avatar;
         }
 
         if(isset($data['url_avatar'])){
 
-            if (isset($data['old_url_avatar'])){
-                // delete 
+            if (isset($data['old_url_avatar']) && file_exists(public_path() . $data['old_url_avatar'])){
+                unlink(public_path() . $data['old_url_avatar']);
             }
 
-            // set img for profile-workers
-
-            $success = true;
-            $response = [ 'result' => 'Аватар успешно изменен' ];
+            $workerFind->url_avatar = $data['url_avatar'];
+            
+            $res = $workerFind->save() ? [ 'success' => true, 'result' => 'Аватар успешно изменен' ]
+                : [ 'success' => false, 'errors' => 'Не удалось изменить аватарку' ];
+            
         } else {
-            $response = [ 'error' => 'Не удалось задать новую аватарку' ];
+            $res = [
+                'success' => false,
+                'error' => 'Не удалось задать новую аватарку'
+            ];
         }
 
-        $res = [
-            'success' => $success,
-            'response' => $response
-        ];
-
-        Helpers::jsonRespose($res);
+        return Helpers::jsonRespose($res);
     }
     
 }
