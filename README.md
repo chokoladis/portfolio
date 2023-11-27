@@ -1,3 +1,12 @@
+<style>
+    h2{
+        font-weight:700;
+    }
+    .blue{
+        color: blue;
+    }
+</style>
+
 <h2>HYSTORY LINE</h2>
 
 <ul>
@@ -20,8 +29,3 @@
     </li>
 </ul>
 
-<style>
-    .blue{
-        color: blue;
-    }
-</style>
