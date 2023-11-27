@@ -54,7 +54,7 @@ class ProfileController extends Controller
                 return Helpers::jsonRespose(false,'Файл превышает 3МБ');
             }
             
-            $photoNewName = Hash::make('user_'.$userId.'_avatar', ['rounds' => 5]);
+            $photoNewName = Hash::make('user_'.$userId.'_avatar'.time(), ['round' => 3]);
 
             $photo_path = self::$defaultFolderImg.$photoNewName.'.'.$photoExt;
             if (!file_exists(public_path() . $photo_path)){
@@ -73,7 +73,7 @@ class ProfileController extends Controller
 
         if(isset($data['url_avatar'])){
 
-            if (isset($data['old_url_avatar']) && file_exists(public_path() . $data['old_url_avatar'])){
+            if ($data['old_url_avatar'] && file_exists(public_path() . $data['old_url_avatar'])){
                 unlink(public_path() . $data['old_url_avatar']);
             }
 

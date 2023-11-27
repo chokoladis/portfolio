@@ -20,6 +20,21 @@ class HelperController extends Controller
         return json_encode($res,JSON_UNESCAPED_UNICODE);        
     }
 
+    public static function getAdminUser(){
+        $userObj = auth()->user();
+        if ($userObj){
+            return [
+                'id' => auth()->user()->id,
+                'name' => auth()->user()->name,
+            ];
+        } else {
+            return [
+                'id' => 0,
+                'name' => 'noname',
+            ];
+        }
+    }
+
     // public function setCookie($name, $value, $minutes = 60){
     // //     // $cookie = Cookie($name, $value, $minutes);
 

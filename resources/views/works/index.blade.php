@@ -13,7 +13,7 @@
 
     if (isset($_GET['q'])){
         $f_search = true;
-        $search_val = $_GET['q'];
+        $search_val = htmlspecialchars($_GET['q']);
     }
 
     $f_profile = false;
@@ -21,7 +21,7 @@
 
     if (isset($_GET['profile'])){
         $f_profile = true;
-        $profile_val = $_GET['profile'];
+        $profile_val = htmlspecialchars($_GET['profile']);
     }
     
 @endphp

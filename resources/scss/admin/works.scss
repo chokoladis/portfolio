@@ -5,12 +5,13 @@
     // padding-top: 20px;
 
     .work{
-        box-shadow: -6px 0px 0px rgba(193, 193, 255, 0.646);
+        box-shadow: -6px 0px 0px $second-color-lg;
 
         .area_actions{
             flex-direction: row;
             height: fit-content;
             margin-top: auto;
+            z-index: 5;
 
             >div{
 

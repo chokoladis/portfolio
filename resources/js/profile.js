@@ -10,16 +10,27 @@ $('input[name="new_user_avatar"]').on('change', function(){
     let sendData = new FormData();
 
     sendData.append("user_avatar", user_avatar_file[0]);
-
-    $.ajax({
-        url: form.attr('action'),
-        method: form.attr('method'),
-        processData: false,
-        contentType: false,
-        data: sendData,
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        success: function(data){
-            console.log(data);
-        }
-    });
+    
+    changeUserAvatarAjax(form, sendData)
 });
+
+async function changeUserAvatarAjax(form, body){
+    const change = await fetch(form.attr('action'), 
+            {
+                method: form.attr('method'),
+                body: body,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            }
+        );
+    let changeRes = await change.json();
+    if (changeRes.success){
+        $.ajax({
+            url: location.href,
+            success: function(data){
+                let img = $(data).find('.form_change_img img');
+                let newSrc = img.attr('src');
+                $('.form_change_img img').attr('src', newSrc);
+            }
+        })
+    }
+}

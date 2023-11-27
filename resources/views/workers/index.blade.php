@@ -7,31 +7,38 @@
     @vite(['resources/js/workers.js'])
 @endpush
 
+@php
+    $f_search = false;
+
+    $f_profile = false;
+    $profile_val = '';
+
+    if (isset($_GET['profile'])){
+        $f_profile = true;
+        $profile_val = htmlspecialchars($_GET['profile']);
+    }
+    
+@endphp
+
 @section('content')
     
-    <!-- <header class="header-filter">
+    <header class="header-filter">
         <div class="container">
-            <ul>
-                <li class="search">
-                    <div class="btn">
-                        
-                        <span uk-icon="search"></span>
-                    </div>
-                    <form action="" method="get">
-                        <input type="search" name="q" id="" minlength='2' value="" placeholder="Введите поисковой запрос">
-                    </form>
-                </li>
-                <li class="filter">
-                    <div class="btn">
-                        <span uk-icon="settings"></span>
-                    </div>
-                    <form action="" method="get">
-
-                    </form>
-                </li>
-            </ul>
+            <form action="{{ route('workers.index') }}" method="GET" id="worker-filter">
+                <ul class="one-row {{ $f_profile ? 'active' : '' }} ">
+                    <li class="filter {{ $f_profile ? 'active' : '' }}">
+                        <div class="btn">
+                            <span uk-icon="settings"></span>
+                        </div>
+                        <div class="inputs">
+                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" placeholder="Введите имя или телефон пользователя">
+                        </div>
+                    </li>
+                    <input type="submit" value="Поиск" class="uk-button uk-button-default">
+                </ul>
+            </form>
         </div>
-    </header> -->
+    </header>
     
     <main>
         <div class="container">

@@ -18,7 +18,7 @@
   <script src="{{ asset('/dist/js/adminlte.js') }}"></script>
 
   @vite(['resources/js/app.js'])
-
+  @stack('scripts')
   @include('inc.modal.response')
   <!-- поменять проверку на ? -->
   @if (Route::current()->getName() == 'admin.works')

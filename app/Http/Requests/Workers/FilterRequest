@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ExampleWork;
+namespace App\Http\Requests\Workers;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,6 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => 'string',
             'profile' => 'string',
         ];
     }

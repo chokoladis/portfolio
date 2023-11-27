@@ -24,11 +24,15 @@ class StoreRequest extends FormRequest
     {
         return [
             'id' => '',
+            'photo' => 'file|size:3072|nullable',
             'url_avatar' => 'string|nullable',
             'phone' => 'required|string|min:17',
             'about' => 'string|nullable',
             "socials"    => "array|nullable",
             "socials.*"  => "string|nullable",
+
+            // ('/\D/','',$data['phone']);
+            // (strlen($nubmers) !== 11)
         ];
     }
 

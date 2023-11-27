@@ -12628,7 +12628,8 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
   padding-left: 0.8rem;
 }
 
-.user-panel img {
+.user-panel img,
+.user-panel svg{
   height: auto;
   width: 2.1rem;
 }

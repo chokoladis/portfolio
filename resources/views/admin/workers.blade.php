@@ -1,21 +1,15 @@
 @extends('layouts.admin')
 
 @push('styles')
-    @vite(['resources/scss/works.scss'])
-    @vite(['resources/scss/admin/works.scss'])
+    @vite(['resources/scss/workers.scss'])
+    @vite(['resources/scss/admin/workers.scss'])
 @endpush
 @push('scripts')
-    @vite(['resources/js/admin/works.js'])
+    @vite(['resources/js/admin/workers.js'])
 @endpush
 
 @php
     $f_search = false;
-    $search_val = '';
-
-    if (isset($_GET['q'])){
-        $f_search = true;
-        $search_val = htmlspecialchars($_GET['q']);
-    }
 
     $f_profile = false;
     $profile_val = '';
@@ -34,37 +28,29 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Examples work</h1>
+                    <h1 class="m-0">Workers</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
-                    <li class="breadcrumb-item active">Examples work</li>
+                    <li class="breadcrumb-item active">Workers</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    
+
     <header class="header-filter">
         <div class="container">
-            <form action="{{ route('admin.works') }}" method="GET" id="work-filter">
-                <ul class="one-row {{ $f_profile || $f_search ? 'active' : '' }} ">
-                    <li class="search {{ $f_search ? 'active' : '' }}">
-                        <div class="btn">
-                            <span uk-icon="search"></span>
-                        </div>
-                        <div class="inputs">
-                            <input type="search" name="q" minlength='2' value="{{ $search_val }}" placeholder="Поиск по работам в портфолио">
-                        </div>
-                    </li>
+            <form action="{{ route('admin.workers') }}" method="GET" id="worker-filter">
+                <ul class="one-row {{ $f_profile ? 'active' : '' }} ">
                     <li class="filter {{ $f_profile ? 'active' : '' }}">
                         <div class="btn">
                             <span uk-icon="settings"></span>
                         </div>
                         <div class="inputs">
-                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" placeholder="Поиск по пользователю">
+                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" placeholder="Введите имя или телефон пользователя">
                         </div>
                     </li>
                     <input type="submit" value="Поиск" class="uk-button uk-button-default">
@@ -76,9 +62,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            @include('compiled.works')
-
-            <button class="uk-button uk-button-primary" uk-toggle="target: #md-work_create" type="button">Добавить</button>
+            @include('compiled.workers')
         </div><!--/. container-fluid -->
     </section>
     <!-- /.content -->

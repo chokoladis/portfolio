@@ -21,6 +21,73 @@ body{
         }
     }
 
+    header{
+
+        &.header-filter{
+
+            background: $second-color-lg;
+
+            ul{
+                display: flex;
+                padding: 8px 0;
+
+                li{
+                    display: flex;
+
+                    .btn{
+
+                        svg{
+                            width: 30px;
+                            color: var(--main-clr-text);
+                        }
+                    }
+                    .inputs{
+                        display: none;
+                        flex: 1;
+
+                        input{
+                            width: 100%;
+                            padding: 5px 20px;
+                            outline: none;
+                            border: 0;
+                            background: rgba(white, 0.6);
+                        }
+                    }
+
+                    &.active{
+
+                        .inputs{
+                            display: flex;
+                        }
+                    }
+                }
+
+                [type="submit"]{
+                    display: none;
+                }
+
+                &.one-row{
+                    
+                    li{
+                        margin-right: 10px;
+                    }
+                }
+
+                &.active{
+
+                    [type="submit"]{
+                        display: block;
+                    }
+                    &.one-row{
+
+                        >*.active{
+                            width: 32%;
+                        }
+                    }
+                }
+            }
+        }
+    }
     .area_actions{
         display: flex;
         flex-direction: column;

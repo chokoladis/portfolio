@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Workers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,37 @@ class WorkersController extends Controller
             $workerById = Workers::where('user_id', '=', $userId)->first();
         }
 
+        // $queryWorkers = Workers::query();
+        // $queryUser = User::query();
+
+        // if (isset($data['profile'])){
+            
+        //     // preg_match_all('/[\d]/');
+        //     // $data['profile']
+
+        //     // queryWorkers
+
+        //     $queryUser->where('name', 'like', '%'.$data['profile'].'%');
+
+        //     $userFinder = $queryUser->get();
+        //     $arUsersId = [];
+
+        //     foreach($userFinder as $user){
+        //         if ($user->role !== 'admin'){
+        //             $arUsersId[] = $user->id;
+        //         }
+        //     }
+
+        //     if (!empty($arUsersId)){
+        //         $query->where('user_id', $arUsersId);
+        //     } else {
+        //         // empty search
+        //     }
+
+        // }
+        // $workers = $queryWorkers->paginate($perPage)->appends(request()->query());
+
+
         $workers = DB::table('workers')
                     ->join('users', 'workers.user_id', '=', 'users.id')
                     ->select('users.name', 'workers.*')
@@ -45,7 +77,6 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $success = null;
         $data = $request->validated();
             
         if ($request->hasFile('photo')) {
@@ -57,15 +88,6 @@ class WorkersController extends Controller
             }
         }
         $data['url_avatar'] = $photo_path;
-
-        if (isset($data['phone'])){
-            $nubmers = preg_replace('/\D/','',$data['phone']);
-            if (strlen($nubmers) !== 11){
-                $success = false;
-                $response = ['error' => 'mess'];
-            }
-        }
-
     
         $data['socials'] = !empty($data['socials']) ? json_encode($data['socials']) : null;
 

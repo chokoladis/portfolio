@@ -2,6 +2,7 @@
 
 @push('styles')
     @vite(['resources/scss/profile.scss'])
+    @vite(['resources/scss/workers.scss'])
 @endpush
 
 @section('content')    

@@ -26,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
         $menuNav = new MenuNavController();
         $helper = new HelperController();
 
+        // $authUser = auth()->user();
+        // $authUserName = $authUser !== null ? $authUser->name : 'noname';
+
+        // View::share('G_authUser', $authUser);
+        // View::share('G_authUserName', $authUserName);
+
         View::share('G_menuNav', $menuNav->getActive());
         // View::share('G_theme', $helper->getCookie('theme'));
 
