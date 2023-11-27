@@ -2,9 +2,6 @@
     h2{
         font-weight:700;
     }
-    .blue{
-        color: blue;
-    }
 </style>
 
 <h2>HYSTORY LINE</h2>
@@ -15,7 +12,7 @@
         <b>0.2</b>
         <p>...</p>
     </li>
-    <li class="blue">
+    <li style="color: blue;">
         <b>0.18</b>
         <p>rework admin!</p>
     </li>
