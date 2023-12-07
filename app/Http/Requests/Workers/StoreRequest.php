@@ -24,21 +24,23 @@ class StoreRequest extends FormRequest
     {
         return [
             'id' => '',
-            'photo' => 'file|size:3072|nullable',
+            'photo' => [
+                'nullable',
+                'extensions:jpg,png,jpeg,gif',
+                File::image()
+                    ->max(3 * 1024)
+            ],
             'url_avatar' => 'string|nullable',
-            'phone' => 'required|string|min:17',
+            'phone' => 'required|regex:/\+([\d]) ([\d]{3}) ([\d]{4}) ([\d]{3})/i',
             'about' => 'string|nullable',
             "socials"    => "array|nullable",
             "socials.*"  => "string|nullable",
-
-            // ('/\D/','',$data['phone']);
-            // (strlen($nubmers) !== 11)
         ];
     }
 
     public function messages(){
         return [
-            'phone.min' => 'Поле телефон не заполнено полностью'
+            'photo.size' => 'Размер изображения более 3мб'
         ];
     }
 }

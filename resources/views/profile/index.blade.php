@@ -31,6 +31,10 @@
                     </form>
                     <h3 class="name">{{ $worker->name }}</h3>
                     <a href="tel:{{ $worker->phone }}">{{ $worker->phone }}</a>
+                    <form action="__route_delete__">
+                        <a href="">Удалить профиль</a>
+                        <!-- модалка вы точно хотите удалить профиль? вы больше не сможете просматривать профили других людей -->
+                    </form>
                     <!-- какая то ещё небольшая инфа -->
                 </div>
                 <div class="big_info">

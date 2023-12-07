@@ -4,7 +4,7 @@ import 'jquery-mask-plugin';
 import {Helper} from './variables';
 
 
-$('.js-phone-mask').mask('+9 (999) 9999-999');
+$('.js-phone-mask').mask('+9 999 9999 999');
 
 $(function(){
     $('.theme-toggle').on('click', function(){

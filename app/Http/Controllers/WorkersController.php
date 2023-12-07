@@ -7,6 +7,7 @@ use App\Models\Workers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Workers\StoreRequest;
+use App\Http\Requests\Workers\FilterRequest;
 // use App\Http\Requests\Workers\DetailRequest;
 
 
@@ -17,7 +18,7 @@ class WorkersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(FilterRequest $request)
     {
         $workerById = null;
         if (auth()->user()){
@@ -25,43 +26,76 @@ class WorkersController extends Controller
             $workerById = Workers::where('user_id', '=', $userId)->first();
         }
 
-        // $queryWorkers = Workers::query();
-        // $queryUser = User::query();
+        $data = $request->validated();
 
-        // if (isset($data['profile'])){
-            
-        //     // preg_match_all('/[\d]/');
-        //     // $data['profile']
+        $queryWorkers = Workers::query();
 
-        //     // queryWorkers
+        $page = $data['page'] ?? 1;
+        $perPage = $data['per_page'] ?? 5;
 
-        //     $queryUser->where('name', 'like', '%'.$data['profile'].'%');
+        if (isset($data['profile'])){
+            $queryWorkers = $this->filterByProfile($queryWorkers, $data['profile']);
+        }
 
-        //     $userFinder = $queryUser->get();
-        //     $arUsersId = [];
-
-        //     foreach($userFinder as $user){
-        //         if ($user->role !== 'admin'){
-        //             $arUsersId[] = $user->id;
-        //         }
-        //     }
-
-        //     if (!empty($arUsersId)){
-        //         $query->where('user_id', $arUsersId);
-        //     } else {
-        //         // empty search
-        //     }
-
-        // }
-        // $workers = $queryWorkers->paginate($perPage)->appends(request()->query());
-
-
-        $workers = DB::table('workers')
-                    ->join('users', 'workers.user_id', '=', 'users.id')
-                    ->select('users.name', 'workers.*')
-                    ->paginate(5);
-
+        $workers = $queryWorkers->paginate($perPage)->appends(request()->query());
+        
         return view('workers.index', compact('workers', 'workerById'));
+    }
+
+    public function filterByProfile($queryWorkers, $fieldProfile){
+
+        if ($this->isUsername($fieldProfile)){
+
+            $arUsersId = $this->getUsersByLikeName($fieldProfile);
+            $arUsersId = !empty($arUsersId) ? $arUsersId : [0];
+
+            $queryWorkers->whereIn('user_id', $arUsersId);
+
+        } else {
+
+            $matches = $this->getNumbers($fieldProfile);
+            
+            if (!empty($matches)){
+                $phone = implode('', $matches);
+                $queryWorkers->where('phone', 'like', '%'.$phone.'%');
+            }
+        }
+
+        return $queryWorkers;
+    }
+
+    public function isUsername(string $data) : bool {
+
+        preg_match('/[a-zA-Z]+/', $data, $matches_letter);
+        return !empty($matches_letter) ? true : false;
+    }
+
+    public function getNumbers(string $data) : array {
+
+        preg_match_all('/[\d]/', $data, $matches_num);
+        if(!empty($matches_num)){
+            // && count($matches_num[0]) > 3){            
+            return $matches_num[0];
+        } else {
+            return [];
+        }
+    }
+
+    public function getUsersByLikeName(string $name) : array{
+
+        $userFinder = User::query()
+            ->where('name', 'like', '%'.$name.'%')
+            ->get();
+
+        $arUsersId = [];
+
+        foreach($userFinder as $user){
+            if ($user->role !== 'admin'){
+                $arUsersId[] = $user->id;
+            }
+        }
+
+        return $arUsersId;
     }
 
     /**
@@ -78,48 +112,64 @@ class WorkersController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-            
-        if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            
-            $photo_path = self::$defaultFolderImg.$photo->getClientOriginalName();
-            if (!file_exists(public_path() . $photo_path)){
-                $photo->move(public_path() . self::$defaultFolderImg, $photo->getClientOriginalName());
-            }
-        }
-        $data['url_avatar'] = $photo_path;
     
+        // todo
         $data['socials'] = !empty($data['socials']) ? json_encode($data['socials']) : null;
+        
+        preg_match_all('/[\d]/',$data['phone'],$arNumPhone);
+        $data['phone'] = implode('',$arNumPhone[0]);
 
-        if ($success === null){
+        $data['url_avatar'] = $this->getCreateImg($request);
 
-            $success = true;
-            $res = Workers::firstOrCreate(
-                [ 'user_id' => auth()->user()->id ],
-                $data
-            );
+        unset($data['photo']);
 
-            if ($res->wasRecentlyCreated){
-                $response = ['result' => 'Профиль Workers создан'];
-            } else {
-                $success = false;
-                $response = ['error' => 'Профиль Workers с такими данными уже есть в БД'];
-            }
+        $success = true;
+        $res = Workers::firstOrCreate(
+            [ 'user_id' => auth()->user()->id ],
+            $data
+        );
+
+        if ($res->wasRecentlyCreated){
+            $response = ['result' => 'Профиль Workers создан'];
+        } else {
+            $success = false;
+            $response = ['error' => 'Профиль Workers с такими данными уже есть в БД'];
         }
 
         return HelperController::jsonRespose($success,$response);
     }
 
+    public function getCreateImg($request){
+        
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            
+            $file_name = md5($photo->getClientOriginalName());
+            $mk_name = substr($file_name,0,3);
+
+            $folder = public_path() . self::$defaultFolderImg . $mk_name;
+            if (!is_dir($folder)){
+                mkdir($folder, 755);
+            }
+
+            $photo_path = $folder.'/'.$file_name;
+            if (!file_exists($photo_path)){
+                $photo->move(public_path() . self::$defaultFolderImg, $photo->getClientOriginalName());
+            }
+        } else {
+            $photo_path = '';
+        }
+
+        return $photo_path;
+    }
+
     public function detail(Workers $worker)
     {
-        $workerNew = DB::table('workers')
-                ->join('users', 'workers.user_id', '=', 'users.id')
-                ->select('users.name', 'workers.*')
-                ->where('workers.id', '=', $worker->id)->first();
+        $workerNew = Workers::find($worker->id);
                 
         $worker = [
             'id' => $workerNew->id,
-            'name' => $workerNew->name,
+            'name' => $workerNew->user->name,
             'url_avatar' => $workerNew->url_avatar,
             'phone' => $workerNew->phone,
             'about' => $workerNew->about,

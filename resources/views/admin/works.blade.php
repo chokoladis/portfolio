@@ -56,7 +56,7 @@
                             <span uk-icon="search"></span>
                         </div>
                         <div class="inputs">
-                            <input type="search" name="q" minlength='2' value="{{ $search_val }}" placeholder="Поиск по работам в портфолио">
+                            <input type="search" name="q" minlength='2' value="{{ $search_val }}" autocomplete="on" placeholder="Поиск по работам в портфолио">
                         </div>
                     </li>
                     <li class="filter {{ $f_profile ? 'active' : '' }}">
@@ -64,7 +64,7 @@
                             <span uk-icon="settings"></span>
                         </div>
                         <div class="inputs">
-                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" placeholder="Поиск по пользователю">
+                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" autocomplete="on" placeholder="Поиск по пользователю">
                         </div>
                     </li>
                     <input type="submit" value="Поиск" class="uk-button uk-button-default">

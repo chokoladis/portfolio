@@ -15,12 +15,12 @@
                     @endphp
                 </div>                
                 <div class="content">
-                    <h4>{{ $worker->name }}</h4>
+                    <h4>{{ $worker->user->name }}</h4>
                     <p>{{ $worker->about }}</p>
                     <ul class="links">
                         <li class='link-tel'>
                             <!-- <img src="/storage/general/vibrating-phone.png" alt="vibrating-phone"> -->
-                            <a href="tel:{{ $worker->phone }}">{{ $worker->phone }}</a></li>
+                            <a href="tel:{{ $worker->phone }}"><?= App\Http\Controllers\HelperController::phoneOutFormated($worker->phone) ?></a></li>
                         @php
                             if ($worker->socials !== null){
                                 $arSocials = json_decode($worker->socials, 1);
