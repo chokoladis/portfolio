@@ -144,7 +144,10 @@ class WorkersController extends Controller
         if ($request->hasFile('photo')) {
             $photo = $request->file('photo');
             
-            $file_name = md5($photo->getClientOriginalName());
+            $salt = auth()->user()->id.'_'.time();
+            
+            $file_name = md5($salt.'_'.$photo->getClientOriginalName());
+            $file_name = mb_substr($file_name, 0, 12).'.'.$photo->extension();
             $mk_name = substr($file_name,0,3);
 
             $folder = public_path() . self::$defaultFolderImg . $mk_name;

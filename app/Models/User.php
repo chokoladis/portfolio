@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Workers;
+use App\Models\Example_work;
 
 class User extends Authenticatable
 {
@@ -47,5 +48,9 @@ class User extends Authenticatable
     public function workers()
     {
         return $this->hasOne(Workers::class);
+    }
+    public function exampleWorks()
+    {
+        return $this->hasMany(Example_work::class);
     }
 }

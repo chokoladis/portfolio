@@ -22,74 +22,58 @@ class ExampleWork extends Controller
         $page = $data['page'] ?? 1;
         $perPage = $data['per_page'] ?? 5;
         
-
         $query = Example_work::query();
-        $queryUser = User::query();
-
-        if (isset($data['q'])){
-            $query->where('title', 'like', '%'.$data['q'].'%')
-                ->orWhere('description', 'like', '%'.$data['q'].'%')
-                ->orWhere('url_work', 'like', '%'.$data['q'].'%');
-        }
-        if (isset($data['profile'])){
-            
-            $queryUser->where('name', 'like', '%'.$data['profile'].'%')
-                ->orWhere('email', 'like', '%'.$data['profile'].'%');
-
-            $userFinder = $queryUser->get();
-            $userID = 0;
-
-            foreach($userFinder as $user){
-                if ($user->role !== 'admin'){
-                    $userID = $user->id;
-                }
-            }
-
-            if ($userID !== 0){
-                $query->where('user_id', $userID);
-            } else {
-                // empty search
-            }
-
-        }
+        
+        $query = isset($data['q']) ? $this->filterByQ($query, $data['q']) : $query;
+        $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
+        
 
         $works = $query->paginate($perPage)->appends(request()->query());
         // $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
-            
 
-        // $works->appends(Input::except('page'));
-        // $works = $query->paginate(10);
-
-        // return WorkResource::collection($works);
-        // 1 - pagename , 2 - var
         return view('works.index', compact('works'));
+    }
+
+    public function filterByQ($query, $data){
+        return $query->where('title', 'like', '%'.$data.'%')
+                ->orWhere('description', 'like', '%'.$data.'%')
+                ->orWhere('url_work', 'like', '%'.$data.'%');
+    }
+
+    public function filterByProfile($query, $data){
+
+        $arUsersId = $this->getUsersByLikeName($data);
+        $arUsersId = !empty($arUsersId) ? $arUsersId : [0];
+
+        return $query->whereIn('user_id', $arUsersId);
+    }
+
+    public function getUsersByLikeName(string $data) : array{
+
+        $userFinder = User::query()
+            ->where('name', 'like', '%'.$data.'%')
+            ->orWhere('email', 'like', '%'.$data.'%')
+            ->get();
+
+        $arUsersId = [];
+
+        foreach($userFinder as $user){
+            if ($user->role !== 'admin'){
+                $arUsersId[] = $user->id;
+            }
+        }
+
+        return $arUsersId;
     }
 
     public function store(StoreRequest $request){
         
         $success = true;
-        $url_files_path = '';
 
         $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
 
-        if ($request->hasFile('url_files')) {
-            $url_files = $request->file('url_files');
-            if (is_array($url_files)){
-                foreach ($url_files as $file) {
-                    $file->move(public_path() . self::$defaultFolderImg, $file->getClientOriginalName());
-                    $url_files_path .= self::$defaultFolderImg.$file->getClientOriginalName().', ';
-                }
-
-                $url_files_path = trim($url_files_path);
-                $url_files_path_len = mb_strlen($url_files_path);
-                $url_files_path = mb_substr($url_files_path, 0, $url_files_path_len - 1);
-            } else {
-                $url_files->move(public_path() . self::$defaultFolderImg, $url_files->getClientOriginalName());
-                $url_files_path = self::$defaultFolderImg.$url_files->getClientOriginalName();
-            }
-            
-        }
-        $data['url_files'] = $url_files_path;
+        $data['url_files'] = $this->getCreateImg($request);
 
         $res = Example_work::firstOrCreate(
             [ 'title' => $data['title']],
@@ -104,6 +88,59 @@ class ExampleWork extends Controller
         }
 
         return HelperController::jsonRespose($success,$response);
+    }
+
+    public function getCreateImg($request){
+        
+        $url_files_path = '';
+
+        if ($request->hasFile('url_files')) {
+            $url_files = $request->file('url_files');
+            if (is_array($url_files)){
+                foreach ($url_files as $file) {
+                    
+                    $fileAr = $this->setPhotoPath($file);
+                    $file_path = $fileAr['folder'].'/'.$fileAr['file_name'];
+
+                    if (!file_exists($file_path)){
+                        $file->move($fileAr['folder'], $fileAr['file_name']);
+                    }
+                    
+                    $url_files_path .= $file_path.', ';
+                }
+
+                $url_files_path = trim($url_files_path);
+                $url_files_path_len = mb_strlen($url_files_path);
+                $url_files_path = mb_substr($url_files_path, 0, $url_files_path_len - 1);
+            } else {
+                $fileAr = $this->setPhotoPath($url_files);
+                $file_path = $fileAr['folder'].'/'.$fileAr['file_name'];
+
+                if (!file_exists($file_path)){
+                    $url_files->move($fileAr['folder'], $fileAr['file_name']);
+                }
+                $url_files_path = $file_path;
+            }
+        }
+
+        return $url_files_path;
+    }
+
+    protected function setPhotoPath($file){
+
+        $salt = auth()->user()->id.'_'.time();
+            
+        $file_name = md5($salt.'_'.$file->getClientOriginalName());
+        $file_name = mb_substr($file_name, 0, 12).'.'.$file->extension();
+        
+        $mk_name = substr($file_name,0,3);
+
+        $folder = public_path() . self::$defaultFolderImg . $mk_name;
+        if (!is_dir($folder)){
+            mkdir($folder, 755);
+        }
+
+        return [ 'folder' => $folder, 'file_name' => $file_name ];
     }
 
     public function edit(Example_work $work){
