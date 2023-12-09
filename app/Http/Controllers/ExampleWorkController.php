@@ -11,9 +11,9 @@ use App\Models\User;
 use App\Http\Controllers\HelperController;
 use App\Http\Resources\ExampleWork\WorkResource;
 
-class ExampleWork extends Controller
+class ExampleWorkController extends Controller
 {
-    static $defaultFolderImg = '/storage/works/img/';
+    static $folderImg = '/storage/works/img/';
 
     public function index(FilterRequest $request){
 
@@ -27,7 +27,6 @@ class ExampleWork extends Controller
         $query = isset($data['q']) ? $this->filterByQ($query, $data['q']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
         
-
         $works = $query->paginate($perPage)->appends(request()->query());
         // $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
 
@@ -93,6 +92,7 @@ class ExampleWork extends Controller
     public function getCreateImg($request){
         
         $url_files_path = '';
+        $root = public_path() . self::$folderImg;
 
         if ($request->hasFile('url_files')) {
             $url_files = $request->file('url_files');
@@ -100,10 +100,10 @@ class ExampleWork extends Controller
                 foreach ($url_files as $file) {
                     
                     $fileAr = $this->setPhotoPath($file);
-                    $file_path = $fileAr['folder'].'/'.$fileAr['file_name'];
+                    $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'];
 
-                    if (!file_exists($file_path)){
-                        $file->move($fileAr['folder'], $fileAr['file_name']);
+                    if (!file_exists($root.$file_path)){
+                        $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
                     }
                     
                     $url_files_path .= $file_path.', ';
@@ -114,10 +114,10 @@ class ExampleWork extends Controller
                 $url_files_path = mb_substr($url_files_path, 0, $url_files_path_len - 1);
             } else {
                 $fileAr = $this->setPhotoPath($url_files);
-                $file_path = $fileAr['folder'].'/'.$fileAr['file_name'];
+                $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'];
 
-                if (!file_exists($file_path)){
-                    $url_files->move($fileAr['folder'], $fileAr['file_name']);
+                if (!file_exists($root.$file_path)){
+                    $url_files->move($root.$fileAr['subdir'], $fileAr['file_name']);
                 }
                 $url_files_path = $file_path;
             }
@@ -135,12 +135,12 @@ class ExampleWork extends Controller
         
         $mk_name = substr($file_name,0,3);
 
-        $folder = public_path() . self::$defaultFolderImg . $mk_name;
+        $folder = public_path() . self::$folderImg . $mk_name;
         if (!is_dir($folder)){
             mkdir($folder, 755);
         }
 
-        return [ 'folder' => $folder, 'file_name' => $file_name ];
+        return [ 'subdir' => $mk_name, 'file_name' => $file_name ];
     }
 
     public function edit(Example_work $work){
@@ -177,27 +177,6 @@ class ExampleWork extends Controller
     }
 
     public function delete(Example_work $work){
-
-        
-        if ($work->url_files){
-
-            $arUrlFiles = explode(',', $work->url_files);
-            // dump($arUrlFiles);
-
-            foreach($arUrlFiles as $nameFile){
-                
-                $filePath = public_path(self::$defaultFolderImg.$nameFile);
-
-                // dump($filePath);
-
-                if (file_exists($filePath)){
-                    // dump('файл существует');
-                    if (!unlink($filePath)){
-                        // dump('ошибка удаления');
-                    }
-                };
-            }            
-        }
 
         if ($work->delete()){
             return HelperController::jsonRespose(true, ['result' => 'Запись успешно удаленна']);

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Http\Controllers\HelperController,
-    App\Http\Controllers\ExampleWork,
+    App\Http\Controllers\ExampleWorkController,
     App\Http\Controllers\AdminController,
     App\Http\Controllers\MenuNavController,
     App\Http\Controllers\WorkersController,
@@ -26,19 +26,19 @@ Route::get('/', function () {
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     // сделать доступным и для обычных авториз. пользователей
-    Route::get('/works', 'ExampleWork@index')->name('work.index');
-    // Route::get('/works/search?q={q}', 'ExampleWork@search')->name('work.search');
+    Route::get('/works', 'ExampleWorkController@index')->name('work.index');
+    // Route::get('/works/search?q={q}', 'ExampleWorkController@search')->name('work.search');
 
     // ajax requests
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
 
     Route::middleware(['user'])->group( function() {
         // works
-        Route::post('/works', 'ExampleWork@store')->name('work.store');
-        Route::get('/works/{work}/edit/', 'ExampleWork@edit')->name('work.edit');
-        Route::post('/works/{work}/update/', 'ExampleWork@update')->name('work.update');
-        Route::get('/works/{work}/delete/', 'ExampleWork@delete')->name('work.delete');
-        Route::get('/works/deleteAll/', 'ExampleWork@deleteAll');
+        Route::post('/works', 'ExampleWorkController@store')->name('work.store');
+        Route::get('/works/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
+        Route::post('/works/{work}/update/', 'ExampleWorkController@update')->name('work.update');
+        Route::get('/works/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete');
+        Route::get('/works/deleteAll/', 'ExampleWorkController@deleteAll');
 
         // workers
         Route::get('/workers', 'WorkersController@index')->name('workers.index');
