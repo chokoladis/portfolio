@@ -1,3 +1,6 @@
+<?php
+    use App\Http\Controllers\HelperController;
+?>
 <div class="workers_list">
     
     @if(count($workers) < 1 && auth()->user() === null)
@@ -11,7 +14,7 @@
             <div class="worker" onclick="location.href='/workers/{{ $worker->id }}/'">
                 <div class="avatar">
                     @php    
-                        echo $worker->url_avatar ? '<img src="'.$worker->url_avatar.'">':'<span uk-icon="icon: user; ratio:2"></span>';
+                        echo $worker->url_avatar ? '<img src="'.HelperController::$workerDirImg.$worker->url_avatar.'">':'<span uk-icon="icon: user; ratio:2"></span>';
                     @endphp
                 </div>                
                 <div class="content">
@@ -20,7 +23,7 @@
                     <ul class="links">
                         <li class='link-tel'>
                             <!-- <img src="/storage/general/vibrating-phone.png" alt="vibrating-phone"> -->
-                            <a href="tel:{{ $worker->phone }}"><?= App\Http\Controllers\HelperController::phoneOutFormated($worker->phone) ?></a></li>
+                            <a href="tel:{{ $worker->phone }}"><?= HelperController::phoneOutFormated($worker->phone) ?></a></li>
                         @php
                             if ($worker->socials !== null){
                                 $arSocials = json_decode($worker->socials, 1);
@@ -34,7 +37,9 @@
                         @endphp
                     </ul>                    
                 </div>
-                <div class="bg" style="background-image: url({{ $worker->url_avatar ?? '/storage/general/users2.png' }})"></div>
+                <div class="bg" style="background-image: url({{ $worker->url_avatar 
+                    ? HelperController::$workerDirImg.$worker->url_avatar 
+                    : '/storage/general/users2.png' }})"></div>
             </div>
         @endforeach
     @endif

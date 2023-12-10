@@ -1,3 +1,6 @@
+<?php
+    use App\Http\Controllers\HelperController;
+?>
 @extends('layouts.main')
 
 @push('styles')
@@ -12,7 +15,8 @@
         <div class="container">
             <section class="worker">
                 @php
-                    $imgUrl = $worker->url_avatar && file_exists(public_path($worker->url_avatar)) ? $worker->url_avatar : '/storage/general/user.png' ;
+                    $url_avatar = HelperController::$workerDirImg.$worker->url_avatar;
+                    $imgUrl = $worker->url_avatar && file_exists(public_path($url_avatar)) ? $url_avatar : '/storage/general/user.png' ;
 
                     if ($worker->about){
                         $f_about = true;
@@ -26,7 +30,7 @@
                     <form class="form_change_img" action='{{ route("profile.change_avatar") }}' method="POST">
                         <img src="{{ $imgUrl }}" alt="user avatar">
                         <div class="file_change">Изменить</div>
-                        <input type="file" name="new_user_avatar" accept="image/*">
+                        <input type="file" name="url_avatar" accept="image/*">
                         <input type="submit" value="Изменить">
                     </form>
                     <h3 class="name">{{ $worker->name }}</h3>

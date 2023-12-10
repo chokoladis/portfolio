@@ -13,7 +13,7 @@ use App\Http\Requests\Workers\FilterRequest;
 
 class WorkersController extends Controller
 {
-    static $defaultFolderImg = '/storage/workers/img/';
+    static $folderImg = '/storage/workers/img/';
 
     /**
      * Display a listing of the resource.
@@ -119,7 +119,7 @@ class WorkersController extends Controller
         preg_match_all('/[\d]/',$data['phone'],$arNumPhone);
         $data['phone'] = implode('',$arNumPhone[0]);
 
-        $data['url_avatar'] = $this->getCreateImg($request);
+        $data['url_avatar'] = HelperController::getNewPhotoPath($request, 'photo', self::$folderImg);
 
         unset($data['photo']);
 
@@ -137,33 +137,6 @@ class WorkersController extends Controller
         }
 
         return HelperController::jsonRespose($success,$response);
-    }
-
-    public function getCreateImg($request){
-        
-        if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            
-            $salt = auth()->user()->id.'_'.time();
-            
-            $file_name = md5($salt.'_'.$photo->getClientOriginalName());
-            $file_name = mb_substr($file_name, 0, 12).'.'.$photo->extension();
-            $mk_name = substr($file_name,0,3);
-
-            $folder = public_path() . self::$defaultFolderImg . $mk_name;
-            if (!is_dir($folder)){
-                mkdir($folder, 755);
-            }
-
-            $photo_path = $folder.'/'.$file_name;
-            if (!file_exists($photo_path)){
-                $photo->move(public_path() . self::$defaultFolderImg, $photo->getClientOriginalName());
-            }
-        } else {
-            $photo_path = '';
-        }
-
-        return $photo_path;
     }
 
     public function detail(Workers $worker)

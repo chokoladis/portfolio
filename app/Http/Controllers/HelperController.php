@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Cookie;
-
+use Illuminate\Support\Facades\Hash;
 
 class HelperController extends Controller
 {
     public static $acceptFileSize = 3150000;
+    public static $workerDirImg = '/storage/workers/img/';
 
     public static function jsonRespose(bool $success = true,$response = []){
         $res = [
@@ -44,6 +45,64 @@ class HelperController extends Controller
             substr($from, 9)
         );
         return $to;
+    }
+
+
+    public function getNewPhotoPath($request, $propName, $mainDir){
+        
+        // $root = public_path() . self::$folderImg;
+        $root = public_path() . $mainDir;        
+
+        // if ($request->hasFile('photo')) {
+        if ($request->hasFile($propName)) {
+            
+            $photo = $request->file($propName);
+            
+            if (is_array($photo)){
+                foreach ($photo as $file) {
+                    
+                    $fileAr = $this->generatePhotoPath($file, $mainDir);
+                    $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'].', ';
+
+                    if (!file_exists($root.$file_path)){
+                        $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
+                    }
+                }
+
+                $file_path = trim($file_path);
+                $file_path_len = mb_strlen($file_path);
+                $file_path = mb_substr($file_path, 0, $file_path_len - 1);
+            } else {
+                $fileAr = $this->generatePhotoPath($photo, $mainDir);
+                $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'];
+
+                if (!file_exists($root.$file_path)){
+                    $photo->move($root.$fileAr['subdir'], $fileAr['file_name']);
+                }
+            }
+            
+        } else {
+            $file_path = '';
+        }
+
+        return $file_path;
+    }
+
+    protected function generatePhotoPath($file, $mainDir){
+
+        $salt = auth()->user()->id.'_'.time();
+            
+        $file_name = Hash::make($salt.'_'.$file->getClientOriginalName(), ['round' => 3]);
+        $file_name = mb_substr($file_name, 0, 12).'.'.$file->extension();
+        
+        $mk_name = substr($file_name,0,3);
+
+        $folder = public_path() . $mainDir . $mk_name;
+        if (!is_dir($folder)){
+            mkdir($folder, 755);
+        }
+
+        return [ 'subdir' => $mk_name, 'file_name' => $file_name ];
     }
 
     // public function setCookie($name, $value, $minutes = 60){

@@ -72,7 +72,7 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
 
-        $data['url_files'] = $this->getCreateImg($request);
+        $data['url_files'] = HelperController::getNewPhotoPath($request, 'url_files', self::$folderImg);
 
         $res = Example_work::firstOrCreate(
             [ 'title' => $data['title']],
@@ -87,60 +87,6 @@ class ExampleWorkController extends Controller
         }
 
         return HelperController::jsonRespose($success,$response);
-    }
-
-    public function getCreateImg($request){
-        
-        $url_files_path = '';
-        $root = public_path() . self::$folderImg;
-
-        if ($request->hasFile('url_files')) {
-            $url_files = $request->file('url_files');
-            if (is_array($url_files)){
-                foreach ($url_files as $file) {
-                    
-                    $fileAr = $this->setPhotoPath($file);
-                    $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'];
-
-                    if (!file_exists($root.$file_path)){
-                        $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
-                    }
-                    
-                    $url_files_path .= $file_path.', ';
-                }
-
-                $url_files_path = trim($url_files_path);
-                $url_files_path_len = mb_strlen($url_files_path);
-                $url_files_path = mb_substr($url_files_path, 0, $url_files_path_len - 1);
-            } else {
-                $fileAr = $this->setPhotoPath($url_files);
-                $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'];
-
-                if (!file_exists($root.$file_path)){
-                    $url_files->move($root.$fileAr['subdir'], $fileAr['file_name']);
-                }
-                $url_files_path = $file_path;
-            }
-        }
-
-        return $url_files_path;
-    }
-
-    protected function setPhotoPath($file){
-
-        $salt = auth()->user()->id.'_'.time();
-            
-        $file_name = md5($salt.'_'.$file->getClientOriginalName());
-        $file_name = mb_substr($file_name, 0, 12).'.'.$file->extension();
-        
-        $mk_name = substr($file_name,0,3);
-
-        $folder = public_path() . self::$folderImg . $mk_name;
-        if (!is_dir($folder)){
-            mkdir($folder, 755);
-        }
-
-        return [ 'subdir' => $mk_name, 'file_name' => $file_name ];
     }
 
     public function edit(Example_work $work){

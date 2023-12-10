@@ -1,3 +1,6 @@
+<?php
+    use App\Http\Controllers\HelperController;
+?>
 @extends('layouts.main')
 
 @push('styles')
@@ -10,7 +13,9 @@
         <div class="container">
             <section class="worker">
                 @php
-                    $imgUrl = $worker['url_avatar'] && file_exists(public_path($worker['url_avatar'])) ? $worker['url_avatar'] : '/storage/general/user.png' ;
+                    $worker['url_avatar'] = HelperController::$workerDirImg.$worker['url_avatar'];
+                    $imgUrl = $worker['url_avatar'] && file_exists(public_path($worker['url_avatar'])) 
+                        ? $worker['url_avatar'] : '/storage/general/user.png' ;
 
                     if ($worker['about']){
                         $f_about = true;

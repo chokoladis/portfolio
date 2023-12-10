@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Workers;
 use App\Models\Example_work;
 use App\Http\Controllers\HelperController as Helpers;
+use App\Http\Requests\Profile\UpdateImgRequest;
 
 class ProfileController extends Controller
 {
@@ -16,8 +17,6 @@ class ProfileController extends Controller
 
     public function index()
     {
-        if (auth()->user() === null) return false;
-
         $userId = auth()->user()->id;
 
         $works = $this->userWorks($userId);
@@ -39,43 +38,22 @@ class ProfileController extends Controller
                 ->where('workers.user_id', '=', $userId)->first();
     }
 
-    public static function changeAvatar(Request $request){
-    
-        if (auth()->user() === null) return false;
+    public static function changeAvatar(UpdateImgRequest $request){
     
         $userId = auth()->user()->id;
 
-        if ($request->hasFile('user_avatar')) {
+        $helper = new HelperController;
+        $file_path = $helper->getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
+        
+        dump($file_path);
 
-            $photo = $request->file('user_avatar');
-            $photoExt = $photo->extension();
-            
-            if (Helpers::$acceptFileSize < $photo->getSize()){
-                return Helpers::jsonRespose(false,'Файл превышает 3МБ');
-            }
-            
-            $photoNewName = Hash::make('user_'.$userId.'_avatar'.time(), ['round' => 3]);
+        if ($file_path) {
 
-            $photo_path = self::$defaultFolderImg.$photoNewName.'.'.$photoExt;
-            if (!file_exists(public_path() . $photo_path)){
-                $photo->move(public_path() . self::$defaultFolderImg, $photoNewName.'.'.$photoExt);
-            }
-
-            $data['url_avatar'] = $photo_path;
+            $data['url_avatar'] = $file_path;
 
             $workerFind = Workers::query()
                 ->where('user_id', '=', $userId)
-                ->where('url_avatar', '<>', null)
                 ->first();
-
-            $data['old_url_avatar'] = $workerFind->url_avatar;
-        }
-
-        if(isset($data['url_avatar'])){
-
-            if ($data['old_url_avatar'] && file_exists(public_path() . $data['old_url_avatar'])){
-                unlink(public_path() . $data['old_url_avatar']);
-            }
 
             $workerFind->url_avatar = $data['url_avatar'];
 

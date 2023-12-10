@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
             'id' => '',
             'photo' => [
                 'nullable',
-                'extensions:jpg,png,jpeg,gif',
+                'mimes:jpg,png,jpeg,gif',
                 File::image()
                     ->max(3 * 1024)
             ],
