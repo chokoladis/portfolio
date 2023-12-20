@@ -12,13 +12,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         
-        <title>{{ config('app.name', 'Portfolio') }}</title>
+        <title>@yield('page.title', config('app.name'))</title>
         <!-- UIkit CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
 
         <!-- UIkit JS -->
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
+        
         @vite(['resources/scss/app.scss'])
         @stack('styles')
     </head>
@@ -49,21 +50,23 @@
                     </div> -->
                     <div class="theme-toggle"></div>
                     <ul class="header-main">
-                        <li class='animated'><a href="/">home</a></li>
-                        
-                        @include('compiled.menu_list_active')
+                        <x-main-menu-li route="{{ route('home') }}">
+                            {{ __('Главная') }}
+                        </x-main-menu-li>
+
+                        <x-main-menu-list-active />
                         
                         @guest
                             @if (Route::has('login'))
-                                <li class='animated'>
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
+                                <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>
+                                    {{ __('Вход') }}
+                                </x-main-menu-li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class='animated'>
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                <x-main-menu-li route="{{ route('register') }}" a_class='nav-link'>
+                                    {{ __('Регистрация') }}
+                                </x-main-menu-li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
@@ -75,7 +78,7 @@
                                     <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Выйти') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

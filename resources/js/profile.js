@@ -27,6 +27,7 @@ async function changeUserAvatarAjax(form, body){
         $.ajax({
             url: location.href,
             success: function(data){
+                // console.log(data);
                 let img = $(data).find('.form_change_img img');
                 let newSrc = img.attr('src');
                 $('.form_change_img img').attr('src', newSrc);

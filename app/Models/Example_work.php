@@ -44,6 +44,7 @@ class Example_work extends Model
     
                 foreach($arUrlFiles as $filePath){
                     
+                    $filePath = trim($filePath);
                     $arPath = explode('/', $filePath);
 
                     $filePath = public_path(ExampleWorkController::$folderImg.$filePath);

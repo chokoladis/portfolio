@@ -57,12 +57,15 @@ class HelperController extends Controller
         if ($request->hasFile($propName)) {
             
             $photo = $request->file($propName);
-            
+
             if (is_array($photo)){
+
+                $file_path = '';
+
                 foreach ($photo as $file) {
                     
                     $fileAr = $this->generatePhotoPath($file, $mainDir);
-                    $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'].', ';
+                    $file_path .= $fileAr['subdir'].'/'.$fileAr['file_name'].', ';
 
                     if (!file_exists($root.$file_path)){
                         $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
@@ -92,8 +95,8 @@ class HelperController extends Controller
 
         $salt = auth()->user()->id.'_'.time();
             
-        $file_name = Hash::make($salt.'_'.$file->getClientOriginalName(), ['round' => 3]);
-        $file_name = mb_substr($file_name, 0, 12).'.'.$file->extension();
+        $file_name = md5($salt.'_'.$file->getClientOriginalName());
+        $file_name = mb_substr($file_name, 0, 16).'.'.$file->extension();
         
         $mk_name = substr($file_name,0,3);
 

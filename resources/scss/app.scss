@@ -140,6 +140,14 @@ ul,li,p{
                             
                         }
                     }
+
+                    &.active{
+
+                        a{
+                            cursor: default;
+                        }
+
+                    }
                     
                     .dropdown-menu a{
                         color: $header-bg;
@@ -302,6 +310,10 @@ ul,li,p{
     main{
         padding: 10px 0;
         flex: 1;
+
+        label{
+            color: var(--main-clr-text);
+        }
     }
 
     .area_actions{

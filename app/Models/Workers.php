@@ -28,13 +28,12 @@ class Workers extends Model
         parent::boot();
 
         self::updating(function($model){
-            
-            dd($model);
 
-            $old_avatar = $model->url_avatar;
+            $old_avatar = $model->getOriginal('url_avatar');
+            $real_path = public_path(WorkersController::$folderImg. $old_avatar);
 
-            if ($old_avatar && file_exists(public_path() . $old_avatar)){
-                unlink(public_path() . $old_avatar);
+            if ($old_avatar && file_exists($real_path)){
+                unlink($real_path);
             }
         });
         

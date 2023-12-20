@@ -39,6 +39,7 @@ html{
     .content{
         z-index: 3;
         width: 90%;
+        position: relative;
 
         p{
             white-space: nowrap;
@@ -51,12 +52,16 @@ html{
         .works_gallery{
 
             position: absolute;
-            bottom: -5%;
-            display: block;
+            display: flex;
             z-index: -1;
+            max-width: 100%;
+            top: -5px;
+            left: -5px;
+            max-height: 140px;
 
             img{
                 min-width: 40px;
+                max-height: 100%;
                 width: 20%;
                 filter: blur(1px) opacity(60%);
             }

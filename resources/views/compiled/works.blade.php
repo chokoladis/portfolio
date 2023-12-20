@@ -16,7 +16,7 @@
                                 @php 
                                     //if ($filesPath) $imgclass = (Storage::disk('s3')->exists($filesPath))?'':'img_404';
                                 @endphp
-                                <img src="/storage/works/img/{{ $filesPath }}" class="{{ $imgclass }}">
+                                <img src="/storage/works/img/{{ trim($filesPath) }}" class="{{ $imgclass }}">
                         @endforeach
                     </div>
                 @endif

@@ -44,18 +44,14 @@ class ProfileController extends Controller
 
         $helper = new HelperController;
         $file_path = $helper->getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
-        
-        dump($file_path);
 
         if ($file_path) {
-
-            $data['url_avatar'] = $file_path;
 
             $workerFind = Workers::query()
                 ->where('user_id', '=', $userId)
                 ->first();
 
-            $workerFind->url_avatar = $data['url_avatar'];
+            $workerFind->url_avatar = $file_path;
 
             $res = $workerFind->save();
             $res = $res ? [ 'success' => true, 'res' => 'Аватар успешно изменен' ]
@@ -71,6 +67,10 @@ class ProfileController extends Controller
         }
 
         return Helpers::jsonRespose($res['success'], $res['res']);
+    }
+
+    public function update(){
+        
     }
     
 }

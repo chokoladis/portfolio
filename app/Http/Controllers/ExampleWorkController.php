@@ -15,6 +15,14 @@ class ExampleWorkController extends Controller
 {
     static $folderImg = '/storage/works/img/';
 
+    // todo
+    // static $Helper = HelperController::class;
+
+    // function __construct(){
+    //     $this->Helper = new HelperController();
+    //     parent::__construct();
+    // }
+
     public function index(FilterRequest $request){
 
         $data = $request->validated();
@@ -72,7 +80,8 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
 
-        $data['url_files'] = HelperController::getNewPhotoPath($request, 'url_files', self::$folderImg);
+        $helper = new HelperController;
+        $data['url_files'] = $helper->getNewPhotoPath($request, 'url_files', self::$folderImg);
 
         $res = Example_work::firstOrCreate(
             [ 'title' => $data['title']],
