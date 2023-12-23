@@ -73,4 +73,7 @@ class ProfileController extends Controller
         
     }
     
+    public function delete(Workers $worker){
+        dd($worker);
+    }
 }

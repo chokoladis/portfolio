@@ -11,11 +11,11 @@
     $f_search = false;
 
     $f_profile = false;
-    $profile_val = '';
+    // $profile_val = '';
 
     if (isset($_GET['profile'])){
         $f_profile = true;
-        $profile_val = htmlspecialchars($_GET['profile']);
+        // $profile_val = htmlspecialchars($_GET['profile']);
     }
     
 @endphp
@@ -31,7 +31,7 @@
                             <span uk-icon="settings"></span>
                         </div>
                         <div class="inputs">
-                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" autocomplete="on" placeholder="Введите имя или телефон пользователя">
+                            <input type="text" name="profile" minlength='2' value="{{ old('profile') }}" autocomplete="on" placeholder="Введите имя или телефон пользователя">
                         </div>
                     </li>
                     <input type="submit" value="Поиск" class="uk-button uk-button-default">

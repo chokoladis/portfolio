@@ -36,7 +36,7 @@
                     <h3 class="name">{{ $worker->name }}</h3>
                     <a href="tel:{{ $worker->phone }}">{{ $worker->phone }}</a>
                     <a uk-toggle="target: #md-worker_edit" type="button">Редактировать профиль</button>
-                    <a href="">Удалить профиль</a>
+                    <a href="javascript:void(0)" class="js_profile_delete">Удалить профиль</a>
                     <!-- модалка вы точно хотите удалить профиль? вы больше не сможете просматривать профили других людей -->
                     <!-- какая то ещё небольшая инфа -->
                 </div>

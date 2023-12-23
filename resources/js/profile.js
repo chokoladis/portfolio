@@ -35,3 +35,20 @@ async function changeUserAvatarAjax(form, body){
         })
     }
 }
+
+$('a.js_profile_delete').on('click', function(){
+    // show msg
+});
+
+async function profileDelete(){
+    const change = await fetch('/profile/delete', 
+            {
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            }
+        );
+    let changeRes = await change.json();
+    if (changeRes.success){
+        // redirect withsession
+    }
+}

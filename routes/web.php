@@ -33,26 +33,26 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
 
     Route::middleware(['auth'])->group( function() {
-            
-        Route::middleware(['user'])->group( function() {
-            // works
-            Route::post('/works', 'ExampleWorkController@store')->name('work.store');
-            Route::get('/works/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
-            Route::post('/works/{work}/update/', 'ExampleWorkController@update')->name('work.update');
-            Route::get('/works/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete');
-            Route::get('/works/deleteAll/', 'ExampleWorkController@deleteAll');
+        
+        // works
+        Route::post('/works', 'ExampleWorkController@store')->name('work.store');
+        Route::get('/works/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
+        Route::post('/works/{work}/update/', 'ExampleWorkController@update')->name('work.update');
+        Route::get('/works/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete');
+        Route::get('/works/deleteAll/', 'ExampleWorkController@deleteAll');
 
-            // workers
-            Route::get('/workers', 'WorkersController@index')->name('workers.index');
-            Route::post('/workers', 'WorkersController@store')->name('workers.store');
-            Route::get('/workers/{worker}/', 'WorkersController@detail')->name('workers.detail');
-            Route::post('/profile', 'ProfileController@update')->name('profile.update');
-            // Route::get('/workers/{worker}/works/', 'WorkersController@works')->name('workers.works'); todo
+        // workers
+        Route::get('/workers', 'WorkersController@index')->name('workers.index');
+        Route::post('/workers', 'WorkersController@store')->name('workers.store');
+        Route::get('/workers/{worker}/', 'WorkersController@detail')->name('workers.detail');
+        Route::post('/profile', 'ProfileController@update')->name('profile.update');
+        // Route::get('/workers/{worker}/works/', 'WorkersController@works')->name('workers.works'); todo
 
-            // profile
-            Route::get('/profile', 'ProfileController@index')->name('profile.index');
-            Route::post('/ajax/profile/change_avatar', 'ProfileController@changeAvatar')->name('profile.change_avatar');
-        });    
+        // profile
+        Route::get('/profile', 'ProfileController@index')->name('profile.index');
+        Route::post('/ajax/profile/change_avatar', 'ProfileController@changeAvatar')->name('profile.change_avatar');
+        Route::post('/profile/delete', 'ProfileController@delete')->name('profile.delete');
+        
 
         Route::group(['middleware' => 'admin'], function() {
             Route::get('/admin/', 'AdminController@index')->name('admin.index');

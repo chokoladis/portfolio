@@ -95,7 +95,7 @@ class ExampleWorkController extends Controller
             $response = ['error' => 'Запись с данным заголовком уже есть в БД'];
         }
 
-        return HelperController::jsonRespose($success,$response);
+        return response()->json(['success' => $success,'response' => $response]);
     }
 
     public function edit(Example_work $work){
@@ -128,15 +128,15 @@ class ExampleWorkController extends Controller
             $response = ['error' => 'При изменении данных возникла ошибка'];
         }
 
-        return HelperController::jsonRespose($success,$response);
+        return response()->json(['success' => $success,'response' => $response]);
     }
 
     public function delete(Example_work $work){
 
         if ($work->delete()){
-            return HelperController::jsonRespose(true, ['result' => 'Запись успешно удаленна']);
+            return response()->json(['success' => true,'response' => ['result' => 'Запись успешно удаленна']]);
         } else {
-            return HelperController::jsonRespose(false, ['error' => 'Произошла ошибка при удалении']);
+            return response()->json(['success' => false,'response' => ['error' => 'Произошла ошибка при удалении']]);
         }
     }
 

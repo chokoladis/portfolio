@@ -136,13 +136,13 @@ class WorkersController extends Controller
             $response = ['error' => 'Профиль Workers с такими данными уже есть в БД'];
         }
 
-        return HelperController::jsonRespose($success,$response);
+        return response()->json(['success' => $success,'response' => $response]);
     }
 
     public function detail(Workers $worker)
     {
         $workerNew = Workers::find($worker->id);
-                
+ 
         $worker = [
             'id' => $workerNew->id,
             'name' => $workerNew->user->name,

@@ -4,6 +4,8 @@ import 'jquery-mask-plugin';
 import {Helper} from './variables';
 
 
+// todo 
+// GenerateRoutesForJavascript
 $('.js-phone-mask').mask('+9 999 9999 999');
 
 $(function(){

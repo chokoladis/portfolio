@@ -6,7 +6,7 @@
     <main>
         <div class="container">
             <div class="uk-flex uk-flex-center">
-                <div class="uk-width-1-3">
+                <div class="uk-width-1-1 uk-width-3-5@s uk-width-1-3@l">
                     <div class="uk-card">
                         <div class="uk-card-title uk-text-center">{{ __('Регистрация') }}</div>
 
