@@ -8,13 +8,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Workers\StoreRequest;
 use App\Http\Requests\Workers\FilterRequest;
+use App\Http\Controllers\HelperController;
 // use App\Http\Requests\Workers\DetailRequest;
 
 
 class WorkersController extends Controller
 {
     static $folderImg = '/storage/workers/img/';
+    public $Helper = HelperController::class;
 
+    const DEFAULT_SOCIAL_LIST = ['telegram', 'github', 'hh', 'kwork'];
+
+    function __constructor(){
+        $this->Helper = new HelperController();
+    }
     /**
      * Display a listing of the resource.
      */
@@ -113,13 +120,11 @@ class WorkersController extends Controller
     {
         $data = $request->validated();
     
-        // todo
-        $data['socials'] = !empty($data['socials']) ? json_encode($data['socials']) : null;
-        
-        preg_match_all('/[\d]/',$data['phone'],$arNumPhone);
-        $data['phone'] = implode('',$arNumPhone[0]);
+        $data['socials'] = $this->getSocials($data['socials']);
+        $data['phone'] = $this->getNumbers($data['phone']);
 
-        $data['url_avatar'] = HelperController::getNewPhotoPath($request, 'photo', self::$folderImg);
+        // todo
+        $data['url_avatar'] = $this->Helper->getNewPhotoPath($request, 'photo', self::$folderImg);
 
         unset($data['photo']);
 
@@ -136,7 +141,23 @@ class WorkersController extends Controller
             $error = 'Профиль Workers с такими данными уже есть в БД';
         }
 
+        // todo отдельную функцию с респонсом и параметрами
         return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
+    }
+
+    public function getSocials(array|null $data){
+
+        if ($data === null)
+            return $data;
+
+        $data['telegram'] = HelperController::replaceArrobaToLink($data['telegram'], 't.me');
+        $data['github'] = HelperController::replaceArrobaToLink($data['github'], 'github.com');
+        
+        // dump($data);
+        $socials = json_encode($data);
+        // dd($socials);
+
+        return $socials;
     }
 
     public function detail(Workers $worker)
@@ -153,14 +174,6 @@ class WorkersController extends Controller
         ];
 
         return view('workers.detail', compact('worker'));
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Workers $workers)
-    {
-        //
     }
 
     /**

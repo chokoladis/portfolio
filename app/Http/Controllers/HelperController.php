@@ -47,6 +47,33 @@ class HelperController extends Controller
         return $to;
     }
 
+    public static function replaceArrobaToLink(string $str, string $link){
+
+        if (str_contains($str, 'https://')){
+
+            if(str_contains($str, $link)){
+                $res = $str;
+            } else {
+                $str = str_replace('https://','',$str);
+                $res = 'https://'.$link.'/'.$str;
+            }
+
+        } else {
+
+            if(str_contains($str, $link)){
+                $res = $str;
+            } else if (str_contains($str, '@')){
+                $res = str_replace('@', $link, $str);
+            } else {
+                $res = $link.'/'.$str;
+            }
+
+            $res = 'https://' . $res;
+        }
+
+        return $res;
+    }
+
 
     public function getNewPhotoPath($request, $propName, $mainDir){
         
