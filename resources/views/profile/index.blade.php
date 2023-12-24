@@ -25,6 +25,9 @@
                         $f_about = false;
                         $textAbout = 'Вы не заполнили информацию о себе';
                     }
+
+                    $phone = HelperController::phoneOutFormated($worker->phone);
+
                 @endphp
                 <div class="small_info">
                     <form class="form_change_img" action='{{ route("profile.change_avatar") }}' method="POST">
@@ -34,7 +37,7 @@
                         <input type="submit" value="Изменить">
                     </form>
                     <h3 class="name">{{ $worker->name }}</h3>
-                    <a href="tel:{{ $worker->phone }}">{{ $worker->phone }}</a>
+                    <a href="tel:{{ $phone }}">{{ $phone }}</a>
                     <a uk-toggle="target: #md-worker_edit" type="button">Редактировать профиль</button>
                     <a href="javascript:void(0)" class="js_profile_delete">Удалить профиль</a>
                     <!-- модалка вы точно хотите удалить профиль? вы больше не сможете просматривать профили других людей -->

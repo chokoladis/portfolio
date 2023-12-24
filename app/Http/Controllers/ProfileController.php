@@ -22,6 +22,16 @@ class ProfileController extends Controller
         $works = $this->userWorks($userId);
         $worker = $this->userWorker($userId);
 
+        if (!$worker){
+            session([
+                'status' => __('warning'),
+                'msg' => __('Профиль не найден, вы можете создать его на текущей странице.')
+            ]);
+
+            return redirect()->route('workers.index');
+        }
+        // show works current profile
+
         return view('profile.index', compact('worker', 'works'));
     }
 
@@ -73,7 +83,14 @@ class ProfileController extends Controller
         
     }
     
-    public function delete(Workers $worker){
-        dd($worker);
+    public function delete(){
+
+        $worker = $this->userWorker(auth()->user()->id);
+        if (Workers::destroy($worker->id)){
+            return response()->json(['success' => true, 'result' => 'Профиль успешно удален']);
+        } else {
+            return response()->json(['success' => false, 'error' => 'Произошла ошибка при удалении']);
+        }
+
     }
 }

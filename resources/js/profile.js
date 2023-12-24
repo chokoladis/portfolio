@@ -37,18 +37,27 @@ async function changeUserAvatarAjax(form, body){
 }
 
 $('a.js_profile_delete').on('click', function(){
-    // show msg
+    if (confirm('Вы уверенны что хотите удалить профиль?')){
+        profileDelete();
+    }
 });
 
 async function profileDelete(){
-    const change = await fetch('/profile/delete', 
+    const resDelete = await fetch('/profile/delete', 
             {
                 method: 'POST',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             }
         );
-    let changeRes = await change.json();
-    if (changeRes.success){
-        // redirect withsession
+
+    let jsonDelete = await resDelete.json();
+    if (jsonDelete.success){
+        location.href="/workers";
+    } else {
+        UIkit.notification({
+            message: jsonDelete.error,
+            status: 'danger',
+            timeout: 5000
+        });
     }
 }

@@ -89,13 +89,13 @@ class ExampleWorkController extends Controller
         );
 
         if ($res->wasRecentlyCreated){
-            $response = ['result' => 'Данные успешно созданы'];
+            $response = 'Данные успешно созданы';
         } else {
             $success = false;
-            $response = ['error' => 'Запись с данным заголовком уже есть в БД'];
+            $error = 'Запись с данным заголовком уже есть в БД';
         }
 
-        return response()->json(['success' => $success,'response' => $response]);
+        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
     }
 
     public function edit(Example_work $work){
@@ -122,21 +122,21 @@ class ExampleWorkController extends Controller
         $res = $work->update($data);
 
         if ($res){
-            $response = ['result' => 'Данные успешно обновлены'];
+            $response = 'Данные успешно обновлены';
         } else {
             $success = false;
-            $response = ['error' => 'При изменении данных возникла ошибка'];
+            $error = 'При изменении данных возникла ошибка';
         }
 
-        return response()->json(['success' => $success,'response' => $response]);
+        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
     }
 
     public function delete(Example_work $work){
 
         if ($work->delete()){
-            return response()->json(['success' => true,'response' => ['result' => 'Запись успешно удаленна']]);
+            return response()->json(['success' => true, 'result' => 'Запись успешно удаленна']);
         } else {
-            return response()->json(['success' => false,'response' => ['error' => 'Произошла ошибка при удалении']]);
+            return response()->json(['success' => false, 'error' => 'Произошла ошибка при удалении']);
         }
     }
 

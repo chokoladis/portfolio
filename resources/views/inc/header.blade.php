@@ -25,7 +25,17 @@
     </head>
     <body class="antialiased">
         <div class="root">
-                
+            
+            @if($status = session()->get('status') && $msg = session()->pull('msg'))
+                <script>
+                    UIkit.notification({
+                        message: '{{ $msg }}',
+                        status: '{{ session()->get('status') }}',
+                        timeout: 5000
+                    });
+                </script>
+            @endif
+
             <header class="header">
                 <div class="container">
                     <!-- <div class="profile">

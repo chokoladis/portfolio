@@ -130,13 +130,13 @@ class WorkersController extends Controller
         );
 
         if ($res->wasRecentlyCreated){
-            $response = ['result' => 'Профиль Workers создан'];
+            $response = 'Профиль Workers создан';
         } else {
             $success = false;
-            $response = ['error' => 'Профиль Workers с такими данными уже есть в БД'];
+            $error = 'Профиль Workers с такими данными уже есть в БД';
         }
 
-        return response()->json(['success' => $success,'response' => $response]);
+        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
     }
 
     public function detail(Workers $worker)
