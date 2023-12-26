@@ -63,7 +63,7 @@ class HelperController extends Controller
             if(str_contains($str, $link)){
                 $res = $str;
             } else if (str_contains($str, '@')){
-                $res = str_replace('@', $link, $str);
+                $res = str_replace('@', $link.'/' , $str);
             } else {
                 $res = $link.'/'.$str;
             }
@@ -120,7 +120,7 @@ class HelperController extends Controller
 
     protected function generatePhotoPath($file, $mainDir){
 
-        $salt = auth()->user()->id.'_'.time();
+        $salt = auth()->user()->id.'_2901';
             
         $file_name = md5($salt.'_'.$file->getClientOriginalName());
         $file_name = mb_substr($file_name, 0, 16).'.'.$file->extension();

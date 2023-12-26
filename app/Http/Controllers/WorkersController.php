@@ -15,13 +15,9 @@ use App\Http\Controllers\HelperController;
 class WorkersController extends Controller
 {
     static $folderImg = '/storage/workers/img/';
-    public $Helper = HelperController::class;
 
     const DEFAULT_SOCIAL_LIST = ['telegram', 'github', 'hh', 'kwork'];
 
-    function __constructor(){
-        $this->Helper = new HelperController();
-    }
     /**
      * Display a listing of the resource.
      */
@@ -121,10 +117,12 @@ class WorkersController extends Controller
         $data = $request->validated();
     
         $data['socials'] = $this->getSocials($data['socials']);
-        $data['phone'] = $this->getNumbers($data['phone']);
+        $phone = $this->getNumbers($data['phone']);
+        $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
         // todo
-        $data['url_avatar'] = $this->Helper->getNewPhotoPath($request, 'photo', self::$folderImg);
+        $helper = new HelperController();
+        $data['url_avatar'] = $helper->getNewPhotoPath($request, 'photo', self::$folderImg);
 
         unset($data['photo']);
 
@@ -136,13 +134,12 @@ class WorkersController extends Controller
 
         if ($res->wasRecentlyCreated){
             $response = 'Профиль Workers создан';
+            return responseJson($success, $response);
         } else {
             $success = false;
             $error = 'Профиль Workers с такими данными уже есть в БД';
+            return responseJson($success, error: $error);
         }
-
-        // todo отдельную функцию с респонсом и параметрами
-        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
     }
 
     public function getSocials(array|null $data){
@@ -153,7 +150,7 @@ class WorkersController extends Controller
         $data['telegram'] = HelperController::replaceArrobaToLink($data['telegram'], 't.me');
         $data['github'] = HelperController::replaceArrobaToLink($data['github'], 'github.com');
         
-        // dump($data);
+        // dd($data);
         $socials = json_encode($data);
         // dd($socials);
 

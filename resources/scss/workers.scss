@@ -81,6 +81,14 @@
     .content{
         z-index: 2;
 
+        p{
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
         .links{
 
             display: flex;

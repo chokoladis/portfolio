@@ -7,8 +7,12 @@ main{
         margin-top: 30px;
         // justify-content: space-between;
 
+        @media (max-width: 960px) {
+            flex-direction: column;
+        }
+
         .small_info{
-            width: 25%;
+            // width: 25%;
             min-width: 100px;
             max-width: 200px;
             margin-right: 20px;
@@ -46,8 +50,25 @@ main{
                 
             }
 
-            .name{
-                margin-top: 20px;
+            .main_info{
+                .name{
+                    margin-top: 20px;
+                }
+    
+                .links{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                @media (max-width: 960px) {
+                    margin-left: 20px;
+                }
+            }
+           
+
+            @media (max-width: 960px) {
+                max-width: unset;
+                display: flex;
             }
         }
 
@@ -104,6 +125,10 @@ main{
                         background-image: url('/public/storage/general/links/kwork.png');
                     }
                 }
+            }
+
+            @media (max-width: 960px) {
+                margin-top: 20px;
             }
             
         }
