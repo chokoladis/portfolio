@@ -25,16 +25,25 @@
                         $textAbout = 'Пользователь не заполнил информацию о себе';
                     }
 
-                    $phone = HelperController::phoneOutFormated($workers['phone']);
+                    $phone = HelperController::phoneOutFormated($worker['phone']);
 
                 @endphp
                 <div class="small_info">
                     <div class="img">
                         <img src="{{ $imgUrl }}" alt="user avatar">
                     </div>
-                    <h3 class="name">{{ $worker['name'] }}</h3>
-                    <a href="tel:{{ $phone }}">{{ $phone }}</a>
-                    <!-- какая то ещё небольшая инфа -->
+                    <div class="main_info">
+                        <h3 class="name">{{ $worker['name'] }}</h3>
+                        <div class="links">
+                            <a href="tel:{{ $phone }}">
+                                <div class="icon">
+                                    <span uk-icon="icon:receiver" title="Позвонить"></span>
+                                </div>
+                                <span>{{ $phone }}</span>
+                            </a>
+                            <!-- какая то ещё небольшая инфа -->
+                        </div>
+                    </div>
                 </div>
                 <div class="big_info">
                     <p class="about {{ $f_about ? '' : 'is-disable' }}">{{ $textAbout }}</p>

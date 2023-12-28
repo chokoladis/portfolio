@@ -70,7 +70,7 @@ $(function(){
 
             } else if (formId == 'work_edit') {
                 action = '/works/'+itemId.val()+'/update/';
-            } else if (formId == 'menu_edit'){
+            } else if (formId == 'menu_edit'){ // todo admin.js
                 action = '/admin/menu/'+itemId.val()+'/update/';
             } else if (formId == 'worker_new'){
                 return; // todo

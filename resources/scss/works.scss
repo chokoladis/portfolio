@@ -44,11 +44,17 @@ html{
         p{
             white-space: nowrap;
             text-overflow: ellipsis;
-            -webkit-line-clamp: 2; /* Число отображаемых строк */
-            display: block; /* Включаем флексбоксы */
-            -webkit-box-orient: vertical; /* Вертикальная ориентация */
-            overflow: hidden; /* Обрезаем всё за пределами блока */;
+            -webkit-line-clamp: 2; 
+            display: block; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
         }
+
+        .link{
+            display: flex;
+            margin-top: 10px;
+        }
+
         .works_gallery{
 
             position: absolute;

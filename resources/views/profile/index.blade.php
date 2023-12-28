@@ -39,9 +39,26 @@
                     <div class="main_info">
                         <h3 class="name">{{ $worker->name }}</h3>
                         <div class="links">
-                            <a href="tel:{{ $phone }}">{{ $phone }}</a>
-                            <a uk-toggle="target: #md-worker_edit" type="button">Редактировать профиль</button>
-                            <a href="javascript:void(0)" class="js_profile_delete">Удалить профиль</a>
+                            <a href="tel:{{ $phone }}">
+                                <div class="icon">
+                                    {{-- <img src="/storage/general/vibrating-phone.png" alt=""> --}}
+                                    <span uk-icon="icon:receiver" title="Позвонить"></span>
+                                </div>
+                                <span>{{ $phone }}</span>
+                            </a>    
+                            <a uk-toggle="target: #md-worker_edit" type="button" class="js_profile_edit">
+                                <div class="icon">
+                                    <span uk-icon="icon:pencil" title="Редактировать"></span>
+                                </div>
+                                <span>Редактировать профиль</span>
+                            </a>
+                            <a href="javascript:void(0)" class="js_profile_delete">
+                                <div class="icon">
+                                    <span uk-icon="icon:trash" title="Удалить"></span>
+                                </div>
+                                <span>Удалить профиль</span>
+                            </a>
+                            
                             <!-- модалка вы точно хотите удалить профиль? вы больше не сможете просматривать профили других людей -->
                             <!-- какая то ещё небольшая инфа -->
                         </div>

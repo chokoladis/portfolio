@@ -1,4 +1,4 @@
-// @import 'variables';
+@import 'variables';
 
 main{
 
@@ -58,6 +58,46 @@ main{
                 .links{
                     display: flex;
                     flex-direction: column;
+
+                    a{
+                        > span{
+                            display: block;
+    
+                            @media (max-width:480px) {
+                                display: none;
+                            }
+                        }
+
+                        margin-bottom: 5px;
+
+                        &::last-of-type{
+                            margin-bottom: 0;
+                        }
+                    }
+
+                    [href^="tel"]{
+                        color: var(--clr-ring);
+
+                        .icon{
+                            @include icon($clr-ring);
+                        }
+                    }
+
+                    .js_profile_edit{
+                        
+                        .icon{
+                            @include icon(lighten(blue, 10));
+                        }
+                    }
+                    .js_profile_delete{
+
+                        .icon{
+                            @include icon($clr-danger);
+                        }
+
+                        color: var(--clr-danger);
+                    }
+
                 }
 
                 @media (max-width: 960px) {
