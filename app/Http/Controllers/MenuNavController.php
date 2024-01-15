@@ -10,6 +10,10 @@ use App\Http\Controllers\HelperController;
 
 class MenuNavController extends Controller
 {
+    static $error = '';
+    static $success = true;
+    static $response = '';
+
     /**
      * Display a listing of the resource.
      */
@@ -52,13 +56,14 @@ class MenuNavController extends Controller
         );
 
         if ($res->wasRecentlyCreated){
-            $response = ['result' => 'Данные успешно созданы'];
+            self::$response = __('Данные успешно созданы');
         } else {
-            $success = false;
-            $response = ['error' => 'Запись с данным заголовком уже есть в БД'];
+            self::$success = false;
+            self::$error = __('Запись с данным заголовком уже есть в БД');
         }
 
-        return response()->json(['success' => $success,'response' => $response]);
+        return responseJson(self::$success,self::$response, self::$error);
+        
     }
 
     /**
@@ -100,13 +105,13 @@ class MenuNavController extends Controller
         $res = $menuNav->update($data);
 
         if ($res){
-            $response = ['result' => 'Данные успешно обновлены'];
+            self::$response = 'Данные успешно обновлены';
         } else {
-            $success = false;
-            $response = ['error' => 'При изменении данных возникла ошибка'];
+            self::$success = false;
+            self::$error = __('При изменении данных возникла ошибка');
         }
 
-        return response()->json(['success' => $success,'response' => $response]);
+        return responseJson(self::$success,self::$response, self::$error);
     }
 
     /**
@@ -115,9 +120,9 @@ class MenuNavController extends Controller
     public function delete(MenuNav $menuNav)
     {        
         if ($menuNav->delete()){
-            return response()->json(['success' => true,'response' => ['result' => 'Запись успешно удаленна']]);
+            return responseJson(true, 'Запись успешно удаленна');
         } else {
-            return response()->json(['success' => false,'response' => ['error' => 'Произошла ошибка при удалении']]);
+            return responseJson(false, '', 'Произошла ошибка при удалении');
         }
     }
 

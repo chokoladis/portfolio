@@ -30,19 +30,19 @@
                 <div class="links uk-child-width-1-2@s uk-child-width-1-1">
                     <label>
                         <img src="/storage/general/links/telegram.svg" alt="telegram"> 
-                        <input class="uk-input" name="socials" id="telegram" placeholder="telegram">
+                        <input class="uk-input" name="socials" id="telegram" placeholder="@nickname / t.me/...">
                     </label>
                     <label>
                         <img src="/storage/general/links/github.svg" alt="github"> 
-                        <input class="uk-input" name="socials" id="github" placeholder="github">
+                        <input class="uk-input" name="socials" id="github" placeholder="nickname / github.com/... ">
                     </label>
                     <label>
                         <img src="/storage/general/links/hh.png" alt="hh.ru">
-                        <input class="uk-input" name="socials" id="hh_ru" placeholder="hh.ru">
+                        <input class="uk-input" name="socials" id="hh" placeholder="https://moskow.hh.ru/resume/8960a5...">
                     </label>
                     <label>
                         <img src="/storage/general/links/kwork.png" alt="kwork.com">
-                        <input class="uk-input" name="socials" id="kwork" placeholder="kwork.com">
+                        <input class="uk-input" name="socials" id="kwork" placeholder="https://kwork.ru/user/...">
                     </label>
                 </div>
                 

@@ -1,5 +1,66 @@
 // @import 'variables';
 
+.uk-modal{
+    label{
+
+        &.photo{
+
+            p{
+                margin-top: 5px;
+            }
+            input{
+                display: none;
+            }
+        }
+    }
+    
+    .socials{
+
+
+        .links{
+            display: flex;
+            flex-wrap: wrap;
+
+
+            label{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-right: 10px;
+                position: relative;
+
+                img, [uk-icon]{
+                    width: 30px;
+                    height: 30px;
+                    position: absolute;
+                    left: 5px;
+                    top: 5px;
+                    filter: saturate(0%);
+                }
+
+                input{
+                    padding-left: 40px;
+                }
+
+                &.focus, &.fill{
+                    img,[uk-icon]{
+                        filter: saturate(100%);
+                    }
+                }
+
+                &:nth-child(-n+2){
+                    margin-bottom: 10px;
+                }
+
+                &:nth-child(2n){
+                    padding: 0;
+                }
+                
+            }
+        }
+
+    }
+}
 main{
 
     .worker{
@@ -9,7 +70,7 @@ main{
 
         .small_info{
             width: 25%;
-            min-width: 100px;
+            min-width: 150px;
             max-width: 200px;
             margin-right: 20px;
 
@@ -98,7 +159,7 @@ main{
                         background-image: url('/public/storage/general/links/telegram.svg');
                     }
                     &.hh a::before{                        
-                        background-image: url('/public/storage/general/links/hh-red.png');
+                        background-image: url('/public/storage/general/links/hh.png');
                     }
                     &.kwork a::before{                        
                         background-image: url('/public/storage/general/links/kwork.png');

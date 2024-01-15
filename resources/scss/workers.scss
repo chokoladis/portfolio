@@ -1,5 +1,4 @@
-#md-worker_new{
-
+.uk-modal {
 
     label{
 
@@ -13,8 +12,7 @@
             }
         }
     }
-
-
+    
     .socials{
 
 
@@ -61,7 +59,6 @@
         }
 
     }
-    
 }
 
 .worker{
@@ -80,6 +77,14 @@
 
     .content{
         z-index: 2;
+
+        p{
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
 
         .links{
 
@@ -136,7 +141,7 @@
                         background-image: url('/public/storage/general/links/telegram.svg');
                     }
                     &.hh a::before{                        
-                        background-image: url('/public/storage/general/links/hh-red.png');
+                        background-image: url('/public/storage/general/links/hh.png');
                     }
                     &.kwork a::before{                        
                         background-image: url('/public/storage/general/links/kwork.png');

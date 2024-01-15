@@ -16,24 +16,6 @@ $(function(){
         
     });
 
-    $('.socials input').on('focus', function(){
-        let label = $(this).parents('label');
-        label.addClass('focus');
-    });
-
-    $('.socials input').on('blur', function(){
-        let label = $(this).parents('label');
-        label.removeClass('focus');
-
-        let inputVal = $(this).val();
-
-        if (inputVal){
-            label.addClass('fill');
-        } else {
-            label.removeClass('fill');
-        }
-    });
-
     $('#js_workers_add_submit').on('click', function(e){
         
         let error = 0;
@@ -86,6 +68,7 @@ $(function(){
             if (error)
                 return;
 
+            // todo
             $.ajax({
                 url: action,
                 method: method,

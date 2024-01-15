@@ -88,7 +88,7 @@ $(function(){
                     
                     
                     if (json.success){
-                        $('#md-response .messsage').text(json.response.result); // change todo
+                        $('#md-response .messsage').text(json.result);
 
                         if (location.href == '/admin/menu'){
                             Helper.updMenuAdmin();
@@ -99,7 +99,7 @@ $(function(){
                         }
                         
                     } else {
-                        $('#md-response .messsage').text(json.response.error);
+                        $('#md-response .messsage').text(json.error);
                     }
 
                     UIkit.modal('#md-response').show();
@@ -202,4 +202,21 @@ $(function(){
         }        
         
     });    
+
+    $('.socials input').on('focus', function(){
+        let label = $(this).parents('label');
+        label.addClass('focus');
+    });
+    $('.socials input').on('blur', function(){
+        let label = $(this).parents('label');
+        label.removeClass('focus');
+
+        let inputVal = $(this).val();
+
+        if (inputVal){
+            label.addClass('fill');
+        } else {
+            label.removeClass('fill');
+        }
+    });
 });

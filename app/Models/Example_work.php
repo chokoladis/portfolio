@@ -59,7 +59,6 @@ class Example_work extends Model
                     if (!$countFiles) rmdir($folder);
                 }
             }
-            // Log::info('Deleted event call: '.$item); 
 
         });
 

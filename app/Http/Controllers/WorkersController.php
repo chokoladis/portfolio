@@ -15,13 +15,12 @@ use App\Http\Controllers\HelperController;
 class WorkersController extends Controller
 {
     static $folderImg = '/storage/workers/img/';
-    public $Helper = HelperController::class;
+    static $error = '';
+    static $success = true;
+    static $response = '';
 
     const DEFAULT_SOCIAL_LIST = ['telegram', 'github', 'hh', 'kwork'];
 
-    function __constructor(){
-        $this->Helper = new HelperController();
-    }
     /**
      * Display a listing of the resource.
      */
@@ -121,28 +120,28 @@ class WorkersController extends Controller
         $data = $request->validated();
     
         $data['socials'] = $this->getSocials($data['socials']);
-        $data['phone'] = $this->getNumbers($data['phone']);
+        $phone = $this->getNumbers($data['phone']);
+        $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
         // todo
-        $data['url_avatar'] = $this->Helper->getNewPhotoPath($request, 'photo', self::$folderImg);
+        $helper = new HelperController();
+        $data['url_avatar'] = $helper->getNewPhotoPath($request, 'photo', self::$folderImg);
 
         unset($data['photo']);
 
-        $success = true;
         $res = Workers::firstOrCreate(
             [ 'user_id' => auth()->user()->id ],
             $data
         );
 
         if ($res->wasRecentlyCreated){
-            $response = 'Профиль Workers создан';
+            self::$response = __('Профиль Workers создан');
         } else {
-            $success = false;
-            $error = 'Профиль Workers с такими данными уже есть в БД';
+            self::$success = false;
+            self::$error = __('Профиль Workers с такими данными уже есть в БД');
         }
 
-        // todo отдельную функцию с респонсом и параметрами
-        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
+        return responseJson(self::$success, self::$response, self::$error);
     }
 
     public function getSocials(array|null $data){
@@ -174,22 +173,6 @@ class WorkersController extends Controller
         ];
 
         return view('workers.detail', compact('worker'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Workers $workers)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Workers $workers)
-    {
-        //
     }
 
     /**

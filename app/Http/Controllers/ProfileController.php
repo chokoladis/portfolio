@@ -10,10 +10,15 @@ use App\Models\Workers;
 use App\Models\Example_work;
 use App\Http\Controllers\HelperController as Helpers;
 use App\Http\Requests\Profile\UpdateImgRequest;
+use App\Http\Requests\Profile\UpdateRequest;
+use App\Http\Controllers\WorkersController;
 
 class ProfileController extends Controller
 {
     public static $defaultFolderImg = '/storage/workers/img/';
+    static $error = '';
+    static $success = true;
+    static $response = '';
 
     public function index()
     {
@@ -64,32 +69,50 @@ class ProfileController extends Controller
             $workerFind->url_avatar = $file_path;
 
             $res = $workerFind->save();
-            $res = $res ? [ 'success' => true, 'res' => 'Аватар успешно изменен' ]
-                : [ 'success' => false, 'res' => ['error' => 'Не удалось изменить аватарку'] ];
+            if ($res){
+                self::$response = __('Аватар успешно изменен');
+            } else {
+                self::$success = false;
+                self::$error = __('Не удалось изменить аватарку');
+            }
             
         } else {
-            $res = [
-                'success' => false,
-                'res' => [
-                    'error' => 'Не удалось задать новую аватарку'
-                ]
-            ];
+            self::$success = false;
+            self::$error = __('Не удалось задать новую аватарку');
         }
 
-        return Helpers::jsonRespose($res['success'], $res['res']);
+        return responseJson(self::$success, self::$response, self::$error);
     }
 
-    public function update(){
+    public function update(UpdateRequest $request){
         
+        $data = $request->validated(); 
+
+        $workerController = new WorkersController();
+
+        $data['socials'] = $workerController->getSocials($data['socials']);
+        $phone = $workerController->getNumbers($data['phone']);
+        $data['phone'] = !empty($phone) ? implode('', $phone) : null;
+
+        $userId = auth()->user()->id;
+        
+        $worker = Workers::query()
+            ->where('user_id', '=', $userId);
+
+        if ($worker->update($data)){
+            return responseJson(true, 'success');
+        } else {
+            return responseJson(false, '', 'ошибка');
+        }
     }
     
     public function delete(){
 
         $worker = $this->userWorker(auth()->user()->id);
         if (Workers::destroy($worker->id)){
-            return response()->json(['success' => true, 'result' => 'Профиль успешно удален']);
+            return responseJson(true, __('Профиль успешно удален'));
         } else {
-            return response()->json(['success' => false, 'error' => 'Произошла ошибка при удалении']);
+            return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
 
     }

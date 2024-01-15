@@ -14,14 +14,10 @@ use App\Http\Resources\ExampleWork\WorkResource;
 class ExampleWorkController extends Controller
 {
     static $folderImg = '/storage/works/img/';
+    static $error = '';
+    static $success = true;
+    static $response = '';
 
-    // todo
-    // static $Helper = HelperController::class;
-
-    // function __construct(){
-    //     $this->Helper = new HelperController();
-    //     parent::__construct();
-    // }
 
     public function index(FilterRequest $request){
 
@@ -74,8 +70,6 @@ class ExampleWorkController extends Controller
     }
 
     public function store(StoreRequest $request){
-        
-        $success = true;
 
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
@@ -89,13 +83,13 @@ class ExampleWorkController extends Controller
         );
 
         if ($res->wasRecentlyCreated){
-            $response = 'Данные успешно созданы';
+            self::$response = 'Данные успешно созданы';
         } else {
-            $success = false;
-            $error = 'Запись с данным заголовком уже есть в БД';
+            self::$success = false;
+            self::$error = 'Запись с данным заголовком уже есть в БД';
         }
 
-        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
+        return responseJson(self::$success, self::$response, self::$error);
     }
 
     public function edit(Example_work $work){
@@ -115,36 +109,27 @@ class ExampleWorkController extends Controller
 
     public function update(UpdateRequest $request, Example_work $work){
         
-        $success = true;
-        
         $data = $request->validated(); 
 
         $res = $work->update($data);
 
         if ($res){
-            $response = 'Данные успешно обновлены';
+            self::$response = 'Данные успешно обновлены';
         } else {
-            $success = false;
-            $error = 'При изменении данных возникла ошибка';
+            self::$success = false;
+            self::$error = 'При изменении данных возникла ошибка';
         }
 
-        return response()->json(['success' => $success,'result' => $response, 'error' => $error]);
+        return responseJson(self::$success, self::$response, self::$error);
     }
 
     public function delete(Example_work $work){
 
         if ($work->delete()){
-            return response()->json(['success' => true, 'result' => 'Запись успешно удаленна']);
+            return responseJson(true, __('Запись успешно удаленна'));
         } else {
-            return response()->json(['success' => false, 'error' => 'Произошла ошибка при удалении']);
+            return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
     }
 
-    public function deleteAll(){
-        $works = Example_work::all();
-        foreach($works as $work){
-            $work->delete();
-        }
-        
-    }
 }

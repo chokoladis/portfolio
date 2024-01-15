@@ -1,5 +1,3 @@
-// todo change user-image
-
 $('.file_change').on('click', function(){
     $('input[name="url_avatar"]').click();
 });
@@ -11,10 +9,10 @@ $('input[name="url_avatar"]').on('change', function(){
 
     sendData.append("url_avatar", user_avatar_file[0]);
     
-    changeUserAvatarAjax(form, sendData)
+    profileUpdateAvatar(form, sendData)
 });
 
-async function changeUserAvatarAjax(form, body){
+async function profileUpdateAvatar(form, body){
     const change = await fetch(form.attr('action'), 
             {
                 method: form.attr('method'),
@@ -56,6 +54,57 @@ async function profileDelete(){
     } else {
         UIkit.notification({
             message: jsonDelete.error,
+            status: 'danger',
+            timeout: 5000
+        });
+    }
+}
+
+
+$('form#worker_edit').on('submit', function(e){
+
+    e.preventDefault();
+
+    var formData = $(this).serializeArray();
+    var sendData = new FormData();
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    };
+
+    $.each(formData, function (key, input) {
+        if (input.name != 'socials' && input.value != ''){
+            sendData.set(input.name, input.value);
+        }
+    });
+
+    var socials = $(this).find('.socials input');
+
+    for (var i = 0; i < socials.length; i++) {
+        let id = $(socials[i]).attr('id');
+        let val = $(socials[i]).val();
+        if (val){
+            sendData.append("socials["+id+"]",  val);
+        }
+    }
+    
+    profileUpdate($(this), sendData);
+});
+
+async function profileUpdate(form, body){
+    const update = await fetch(form.attr('action'), 
+            {
+                method: 'POST',
+                body: body,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            }
+        );
+
+    let updateJson = await update.json();
+    if (updateJson.success){
+        location.href="/profile";
+    } else {
+        UIkit.notification({
+            message: updateJson.error,
             status: 'danger',
             timeout: 5000
         });

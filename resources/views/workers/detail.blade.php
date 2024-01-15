@@ -25,7 +25,7 @@
                         $textAbout = 'Пользователь не заполнил информацию о себе';
                     }
 
-                    $phone = HelperController::phoneOutFormated($workers['phone']);
+                    $phone = HelperController::phoneOutFormated($worker['phone']);
 
                 @endphp
                 <div class="small_info">
