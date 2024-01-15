@@ -3,20 +3,26 @@
         @php 
             $addClass = (!empty($work->url_files))?' work_have_preview':'';
             $imgclass = '';
+
+            if (str_contains($work->url_work, 'https://') ||
+                str_contains($work->url_work, 'http://')){
+                $link = $work->url_work;
+            } else {
+                $link = 'https://'.$work->url_work;
+            }
         @endphp
         <div class="work {{ $addClass }}" data-id="{{ $work->id }}">
-            <!-- <div class="border"></div> -->
             <div class="content">
                 <h3>{{  $work->title  }}</h3>
                 <p>{{  $work->description  }}</p>
-                <a href="{{ $work->url_work }}">{{ $work->url_work }}</a>
+                <a href="{{ $link }}" class="link">
+                    <span uk-icon="icon:location" title="{{ __('Ссылка')}}"></span>
+                    <i>{{ $work->url_work }}</i>
+                </a>
                 @if (!empty($work->url_files))
                     <div class="works_gallery">
                         @foreach(explode(',', $work->url_files) as $filesPath)
-                                @php 
-                                    //if ($filesPath) $imgclass = (Storage::disk('s3')->exists($filesPath))?'':'img_404';
-                                @endphp
-                                <img src="/storage/works/img/{{ trim($filesPath) }}" class="{{ $imgclass }}">
+                            <img src="/storage/works/img/{{ trim($filesPath) }}" class="{{ $imgclass }}">
                         @endforeach
                     </div>
                 @endif
@@ -26,10 +32,10 @@
             @can('viewAdmin', auth()->user())
                 <div class="area_actions">
                     <div class="custom-btn clr-danger js_work_del">
-                        <span uk-icon="icon:trash" title="Удалить"></span>
+                        <span uk-icon="icon:trash" title="{{ __('Удалить')}}"></span>
                     </div>
                     <div class="custom-btn clr-primary js_work_edit">
-                        <span uk-icon="icon:pencil" title="Редактировать"></span>
+                        <span uk-icon="icon:pencil" title="{{ __('Редактировать')}}"></span>
                     </div>
                 </div>
             @endcan

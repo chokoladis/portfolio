@@ -42,7 +42,8 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // 
-$clr-danger: red;
+$clr-danger: rgb(196, 0, 0);
+$clr-ring: rgb(3, 179, 3);
 
 // Default theme
 :root, :root.light{
@@ -57,6 +58,8 @@ $clr-danger: red;
     --header-link-clr-visited: #{$header-link-clr-visited-lt};
     --header-link-clr-visited-lt: #{$header-link-clr-visited-lt-20};
     --clr-disable: rgba(218, 218, 218, 0.772);
+    --clr-ring: #{$clr-ring};
+    --clr-danger: #{$clr-danger};
 }
 
 :root.dark{
@@ -70,4 +73,31 @@ $clr-danger: red;
     --header-link-color: #{$main-clr-text-dark};
     --header-link-clr-visited: #{$header-link-clr-visited-dark};
     --header-link-clr-visited-lt: #{$header-link-clr-visited-dark-20};
+}
+
+
+@mixin icon($bg) {
+    display: none;
+    padding: 6px;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    color: rgb(240, 240, 240);
+
+    background: darken($color: $bg, $amount: 3);
+    box-shadow: 0px 0px 7px $bg;
+
+    svg{
+        width: 100%;
+        height: 100%;
+    }
+
+    &:hover{
+        background: $bg;
+        box-shadow: 0px 0px 13px lighten($color: $bg, $amount: 5);
+    }
+
+    @media (max-width:480px) {
+        display: flex;
+    }
 }

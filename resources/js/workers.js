@@ -79,14 +79,12 @@ $(function(){
                 dataType: 'JSON',
                 success: function(json){
                     
-                    // console.log(json);
-                    if (json.errors){
-                        $('#md-response .messsage').text(json.message);
-                    } else if(json.success){
-                        $('#md-response .messsage').text(json.response.result);
+                    if (json.success){
+                        $('#md-response .messsage').text(json.result);
+                    } else {
+                        $('#md-response .messsage').text(json.error);
 
-                        // todo upd
-                        // worksUpd()  
+                        Helper.updWorkers();
                     } 
 
                     UIkit.modal('#md-response').show();

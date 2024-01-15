@@ -1,4 +1,4 @@
-// @import 'variables';
+@import 'variables';
 
 .uk-modal{
     label{
@@ -68,9 +68,18 @@ main{
         margin-top: 30px;
         // justify-content: space-between;
 
+        @media (max-width: 960px) {
+            flex-direction: column;
+        }
+
         .small_info{
+<<<<<<< HEAD
             width: 25%;
             min-width: 150px;
+=======
+            // width: 25%;
+            min-width: 100px;
+>>>>>>> 698189c9c009b2285e6140f4eeec72213cb8971d
             max-width: 200px;
             margin-right: 20px;
 
@@ -107,8 +116,65 @@ main{
                 
             }
 
-            .name{
-                margin-top: 20px;
+            .main_info{
+                .name{
+                    margin-top: 20px;
+                }
+    
+                .links{
+                    display: flex;
+                    flex-direction: column;
+
+                    a{
+                        > span{
+                            display: block;
+    
+                            @media (max-width:480px) {
+                                display: none;
+                            }
+                        }
+
+                        margin-bottom: 5px;
+
+                        &::last-of-type{
+                            margin-bottom: 0;
+                        }
+                    }
+
+                    [href^="tel"]{
+                        color: var(--clr-ring);
+
+                        .icon{
+                            @include icon($clr-ring);
+                        }
+                    }
+
+                    .js_profile_edit{
+                        
+                        .icon{
+                            @include icon(lighten(blue, 10));
+                        }
+                    }
+                    .js_profile_delete{
+
+                        .icon{
+                            @include icon($clr-danger);
+                        }
+
+                        color: var(--clr-danger);
+                    }
+
+                }
+
+                @media (max-width: 960px) {
+                    margin-left: 20px;
+                }
+            }
+           
+
+            @media (max-width: 960px) {
+                max-width: unset;
+                display: flex;
             }
         }
 
@@ -165,6 +231,10 @@ main{
                         background-image: url('/public/storage/general/links/kwork.png');
                     }
                 }
+            }
+
+            @media (max-width: 960px) {
+                margin-top: 20px;
             }
             
         }

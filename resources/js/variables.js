@@ -23,8 +23,26 @@ class Helpers {
                 }
             });
         }
-        
     };
+    updWorkers(data){
+        if (data){
+            let workers = $(data).find('main .workers_list > *');
+            let paginastion  = $(data).find('main .paginastion > *');
+            $('main .workers_list').html(workers);
+            $('main .paginastion').html(paginastion);
+        } else {
+            $.ajax({
+                url: location.href,
+                method: 'GET',
+                success: function(html){
+                    let workers = $(html).find('main .workers_list > *');
+                    let paginastion  = $(html).find('main .paginastion > *');
+                    $('main .workers_list').html(workers);
+                    $('main .paginastion').html(paginastion);
+                }
+            });
+        }
+    }
     resetInput(input){
         let parent = input.parent();
         var errorBlock = parent.find('p.error');

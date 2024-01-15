@@ -152,7 +152,7 @@ class WorkersController extends Controller
         $data['telegram'] = HelperController::replaceArrobaToLink($data['telegram'], 't.me');
         $data['github'] = HelperController::replaceArrobaToLink($data['github'], 'github.com');
         
-        // dump($data);
+        // dd($data);
         $socials = json_encode($data);
         // dd($socials);
 

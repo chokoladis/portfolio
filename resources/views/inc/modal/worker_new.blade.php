@@ -38,7 +38,11 @@
                     </label>
                     <label>
                         <img src="/storage/general/links/hh.png" alt="hh.ru">
+<<<<<<< HEAD
                         <input class="uk-input" name="socials" id="hh" placeholder="https://moskow.hh.ru/resume/8960a5...">
+=======
+                        <input class="uk-input" name="socials" id="hh_ru" placeholder="https://moskow.hh.ru/resume/8960a5...">
+>>>>>>> 698189c9c009b2285e6140f4eeec72213cb8971d
                     </label>
                     <label>
                         <img src="/storage/general/links/kwork.png" alt="kwork.com">
