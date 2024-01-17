@@ -45,7 +45,7 @@
             @include('compiled.workers')
 
             @if (empty($workerById))
-                <button class="uk-button uk-button-default" uk-toggle="target: #md-worker_new" type="button">Создать Workers профиль</button>
+                <button class="uk-button uk-button-default js-create-worker" uk-toggle="target: #md-worker_new" type="button">Создать Workers профиль</button>
             @endif
         </div>
     </main>

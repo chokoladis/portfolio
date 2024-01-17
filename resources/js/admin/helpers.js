@@ -4,7 +4,7 @@ import jQuery, { error } from 'jquery';
 window.$ = jQuery;
 
 class Helpers {
-    updWorksAdmin(){
+    updateWorksHtmlToAdmin(){
         $.ajax({
             url: location.href,
             method: 'GET',

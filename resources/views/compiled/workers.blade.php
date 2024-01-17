@@ -11,7 +11,7 @@
         <p>Вы можете <a href="{{ route('login') }}">авторизоваться</a> и создать первый <b>профиль-workers</b> на сайте</p>
     @elseif(count($workers) > 0)
         @foreach($workers as $worker)
-            <div class="worker" onclick="location.href='/workers/{{ $worker->id }}/'">
+            <div class="worker" onclick="location.href='/workers/{{ $worker->code }}/'">
                 <div class="avatar">
                     @php    
                         echo $worker->url_avatar ? '<img src="'.HelperController::$workerDirImg.$worker->url_avatar.'">':'<span uk-icon="icon: user; ratio:2"></span>';

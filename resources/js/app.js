@@ -37,7 +37,6 @@ $(function(){
 
     $(document).on('click','form [type="submit"]', function(e){
 
-        // console.log('submit');
         let form = $(this).parent('form');
         let ajax = form.find('input[name="AJAX"]');
         let formId = form.attr('id');
@@ -68,12 +67,10 @@ $(function(){
                     sendData.append("url_files[]", file_data[i]);
                 }
 
-            } else if (formId == 'work_edit') {
-                action = '/works/'+itemId.val()+'/update/';
             } else if (formId == 'menu_edit'){ // todo admin.js
                 action = '/admin/menu/'+itemId.val()+'/update/';
-            } else if (formId == 'worker_new'){
-                return; // todo
+            } else {
+                return;
             }
 
             $.ajax({
@@ -93,9 +90,9 @@ $(function(){
                         if (location.href == '/admin/menu'){
                             Helper.updMenuAdmin();
                         } else if (location.href == '/admin/works') {
-                            Helper.updWorksAdmin();
+                            Helper.updateWorksHtmlToAdmin();
                         } else{
-                            Helper.updWorks();
+                            Helper.updateWorksHtml();
                         }
                         
                     } else {

@@ -6,12 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\User;
 use App\Models\Workers;
 use App\Models\Example_work;
-use App\Http\Controllers\HelperController as Helpers;
+use App\Http\Controllers\HelperController as Helper;
 use App\Http\Requests\Profile\UpdateImgRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Controllers\WorkersController;
+
 
 class ProfileController extends Controller
 {
@@ -35,7 +37,6 @@ class ProfileController extends Controller
 
             return redirect()->route('workers.index');
         }
-        // show works current profile
 
         return view('profile.index', compact('worker', 'works'));
     }
@@ -57,7 +58,7 @@ class ProfileController extends Controller
     
         $userId = auth()->user()->id;
 
-        $helper = new HelperController;
+        $helper = new Helper;
         $file_path = $helper->getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
 
         if ($file_path) {
@@ -97,9 +98,12 @@ class ProfileController extends Controller
         $userId = auth()->user()->id;
         
         $worker = Workers::query()
-            ->where('user_id', '=', $userId);
+            ->where(['user_id' => $userId]);
 
-        if ($worker->update($data)){
+        $user = User::query()
+            ->where(['id' => $userId]);
+
+        if ($worker->update($data) && $user->update(['name' => $data['name']])){
             return responseJson(true, 'success');
         } else {
             return responseJson(false, '', 'ошибка');

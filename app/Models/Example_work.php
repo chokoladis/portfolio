@@ -56,7 +56,9 @@ class Example_work extends Model
                     $folder = public_path(ExampleWorkController::$folderImg.$arPath[0]);
                     $countFiles = count(Storage::files($folder));
 
-                    if (!$countFiles) rmdir($folder);
+                    if (!$countFiles &&
+                        $folder != public_path(ExampleWorkController::$folderImg)) 
+                        rmdir($folder);
                 }
             }
 

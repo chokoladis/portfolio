@@ -4,7 +4,7 @@ import jQuery, { error } from 'jquery';
 window.$ = jQuery;
 
 class Helpers {
-    updWorks(data = null){
+    updateWorksHtml(data = null){
         if (data){
             let works = $(data).find('main .works_list > *');
             let paginastion  = $(data).find('main .paginastion > *');
@@ -24,7 +24,7 @@ class Helpers {
             });
         }
     };
-    updWorkers(data){
+    updWorkersHtml(data){
         if (data){
             let workers = $(data).find('main .workers_list > *');
             let paginastion  = $(data).find('main .paginastion > *');

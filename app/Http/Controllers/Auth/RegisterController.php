@@ -50,13 +50,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/[\w\d]+@[\w\d]+\.[\w\d]+/i'],
+            'name' => ['required', 'string', 'max:30'],
+            'email' => ['required', 'string', 'email', 'max:70', 'unique:users', 'regex:/[\w\d]+@[\w\d]+\.[\w\d]+/i'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ],
         [
             'password.confirmed' => 'Подтверждение пароля не прошло проверку',
             'password.min' => 'Введите не менее 8 символов',
+            'email.unique' => 'Пользователь с таким email уже зарегистрирован',
             'email.regex' => 'Ваш email не прошел валидацию'
         ]);
     }

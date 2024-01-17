@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Workers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Workers\StoreRequest;
 use App\Http\Requests\Workers\FilterRequest;
 use App\Http\Controllers\HelperController;
-// use App\Http\Requests\Workers\DetailRequest;
+use Illuminate\Support\Str;
 
 
 class WorkersController extends Controller
@@ -19,7 +17,12 @@ class WorkersController extends Controller
     static $success = true;
     static $response = '';
 
-    const DEFAULT_SOCIAL_LIST = ['telegram', 'github', 'hh', 'kwork'];
+    const SOCIAL_LIST = [ // placeholder
+        'telegram' => '', 
+        'github' => '',
+        'hh' => '',
+        'kwork' => ''
+    ];
 
     /**
      * Display a listing of the resource.
@@ -105,14 +108,6 @@ class WorkersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreRequest $request)
@@ -128,6 +123,8 @@ class WorkersController extends Controller
         $data['url_avatar'] = $helper->getNewPhotoPath($request, 'photo', self::$folderImg);
 
         unset($data['photo']);
+
+        $data['code'] = self::getTransliteName();
 
         $res = Workers::firstOrCreate(
             [ 'user_id' => auth()->user()->id ],
@@ -149,30 +146,35 @@ class WorkersController extends Controller
         if ($data === null)
             return $data;
 
-        $data['telegram'] = HelperController::replaceArrobaToLink($data['telegram'], 't.me');
-        $data['github'] = HelperController::replaceArrobaToLink($data['github'], 'github.com');
+        if (isset($data['telegram']))
+            $data['telegram'] = HelperController::replaceArrobaToLink($data['telegram'], 't.me');
         
-        // dd($data);
-        $socials = json_encode($data);
-        // dd($socials);
+        if(isset($data['github']))
+            $data['github'] = HelperController::replaceArrobaToLink($data['github'], 'github.com');
 
-        return $socials;
+        return json_encode($data);
     }
 
     public function detail(Workers $worker)
     {
-        $workerNew = Workers::find($worker->id);
- 
         $worker = [
-            'id' => $workerNew->id,
-            'name' => $workerNew->user->name,
-            'url_avatar' => $workerNew->url_avatar,
-            'phone' => $workerNew->phone,
-            'about' => $workerNew->about,
-            'socials' => $workerNew->socials
+            'id' => $worker->id,
+            'code' => $worker->code,
+            'name' => $worker->user->name,
+            'url_avatar' => $worker->url_avatar,
+            'phone' => $worker->phone,
+            'about' => $worker->about,
+            'socials' => $worker->socials
         ];
 
         return view('workers.detail', compact('worker'));
+    }
+
+    public function getTransliteName(){
+
+        $user = User::find(auth()->user()->id, 'name');
+        $code = Str::slug($user->name, '_', 'ru');
+        return $code;
     }
 
     /**

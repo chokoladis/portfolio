@@ -18,7 +18,7 @@
                                     <label for="name" class="uk-form-label">{{ __('Имя') }}</label>
 
                                     <div class="">
-                                        <input id="name" type="text" class="uk-input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        <input id="name" type="text" class="uk-input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" maxlength="30" autofocus>
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
                                     <label for="email" class="uk-form-label">{{ __('Email') }}</label>
 
                                     <div class="">
-                                        <input id="email" type="email" class="uk-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        <input id="email" type="email" class="uk-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" maxlength="70">
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">

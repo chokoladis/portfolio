@@ -57,6 +57,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         Route::group(['middleware' => 'admin'], function() {
             Route::get('/admin/', 'AdminController@index')->name('admin.index');
             Route::get('/admin/works/', 'AdminController@examplesWork')->name('admin.works');
+            Route::get('/admin/workers/', 'AdminController@workers')->name('admin.workers');
             Route::get('/admin/menu/', 'AdminController@menu')->name('admin.menu');
         
             Route::post('/admin/menu/', 'MenuNavController@store')->name('menu.store');

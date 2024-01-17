@@ -4,9 +4,9 @@
                         <ul class="socials">
                             <li><a href="https://github.com/chokoladis/" uk-icon="icon: github; ratio:2;"></a></li>
                         </ul>
-                        <div class="by_created">Сайт разработан на свободное время какого то разработчика с ником <b>chokoladis</b></div>
+                        <i>Сайт разработан на свободное время какого то разработчика с ником <b>chokoladis</b></i>
                     </div>
-                    <div class="copyrithg">© 2023 ******.com</div>
+                    <div class="copyrithg">© 2023 localhost.com</div>
                 </div>
             </footer>
 

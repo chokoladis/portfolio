@@ -17,7 +17,7 @@ $(function(){
                     
                     $('.works_list [data-id="'+workId+'"]').remove();
                     
-                    updWorks();
+                    Helper.updateWorksHtml();
 
                 } else {
                     $('#response').show();
@@ -30,7 +30,6 @@ $(function(){
 
     $(document).on('click','.js_work_edit', function(){
 
-        // console.log('click edit');
         let parent = $(this).parents('.work');
         let workId = parent.attr('data-id');
 
@@ -41,18 +40,16 @@ $(function(){
             success: function(data){
 
                 if (data){
-                    // set id in new form
-                    let form = $('#md-work_edit');
-                    form.find('[name="id"]').val(workId);
-                    form.find('[name="title"]').val(data.title);
-                    form.find('[name="description"]').val(data.description);
-                    // form.find('input[name="url_files"]').val(data.url_files);
-                    form.find('[name="url_work"]').val(data.url_work);
+                    let modal = $('#md-work_edit');
+                    modal.find('[name="id"]').val(workId);
+                    modal.find('[name="title"]').val(data.title);
+                    modal.find('[name="description"]').val(data.description);
+                    modal.find('[name="url_work"]').val(data.url_work);
                     
                     UIkit.modal('#md-work_edit').show();
                 } else {
                     $('#response').show();
-                    $('#response .messsage').html('Ошибка в запросе при получении данных <br/>');
+                    $('#response .messsage').html('Ошибка при получении данных <br/>');
                 }
 
             }
@@ -64,11 +61,7 @@ $(function(){
         e.preventDefault();
 
         var action = $(this).attr('action');
-        // var method = $(this).attr('method');
         var formData = $(this).serializeArray();
-        // var headers = {
-        //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        // };
 
         let url = new URL(action);
         for (let key in formData){
@@ -81,52 +74,52 @@ $(function(){
         }
 
         location.href = url;
-
-        // $.ajax({
-        //     url: url,
-        //     method: method,
-        //     data: formData,
-        //     processData: false,
-        //     contentType: false,
-        //     headers: headers,
-        //     dataType: 'html',
-        //     success: function(html){
-                
-                
-        //         if (html){
-        //             // $('#md-response .messsage').text(json.response.result);
-
-        //             updWorks(html);
-                    
-        //         } else {
-        //             // $('#md-response .messsage').text(json.response.error);
-        //         }
-
-        //         // UIkit.modal('#md-response').show();
-        //     },
-        //     error :function( data ) {
-        //         if( data.status === 422 ) {
-        //             var errors = $.parseJSON(data.responseText);
-        //             $.each(errors, function (key, value) {
-        //                 console.log(key+ " " +value);
-
-        //                 $('#response').addClass("alert alert-danger");
-        
-        //                 if($.isPlainObject(value)) {
-        //                     $.each(value, function (key, value) {                       
-        //                         // console.log(key+ " " +value);
-        //                         $('#response').show().append(value+"<br/>");
-        
-        //                     });
-        //                 }else{
-        //                     $('#response').show();
-        //                     $('#response .messsage').html(data.error+"<br/>");
-        //                 }
-        //             });
-        //         }
-        //     }
-        // })
-
     });
+
+    $('#js_work_edit_submit').on('click', function(e){
+
+        e.preventDefault();
+        
+        let form = $(this).parents('form');
+        let formData = form.serializeArray();
+        let sendData = new FormData();
+
+        $.each(formData, function (key, input) {
+            sendData.append(input.name, input.value);
+        });
+
+        workUpdate(form, sendData);            
+    });
+
+    async function workUpdate(form, body){
+
+        let itemId = form.find('[name="id"]');
+        let action = '/works/'+itemId.val()+'/update/';
+
+        const update = await fetch(action, 
+                {
+                    method: 'POST',
+                    body: body,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                }
+            );
+
+        let updateJson = await update.json();
+
+        if (updateJson.success){
+            
+            $('#md-response .messsage').text(updateJson.result);
+            UIkit.modal('#md-response').show();
+
+            Helper.updateWorksHtml();
+
+        } else {
+            UIkit.notification({
+                message: updateJson.error,
+                status: 'danger',
+                timeout: 5000
+            });
+        }
+    }
 
 });
