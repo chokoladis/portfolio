@@ -177,11 +177,9 @@ class WorkersController extends Controller
         return $code;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Workers $workers)
-    {
-        //
+    public function works(Workers $worker){
+        $works = $worker->getWorks();
+
+        return view('workers.works', compact('works'));
     }
 }

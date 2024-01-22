@@ -34,14 +34,10 @@
             } elseif ($role == 'admin' || $item['role'] == $role || $item['role'] == 'guest'){
                 $viewLink = true;
             }
-
-            if ($viewLink){
-                @endphp
-                    <li class='animated'><a href="{{ $item['link'] }}">{{ $item['name'] }}</a></li>
-                @php
-            }            
         @endphp
-
+        @if ($viewLink){
+            <li class='animated'><a href="{{ $item['link'] }}">{{ $item['name'] }}</a></li>
+        @endif
     @endforeach
 
     

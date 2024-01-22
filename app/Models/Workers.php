@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
+use App\Models\Example_work;
 use App\Http\Controllers\WorkersController;
 
 class Workers extends Model
@@ -19,6 +20,13 @@ class Workers extends Model
 
     public function getRouteKeyName(){
         return 'code';
+    }
+
+    public function getWorks()
+    {
+        return Example_work::query()
+            ->where(['user_id' => $this->user->id])
+            ->get();
     }
 
     public function user()

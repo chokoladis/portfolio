@@ -11,7 +11,7 @@
                 $link = 'https://'.$work->url_work;
             }
         @endphp
-        <div class="work {{ $addClass }}" data-id="{{ $work->id }}">
+        <div class="work {{ $addClass }}" data-id="{{ $work->id }}" onclick="location.href='/works/{{ $work->slug }}/detail/'">
             <div class="content">
                 <h3>{{  $work->title  }}</h3>
                 <p>{{  $work->description  }}</p>

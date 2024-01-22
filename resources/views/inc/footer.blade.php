@@ -17,14 +17,12 @@
 
         @include('inc.modal.response')
         @if(auth()->user() !== null) 
-            @if (Route::current()->getName() == 'work.index')
+            @if(Route::is('work.*'))
                 @include('inc.modal.work_create')
-                @include('inc.modal.work_edit')            
-            @endif        
-            @if (Route::current()->getName() == 'workers.index')
+                @include('inc.modal.work_edit')
+            @elseif (Route::is('workers.*'))
                 @include('inc.modal.worker_new')
-            @endif
-            @if (Route::current()->getName() == 'profile.index')
+            @elseif (Route::is('profile.*'))
                 @include('inc.modal.worker_edit')
             @endif
         @endif

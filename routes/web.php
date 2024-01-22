@@ -27,6 +27,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     // сделать доступным и для обычных авториз. пользователей
     Route::get('/works', 'ExampleWorkController@index')->name('work.index');
+    Route::get('/works/{work}/detail/', 'ExampleWorkController@detail')->name('work.detail');
     // Route::get('/works/search?q={q}', 'ExampleWorkController@search')->name('work.search');
 
     // ajax requests
@@ -34,25 +35,23 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     Route::middleware(['auth'])->group( function() {
         
-        // works
         Route::post('/works', 'ExampleWorkController@store')->name('work.store');
-        Route::get('/works/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
-        Route::post('/works/{work}/update/', 'ExampleWorkController@update')->name('work.update');
-        Route::get('/works/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete');
-        Route::get('/works/deleteAll/', 'ExampleWorkController@deleteAll');
 
-        // workers
         Route::get('/workers', 'WorkersController@index')->name('workers.index');
         Route::post('/workers', 'WorkersController@store')->name('workers.store');
         Route::get('/workers/{worker}/', 'WorkersController@detail')->name('workers.detail');
-        Route::post('/profile', 'ProfileController@update')->name('profile.update');
-        // Route::get('/workers/{worker}/works/', 'WorkersController@works')->name('workers.works'); todo
+        Route::get('/workers/{worker}/works/', 'WorkersController@works')->name('workers.works');
 
-        // profile
         Route::get('/profile', 'ProfileController@index')->name('profile.index');
+        Route::post('/profile', 'ProfileController@update')->name('profile.update');
         Route::post('/ajax/profile/change_avatar', 'ProfileController@changeAvatar')->name('profile.change_avatar');
         Route::post('/profile/delete', 'ProfileController@delete')->name('profile.delete');
         
+        // Route::middleware(['isBelongsToUser:Example_work::class'])->group( function() {
+            Route::get('/works/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
+            Route::post('/works/{work}/update/', 'ExampleWorkController@update')->name('work.update');
+            Route::get('/works/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete'); //todo
+        // });
 
         Route::group(['middleware' => 'admin'], function() {
             Route::get('/admin/', 'AdminController@index')->name('admin.index');

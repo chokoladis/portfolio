@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\ExampleWork\StoreRequest;
 use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
 use App\Http\Controllers\HelperController;
-use App\Http\Resources\ExampleWork\WorkResource;
+use Illuminate\Support\Str;
 
 class ExampleWorkController extends Controller
 {
@@ -18,6 +17,10 @@ class ExampleWorkController extends Controller
     static $success = true;
     static $response = '';
 
+    // public function __construct()
+    // {
+    //     $this->middleware('isBelongsToUser:'.Example_work::class.",$work->slug")->only('edit');
+    // }
 
     public function index(FilterRequest $request){
 
@@ -35,6 +38,10 @@ class ExampleWorkController extends Controller
         // $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
 
         return view('works.index', compact('works'));
+    }
+
+    public function detail(Example_work $work){
+        return view('works.detail', compact('work'));
     }
 
     public function filterByQ($query, $data){
@@ -77,6 +84,8 @@ class ExampleWorkController extends Controller
         $helper = new HelperController;
         $data['url_files'] = $helper->getNewPhotoPath($request, 'url_files', self::$folderImg);
 
+        $data['slug'] = Str::slug($data['title'], '_', 'ru');
+
         $res = Example_work::firstOrCreate(
             [ 'title' => $data['title']],
             $data
@@ -93,6 +102,8 @@ class ExampleWorkController extends Controller
     }
 
     public function edit(Example_work $work){
+        
+        $this->authorize('edit', $work);
 
         $ar = [
             'id' => $work->id,
@@ -109,6 +120,8 @@ class ExampleWorkController extends Controller
 
     public function update(UpdateRequest $request, Example_work $work){
         
+        $this->authorize('update', $work);
+
         $data = $request->validated(); 
 
         $res = $work->update($data);

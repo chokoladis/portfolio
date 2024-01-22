@@ -1,16 +1,21 @@
 @php
     $config = [
-        'Example_work' =>[
-            'name' =>   'Examples work',
-            'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
-            'link' => 'admin.works'
-        ],
         'Menu' => [
             'name' =>   'Menu',
             'img' =>    '<i class="nav-icon fas fa-link"></i>',
             'link' => 'admin.menu',
             'items' => []
-        ]
+        ],
+        'Example_work' =>[
+            'name' =>   'Examples work',
+            'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
+            'link' => 'admin.works'
+        ],
+        'Workers' =>[
+            'name' =>   'Workers',
+            'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
+            'link' => 'admin.workers'
+        ],
     ];
 @endphp
 

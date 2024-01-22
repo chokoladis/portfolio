@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
+use App\Models\Example_work;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class AdminPolicy
+class ExampleWorkPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,9 +18,9 @@ class AdminPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, User $model): bool
+    public function view(User $user, Example_work $exampleWork): bool
     {
-        return $model->role == 'admin';
+        //
     }
 
     /**
@@ -31,18 +31,23 @@ class AdminPolicy
         //
     }
 
+    public function edit(User $user, Example_work $work): bool
+    {
+        return $work->user->id === $user->id;
+    }
+
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, User $model): bool
+    public function update(User $user, Example_work $work): bool
     {
-        //
+        return $work->user->id === $user->id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, User $model): bool
+    public function delete(User $user, Example_work $exampleWork): bool
     {
         //
     }
@@ -50,7 +55,7 @@ class AdminPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, User $model): bool
+    public function restore(User $user, Example_work $exampleWork): bool
     {
         //
     }
@@ -58,7 +63,7 @@ class AdminPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, User $model): bool
+    public function forceDelete(User $user, Example_work $exampleWork): bool
     {
         //
     }

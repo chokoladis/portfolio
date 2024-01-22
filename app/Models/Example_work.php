@@ -19,6 +19,10 @@ class Example_work extends Model
     protected $table = 'example_works';
     protected $guarded = [];
 
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
