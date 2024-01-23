@@ -114,7 +114,7 @@ class WorkersController extends Controller
     {
         $data = $request->validated();
     
-        $data['socials'] = $this->getSocials($data['socials']);
+        $data['socials'] = isset($data['socials']) ? $this->getSocials($data['socials']) : null;
         $phone = $this->getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
@@ -180,6 +180,6 @@ class WorkersController extends Controller
     public function works(Workers $worker){
         $works = $worker->getWorks();
 
-        return view('workers.works', compact('works'));
+        return view('workers.works', compact('worker','works'));
     }
 }

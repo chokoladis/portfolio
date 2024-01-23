@@ -3,6 +3,8 @@
 ?>
 @extends('layouts.main')
 
+@section('page.title') {{ __('Профиль') }} @endsection
+
 @push('styles')
     @vite(['resources/scss/profile.scss'])
 @endpush

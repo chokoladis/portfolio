@@ -72,6 +72,12 @@ ul,li,p{
 .is-disable{
     color: var(--clr-disable);
 }
+.result_query{
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+}
 
 .root{
     display: flex;

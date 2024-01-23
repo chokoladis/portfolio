@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('page.title') Регистрация @endsection
+@section('page.title') {{ __('Регистрация') }} @endsection
 
 @section('content')
     <main>

@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('page.title'){{ __('Вход') }}@endsection
+
 @section('content')
     <main>
         <div class="container">

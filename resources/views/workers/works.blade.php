@@ -3,6 +3,8 @@
 ?>
 @extends('layouts.main')
 
+@section('page.title') {{ __('Работы пользователя - '.$worker->user->name ) }} @endsection
+
 @push('styles')
     @vite(['resources/scss/profile.scss'])
     @vite(['resources/scss/workers.scss'])
@@ -11,15 +13,17 @@
 @section('content')    
     <main>
         <div class="container">
-            <section class="worker-works">
-                @if (!empty($works))
+            @if(!$works->count())
+                <div class="result_query">
+                    {{ __('У пользователя нет пример работ') }}
+                </div>
+            @else
+                <section class="worker-works">
                     @foreach($works as $work)
                         title - {{ $work->title }}
                     @endforeach
-                @else
-                    <p>У пользователя нет пример работ</p>
-                @endif
-            </section>
+                </section>
+            @endif
         </div>
     </main>
 

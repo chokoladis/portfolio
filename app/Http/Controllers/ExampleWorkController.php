@@ -17,10 +17,6 @@ class ExampleWorkController extends Controller
     static $success = true;
     static $response = '';
 
-    // public function __construct()
-    // {
-    //     $this->middleware('isBelongsToUser:'.Example_work::class.",$work->slug")->only('edit');
-    // }
 
     public function index(FilterRequest $request){
 
@@ -31,11 +27,10 @@ class ExampleWorkController extends Controller
         
         $query = Example_work::query();
         
-        $query = isset($data['q']) ? $this->filterByQ($query, $data['q']) : $query;
+        $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
-        
+
         $works = $query->paginate($perPage)->appends(request()->query());
-        // $works = $query->paginate($perPage, ['*'], 'page', $page)->appends(request()->query());
 
         return view('works.index', compact('works'));
     }
@@ -44,10 +39,11 @@ class ExampleWorkController extends Controller
         return view('works.detail', compact('work'));
     }
 
-    public function filterByQ($query, $data){
+    public function filterByWork($query, $data){
         return $query->where('title', 'like', '%'.$data.'%')
                 ->orWhere('description', 'like', '%'.$data.'%')
-                ->orWhere('url_work', 'like', '%'.$data.'%');
+                ->orWhere('url_work', 'like', '%'.$data.'%')
+                ->orWhere('slug', 'like', '%'.$data.'%');
     }
 
     public function filterByProfile($query, $data){

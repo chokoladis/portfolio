@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('page.title'){{ __('Работы') }}@endsection
+
 @push('styles')
     @vite(['resources/scss/works.scss'])
 @endpush
@@ -8,22 +10,8 @@
 @endpush
 
 @php
-    $f_search = false;
-    // $search_val = '';
-
-    if (isset($_GET['q'])){
-        $f_search = true;
-        // $search_val = htmlspecialchars($_GET['q']);
-    }
-
-    $f_profile = false;
-    // $profile_val = '';
-
-    if (isset($_GET['profile'])){
-        $f_profile = true;
-        // $profile_val = htmlspecialchars($_GET['profile']);
-    }
-    
+    $f_search = request('work') ? true : false;
+    $f_profile = request('profile') ? true : false;
 @endphp
 @section('content')
     
@@ -36,7 +24,7 @@
                             <span uk-icon="search"></span>
                         </div>
                         <div class="inputs">
-                            <input type="search" name="q" minlength='2' value="{{ old('q') }}" autocomplete="on" placeholder="Поиск по работам в портфолио">
+                            <input type="search" name="work" minlength='2' value="{{ htmlspecialchars(request('work')) }}" autocomplete="on" placeholder="Поиск по работам в портфолио">
                         </div>
                     </li>
                     <li class="filter {{ $f_profile ? 'active' : '' }}">
@@ -44,7 +32,7 @@
                             <span uk-icon="settings"></span>
                         </div>
                         <div class="inputs">
-                            <input type="text" name="profile" minlength='2' value="{{ old('profile') }}" autocomplete="on" placeholder="Поиск по пользователю">
+                            <input type="text" name="profile" minlength='2' value="{{ htmlspecialchars(request('profile')) }}" autocomplete="on" placeholder="Поиск по пользователю">
                         </div>
                     </li>
                     <input type="submit" value="Поиск" class="uk-button uk-button-default">

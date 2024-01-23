@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+@section('page.title'){{ __('Пользователи') }}@endsection
 @push('styles')
     @vite(['resources/scss/workers.scss'])
 @endpush
