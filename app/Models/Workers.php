@@ -22,10 +22,11 @@ class Workers extends Model
         return 'code';
     }
 
-    public function getWorks()
+    public function getWorks(int $limit = 3)
     {
         return Example_work::query()
             ->where(['user_id' => $this->user->id])
+            ->limit($limit)
             ->get();
     }
 

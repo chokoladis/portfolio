@@ -157,6 +157,8 @@ class WorkersController extends Controller
 
     public function detail(Workers $worker)
     {
+        $works = $worker->getWorks();
+
         $worker = [
             'id' => $worker->id,
             'code' => $worker->code,
@@ -167,7 +169,7 @@ class WorkersController extends Controller
             'socials' => $worker->socials
         ];
 
-        return view('workers.detail', compact('worker'));
+        return view('workers.detail', compact('worker','works'));
     }
 
     public function getTransliteName(){
@@ -175,11 +177,5 @@ class WorkersController extends Controller
         $user = User::find(auth()->user()->id, 'name');
         $code = Str::slug($user->name, '_', 'ru');
         return $code;
-    }
-
-    public function works(Workers $worker){
-        $works = $worker->getWorks();
-
-        return view('workers.works', compact('worker','works'));
     }
 }
