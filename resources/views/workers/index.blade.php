@@ -1,25 +1,28 @@
 @extends('layouts.main')
 
-@section('page.title'){{ __('Пользователи') }}@endsection
+
+@php
+    $arSearch = [];
+    $f_profile = request('profile') ? true : false;
+    
+    if (request('profile')){
+        $profileVal = htmlspecialchars(request('profile'));
+        array_push($arSearch, $profileVal);
+    }
+
+    $strSearch = implode(', ',$arSearch);
+    
+    $title = $strSearch ? __('Поиск по запросу - '.$strSearch) :  __('Пользователи');
+@endphp
+
+@section('page.title'){{ $title }}@endsection
+
 @push('styles')
     @vite(['resources/scss/workers.scss'])
 @endpush
 @push('scripts')
     @vite(['resources/js/workers.js'])
 @endpush
-
-@php
-    $f_search = false;
-
-    $f_profile = false;
-    // $profile_val = '';
-
-    if (isset($_GET['profile'])){
-        $f_profile = true;
-        // $profile_val = htmlspecialchars($_GET['profile']);
-    }
-    
-@endphp
 
 @section('content')
     
@@ -32,7 +35,7 @@
                             <span uk-icon="settings"></span>
                         </div>
                         <div class="inputs">
-                            <input type="text" name="profile" minlength='2' value="{{ old('profile') }}" autocomplete="on" placeholder="Введите имя или телефон пользователя">
+                            <input type="text" name="profile" minlength='2' value="{{ htmlspecialchars(request('profile')) }}" autocomplete="on" placeholder="Введите имя или телефон пользователя">
                         </div>
                     </li>
                     <input type="submit" value="Поиск" class="uk-button uk-button-default">

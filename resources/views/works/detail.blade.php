@@ -36,7 +36,7 @@
                 <div class="uk-card-footer">
                     <div class="dates">
                         <p>Создано - <span>{{ $work->created_at }}</span></p>
-                        @if($work->updated_at !== $work->created_at)
+                        @if($work->updated_at != $work->created_at)
                             <p>Обновлено - <span>{{ $work->updated_at }}</span></p>
                         @endif
                     </div>

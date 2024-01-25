@@ -1,6 +1,26 @@
 @extends('layouts.main')
 
-@section('page.title'){{ __('Работы') }}@endsection
+@php
+    $arSearch = [];
+    $f_search = request('work') ? true : false;
+    $f_profile = request('profile') ? true : false;
+
+    if (request('work')){
+        $searchVal = htmlspecialchars(request('work'));
+        array_push($arSearch, $searchVal);
+    }
+    
+    if (request('profile')){
+        $profileVal = htmlspecialchars(request('profile'));
+        array_push($arSearch, $profileVal);
+    }
+
+    $strSearch = implode(', ',$arSearch);
+    
+    $title = $strSearch ? __('Поиск по запросу - '.$strSearch) :  __('Работы');
+@endphp
+
+@section('page.title'){{ $title }}@endsection
 
 @push('styles')
     @vite(['resources/scss/works.scss'])
@@ -9,10 +29,6 @@
     @vite(['resources/js/works.js'])
 @endpush
 
-@php
-    $f_search = request('work') ? true : false;
-    $f_profile = request('profile') ? true : false;
-@endphp
 @section('content')
     
     <header class="header-filter">

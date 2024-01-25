@@ -103,7 +103,8 @@ class ProfileController extends Controller
         $user = User::query()
             ->where(['id' => $userId]);
 
-        if ($worker->update($data) && $user->update(['name' => $data['name']])){
+        if ($worker->update($data) ){
+            // && $user->update(['name' => $data['name']])){
             return responseJson(true, 'success');
         } else {
             return responseJson(false, '', 'ошибка');

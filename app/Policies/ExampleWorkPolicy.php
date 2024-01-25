@@ -18,7 +18,7 @@ class ExampleWorkPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Example_work $exampleWork): bool
+    public function view(User $user, Example_work $work): bool
     {
         //
     }
@@ -33,7 +33,9 @@ class ExampleWorkPolicy
 
     public function edit(User $user, Example_work $work): bool
     {
-        return $work->user->id === $user->id;
+        $currentUser = $work->user->id === $user->id;
+        $admin = $user->role == 'admin';
+        return $currentUser || $admin;
     }
 
     /**
@@ -41,21 +43,25 @@ class ExampleWorkPolicy
      */
     public function update(User $user, Example_work $work): bool
     {
-        return $work->user->id === $user->id;
+        $currentUser = $work->user->id === $user->id;
+        $admin = $user->role == 'admin';
+        return $currentUser || $admin;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Example_work $exampleWork): bool
+    public function delete(User $user, Example_work $work): bool
     {
-        //
+        $currentUser = $work->user->id === $user->id;
+        $admin = $user->role == 'admin';
+        return $currentUser || $admin;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Example_work $exampleWork): bool
+    public function restore(User $user, Example_work $work): bool
     {
         //
     }
@@ -63,7 +69,7 @@ class ExampleWorkPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Example_work $exampleWork): bool
+    public function forceDelete(User $user, Example_work $work): bool
     {
         //
     }

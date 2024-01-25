@@ -134,6 +134,8 @@ class ExampleWorkController extends Controller
 
     public function delete(Example_work $work){
 
+        $this->authorize('update', $work);
+        
         if ($work->delete()){
             return responseJson(true, __('Запись успешно удаленна'));
         } else {

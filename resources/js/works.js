@@ -52,6 +52,9 @@ $(function(){
         e.preventDefault();
         
         let parent = $(this).parents('.work-detail');
+        if (!parent.length){
+            parent = $(this).parents('.work');
+        }
         let workId = parent.attr('data-id');
 
         $.ajax({
