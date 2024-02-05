@@ -1,13 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
-use App\Http\Controllers\HelperController,
-    App\Http\Controllers\ExampleWorkController,
-    App\Http\Controllers\AdminController,
-    App\Http\Controllers\MenuNavController,
-    App\Http\Controllers\WorkersController,
-    App\Http\Controllers\ProfileController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,36 +31,44 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         
         Route::post('/works', 'ExampleWorkController@store')->name('work.store');
 
-        Route::get('/workers', 'WorkersController@index')->name('workers.index');
-        Route::post('/workers', 'WorkersController@store')->name('workers.store');
-        Route::get('/workers/{worker}/', 'WorkersController@detail')->name('workers.detail');
-        Route::get('/workers/{worker}/works/', 'WorkersController@works')->name('workers.works');
+        Route::group(['prefix' => 'workers'], function(){
+            Route::get('/', 'WorkersController@index')->name('workers.index');
+            Route::post('/', 'WorkersController@store')->name('workers.store');
+            Route::get('/{worker}/', 'WorkersController@detail')->name('workers.detail');
+            Route::get('/{worker}/works/', 'WorkersController@works')->name('workers.works');
+        });
 
         Route::get('/profile', 'ProfileController@index')->name('profile.index');
+        Route::get('/profile/works', 'ProfileController@works')->name('profile.works.index');
         Route::post('/profile', 'ProfileController@update')->name('profile.update');
         Route::post('/ajax/profile/change_avatar', 'ProfileController@changeAvatar')->name('profile.change_avatar');
         Route::post('/profile/delete', 'ProfileController@delete')->name('profile.delete');
         
+        Route::group(['prefix' => 'works'], function(){
         // Route::middleware(['isBelongsToUser:Example_work::class'])->group( function() {
-            Route::get('/works/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
-            Route::post('/works/{work}/update/', 'ExampleWorkController@update')->name('work.update');
-            Route::get('/works/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete'); //todo
+            Route::get('/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
+            Route::post('/{work}/update/', 'ExampleWorkController@update')->name('work.update');
+            Route::get('/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete'); //todo
         // });
+        });
 
-        Route::group(['middleware' => 'admin'], function() {
-            Route::get('/admin/', 'AdminController@index')->name('admin.index');
-            Route::get('/admin/works/', 'AdminController@examplesWork')->name('admin.works');
-            Route::get('/admin/workers/', 'AdminController@workers')->name('admin.workers');
-            Route::get('/admin/menu/', 'AdminController@menu')->name('admin.menu');
+        Route::group(['middleware' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
+            Route::get('/', 'HelperController@index')->name('admin.index');
+            Route::get('/works/', 'ExampleWorkController@index')->name('admin.works.index');
+            Route::get('/workers/', 'WorkersController@index')->name('admin.workers.index');
+            Route::get('/menu/', 'MenuNavController@index')->name('admin.menu.index');
         
-            Route::post('/admin/menu/', 'MenuNavController@store')->name('menu.store');
-            Route::get('/admin/menu/{menuNav}/edit/', 'MenuNavController@edit')->name('menu.edit');
-            Route::post('/admin/menu/{menuNav}/update', 'MenuNavController@update')->name('menu.update');
-            Route::get('/admin/menu/{menuNav}/delete/', 'MenuNavController@delete')->name('menu.delete');
+            Route::group(['prefix' => 'menu'], function() {
+                Route::post('/', 'MenuNavController@store')->name('admin.menu.store');
+                Route::get('/add/', 'MenuNavController@create')->name('admin.menu.create');
+                Route::get('/add/', 'MenuNavController@create')->name('admin.menu.create');
+                Route::get('/{menuNav}/edit/', 'MenuNavController@edit')->name('admin.menu.edit');
+                Route::post('/{menuNav}/update', 'MenuNavController@update')->name('admin.menu.update');
+                Route::get('/{menuNav}/delete/', 'MenuNavController@delete')->name('admin.menu.delete');
+            });
         });
     });
 });
-
 
 
 

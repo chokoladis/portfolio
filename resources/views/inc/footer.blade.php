@@ -6,7 +6,7 @@
                         </ul>
                         <i>Сайт разработан на свободное время какого то разработчика с ником <b>chokoladis</b></i>
                     </div>
-                    <div class="copyrithg">© 2023 localhost.com</div>
+                    <div class="copyrithg">© 2023-2024 localhost.com</div>
                 </div>
             </footer>
 
@@ -19,11 +19,7 @@
         @if(auth()->user() !== null) 
             @if(Route::is('work.*'))
                 @include('inc.modal.work_create')
-                @include('inc.modal.work_edit')
-            @elseif (Route::is('workers.*'))
-                @include('inc.modal.worker_new')
-            @elseif (Route::is('profile.*'))
-                @include('inc.modal.worker_edit')
+                @include('inc.modal.work_edit')    
             @endif
         @endif
         <!-- <a href="https://www.flaticon.com/free-icons/portfolio" title="portfolio icons">Portfolio icons created by Freepik - Flaticon</a> -->

@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">
                         <i class="fas fa-link"></i>
-                        Menu editor</h1>
+                        {{ __('Меню редактор - создать')}}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -29,11 +29,14 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            @include('compiled.menu_list')
-            
-            <button class="uk-button uk-button-primary" uk-toggle="target: #md-menu_add" type="button">Добавить</button>
+            <form action="{{ route('admin.menu.store') }}" method="POST">
+                @csrf
+                
+                @include('compiled.admin.form')
+
+                <input type="submit" value="{{ __('Добавить') }}" class="uk-button uk-button-primary">
+            </form>
         </div><!--/. container-fluid -->
     </section>
-    <!-- /.content -->
 
 @endsection

@@ -1,31 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\MenuNav;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuNav\StoreRequest;
 use App\Http\Requests\MenuNav\UpdateRequest;
-use App\Http\Controllers\HelperController;
+
 
 class MenuNavController extends Controller
 {
-    static $error = '';
-    static $success = true;
-    static $response = '';
 
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return MenuNav::all();
-    }
+        // todo filter
+        $listMenu = MenuNav::all();
 
-    public function getActive(){
-        $query = MenuNav::query();
-        $list = $query->where('active', 1)->get();
-        return $list;
+        return view('admin.menu.index', compact('listMenu'));
     }
 
     /**
@@ -33,7 +27,10 @@ class MenuNavController extends Controller
      */
     public function create()
     {
-        //
+        $model = new MenuNav();
+        $columns = $model->getColumns();
+
+        return view('admin.menu.create', compact('columns'));
     }
 
     /**
@@ -41,39 +38,29 @@ class MenuNavController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $success = true;
         $data = $request->validated();
+        
+        $ar = [
+            'name' => $data['name'],
+            'link' => $data['link'],
+            'active' => $data['active'],
+        ];
 
-        $res = MenuNav::firstOrCreate(
-            ['link' => $data['link']], 
-            [
-                'name' => $data['name'],
-                'link' => $data['link'],
-                'role' => $data['role'],
-                'active' => $data['active'],
-                'sort' => $data['sort']
-            ]
-        );
+        if (isset($data['role']))
+            $ar = array_merge($ar,['role' => $data['role'],]);
+
+        if (isset($data['sort']))
+            $ar = array_merge($ar,['sort' => $data['sort'],]);
+
+        $res = MenuNav::firstOrCreate( ['link' => $data['link']], $ar );
 
         if ($res->wasRecentlyCreated){
-            self::$response = __('Данные успешно созданы');
+            return redirect()->route('admin.menu.index')->with('success', __('Данные успешно созданы'));
         } else {
-            self::$success = false;
-            self::$error = __('Запись с данным заголовком уже есть в БД');
-        }
-
-        return responseJson(self::$success,self::$response, self::$error);
-        
+            return redirect()->route('admin.menu.create')->with('error', __('Запись с данным заголовком уже есть в БД'));
+        }        
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(MenuNav $menuNav)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      */

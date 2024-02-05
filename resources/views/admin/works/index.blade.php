@@ -49,7 +49,7 @@
     
     <header class="header-filter">
         <div class="container">
-            <form action="{{ route('admin.works') }}" method="GET" id="work-filter">
+            <form action="{{ route('admin.works.index') }}" method="GET" id="work-filter">
                 <ul class="one-row {{ $f_profile || $f_search ? 'active' : '' }} ">
                     <li class="search {{ $f_search ? 'active' : '' }}">
                         <div class="btn">
@@ -76,7 +76,8 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            @include('compiled.works')
+            
+            @include('compiled.admin.works')
 
             <button class="uk-button uk-button-primary" uk-toggle="target: #md-work_create" type="button">Добавить</button>
         </div><!--/. container-fluid -->

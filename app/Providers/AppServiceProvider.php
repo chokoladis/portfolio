@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Pagination\Paginator;
 use App\Http\Controllers\MenuNavController;
 use App\Http\Controllers\HelperController;
+use App\Models\MenuNav;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,14 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $menuNav = new MenuNavController();
-        $helper = new HelperController();
-
-        // $authUser = auth()->user();
-        // $authUserName = $authUser !== null ? $authUser->name : 'noname';
-
-        // View::share('G_authUser', $authUser);
-        // View::share('G_authUserName', $authUserName);
+        $menuNav = new MenuNav();
+        // $helper = new HelperController();
 
         View::share('G_menuNav', $menuNav->getActive());
         // View::share('G_theme', $helper->getCookie('theme'));

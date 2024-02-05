@@ -68,6 +68,25 @@
                 </div>
                 <div class="big_info uk-width-3-4@m uk-width-1-1">
                     <p class="about {{ $f_about ? '' : 'is-disable' }}">{{ $textAbout }}</p>
+                    @if(!$works->count())
+                        <div class="result_query">
+                            {{ __('У пользователя нет пример работ') }}
+                        </div>
+                    @else
+                        <div class="uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-grid-small uk-grid-match uk-margin-small-bottom" uk-grid>
+                            @foreach($works as $work)
+                                <div>
+                                    <div class="uk-card uk-card-primary uk-card-body">
+                                        <a href="{{ route('work.detail',$work->slug) }}">
+                                            <h3 class="uk-card-title">{{ $work->title }}</h3>
+                                        </a>
+                                        <p>{{ $work->description }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <a href="{{ route('profile.works.index') }}" class="uk-display-block uk-margin-medium-bottom">Просмотреть работы списком</a>
+                    @endif
                     @php 
                         if ($worker->socials !== null){
                             $arSocials = json_decode($worker->socials, 1);
@@ -86,4 +105,5 @@
         </div>
     </main>
 
+    @include('inc.modal.worker_edit')
 @endsection

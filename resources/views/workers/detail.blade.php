@@ -53,7 +53,7 @@
                             {{ __('У пользователя нет пример работ') }}
                         </div>
                     @else
-                        <div class="uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-grid-small uk-grid-match" uk-grid>
+                        <div class="uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-grid-small uk-grid-match uk-margin-medium-bottom" uk-grid>
                             @foreach($works as $work)
                                 <div>
                                     <div class="uk-card uk-card-primary uk-card-body">

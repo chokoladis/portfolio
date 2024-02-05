@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Http\Controllers\ExampleWorkController;
+use Carbon\Carbon;
+use PharIo\Manifest\Url;
 
 class Example_work extends Model
 {
@@ -18,6 +20,18 @@ class Example_work extends Model
     
     protected $table = 'example_works';
     protected $guarded = [];
+
+    protected $hidden = ['deleted_at'];
+
+    protected $casts = [
+        'title' => 'string',
+        'description' => 'string', 
+        'slug' => 'string',
+        'url_files' => 'string',
+        'url_work' => 'string',
+        'created_at' => 'date',
+        'updated_at' => 'date',
+    ];
 
     public function getRouteKeyName(){
         return 'slug';

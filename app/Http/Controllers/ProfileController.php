@@ -13,6 +13,7 @@ use App\Http\Controllers\HelperController as Helper;
 use App\Http\Requests\Profile\UpdateImgRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Controllers\WorkersController;
+use App\Http\Requests\Profile\WorksRequest;
 
 
 class ProfileController extends Controller
@@ -120,5 +121,21 @@ class ProfileController extends Controller
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
 
+    }
+
+    public function works(WorksRequest $request){
+        
+        $data = $request->validated();
+
+        $perPage = isset($data['perPage']) ? $data['perPage'] : 5;
+        $pageNum = isset($data['pageNum']) ? $data['pageNum'] : 1;
+
+        $userId = auth()->user()->id;
+
+        $works = Example_work::query()
+            ->where(['user_id' => $userId ])
+            ->paginate(perPage: $perPage, page: $pageNum);
+
+        return view('profile.works.index', compact('works'));
     }
 }

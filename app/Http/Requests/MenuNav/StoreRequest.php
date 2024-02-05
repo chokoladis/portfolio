@@ -24,9 +24,32 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'string',
             'link' => 'string',
-            'role' => 'string',
+            'role' => 'string|nullable',
             'active' => 'boolean',
-            'sort' => 'string'
+            'sort' => 'integer|nullable'
         ];
+    }
+
+    /**
+     * Prepare inputs for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'active' => $this->toBoolean($this->active),
+        ]);
+    }
+
+    /**
+     * Convert to boolean
+     *
+     * @param $booleable
+     * @return boolean
+     */
+    private function toBoolean($booleable)
+    {
+        return filter_var($booleable, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     }
 }

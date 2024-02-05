@@ -3,18 +3,18 @@
         'Menu' => [
             'name' =>   'Menu',
             'img' =>    '<i class="nav-icon fas fa-link"></i>',
-            'link' => 'admin.menu',
+            'link' => 'admin.menu.index',
             'items' => []
         ],
         'Example_work' =>[
             'name' =>   'Examples work',
             'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
-            'link' => 'admin.works'
+            'link' => 'admin.works.index'
         ],
         'Workers' =>[
             'name' =>   'Workers',
             'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
-            'link' => 'admin.workers'
+            'link' => 'admin.workers.index'
         ],
     ];
 @endphp

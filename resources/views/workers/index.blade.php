@@ -54,4 +54,5 @@
         </div>
     </main>
 
+    @include('inc.modal.worker_new')
 @endsection

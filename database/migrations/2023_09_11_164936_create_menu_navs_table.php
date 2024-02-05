@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('link', 100);
             $table->string('role', 20)->default('user');
             $table->boolean('active')->default(1);
-            $table->smallInteger('sort')->default('100');
+            $table->smallInteger('sort')->default(100);
             $table->softDeletes();
         });
     }
