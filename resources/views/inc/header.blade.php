@@ -99,7 +99,6 @@
                         @endguest
                     </ul>
                 </div>
-                
             </header>
             <!-- <div class="theme-toggle">
                 <img src="/storage/general/switch.png" alt="">

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+@section('breadcrumb'){{ Breadcrumbs::render('workers') }}@endsection
 
 @php
     $arSearch = [];
@@ -12,7 +13,7 @@
 
     $strSearch = implode(', ',$arSearch);
     
-    $title = $strSearch ? __('Поиск по запросу - '.$strSearch) :  __('Пользователи');
+    $title = $strSearch ? __('Поиск по запросу - '.$strSearch) :  __('Профили');
 @endphp
 
 @section('page.title'){{ $title }}@endsection

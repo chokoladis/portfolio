@@ -3,7 +3,9 @@
 ?>
 @extends('layouts.main')
 
+@section('breadcrumb'){{ Breadcrumbs::render('worker', $worker) }}@endsection
 @section('page.title'){{ __('Пользователи - '.$worker['name']) }}@endsection
+
 @push('styles')
     @vite(['resources/scss/profile.scss'])
     @vite(['resources/scss/workers.scss'])

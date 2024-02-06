@@ -168,7 +168,7 @@ ul,li,p{
 
             .theme-toggle{
 
-                top: 80px;
+                bottom: 40px;
                 left: 20px;
                 width: 30px;
                 height: 30px;
@@ -266,6 +266,21 @@ ul,li,p{
                     }
                 }
             }
+        }
+    }
+
+    .header-breadcrumbs{
+        padding: 10px 0;
+        position: relative;
+
+        .uk-breadcrumb::before{
+            content: '';
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 40px;
+            height: 100%;
+            background: green;            
         }
     }
 

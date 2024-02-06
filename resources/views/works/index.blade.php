@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+@section('breadcrumb'){{ Breadcrumbs::render('works') }}@endsection
+
 @php
     $arSearch = [];
     $f_search = request('work') ? true : false;
