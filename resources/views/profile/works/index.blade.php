@@ -3,7 +3,8 @@
 ?>
 @extends('layouts.main')
 
-@section('page.title') {{ __('Профиль - работы') }} @endsection
+@section('breadcrumb'){{ Breadcrumbs::render('profile.works') }}@endsection
+@section('page.title') {{ __('Мои работы') }} @endsection
 
 @push('styles')
     @vite(['resources/scss/profile.scss'])

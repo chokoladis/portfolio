@@ -4,7 +4,7 @@
     <li>...</li>
     <li>
         <b>0.2</b>
-        <p>...</p>
+        <p>add breadcrumbs, fix security</p>
     </li>
     <li>
         <b>0.18</b>

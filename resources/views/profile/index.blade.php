@@ -3,6 +3,7 @@
 ?>
 @extends('layouts.main')
 
+@section('breadcrumb'){{ Breadcrumbs::render('profile') }}@endsection
 @section('page.title') {{ __('Профиль') }} @endsection
 
 @push('styles')
