@@ -19,10 +19,8 @@ Route::get('/', function(){
 
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
-    // сделать доступным и для обычных авториз. пользователей
     Route::get('/works', 'ExampleWorkController@index')->name('work.index');
     Route::get('/works/{work}/detail/', 'ExampleWorkController@detail')->name('work.detail');
-    // Route::get('/works/search?q={q}', 'ExampleWorkController@search')->name('work.search');
 
     // ajax requests
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
@@ -38,17 +36,29 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
             Route::get('/{worker}/works/', 'WorkersController@works')->name('workers.works');
         });
 
-        Route::get('/profile', 'ProfileController@index')->name('profile.index');
-        Route::get('/profile/works', 'ProfileController@works')->name('profile.works.index');
-        Route::post('/profile', 'ProfileController@update')->name('profile.update');
-        Route::post('/ajax/profile/change_avatar', 'ProfileController@changeAvatar')->name('profile.change_avatar');
-        Route::post('/profile/delete', 'ProfileController@delete')->name('profile.delete');
+        Route::group(['namespace' => 'Profile'], function() {
+
+            Route::get('/profile', 'IndexController@index')->name('profile.index');
+
+            Route::get('/profile/works', 'WorksController@index')->name('profile.works.index');
+            Route::get('/profile/works/{work}', 'WorksController@edit')->name('profile.works.edit');
+            Route::post('/profile/works/{work}', 'WorksController@update')->name('profile.works.update');
+            Route::post('/profile/works/{work}/delete', 'WorksController@delete')->name('profile.works.delete');
+            // Route::get('/profile/works/{work}/files', 'WorksController@filesAdd')->name('profile.works.files.add');
+            // Route::post('/profile/works/{work}/files', 'WorksController@filesStore')->name('profile.works.files.store');
+            
+
+            Route::post('/profile', 'IndexController@update')->name('profile.update');
+            Route::post('/ajax/profile/change_avatar', 'IndexController@changeAvatar')->name('profile.change_avatar');
+            Route::post('/profile/delete', 'IndexController@delete')->name('profile.delete');
+
+        });
         
         Route::group(['prefix' => 'works'], function(){
         // Route::middleware(['isBelongsToUser:Example_work::class'])->group( function() {
-            Route::get('/{work}/edit/', 'ExampleWorkController@edit')->name('work.edit');
-            Route::post('/{work}/update/', 'ExampleWorkController@update')->name('work.update');
-            Route::get('/{work}/delete/', 'ExampleWorkController@delete')->name('work.delete'); //todo
+            Route::get('/{work}/edit/', 'ExampleWorkController@edit')->name('works.edit');
+            Route::post('/{work}/update/', 'ExampleWorkController@update')->name('works.update');
+            Route::get('/{work}/delete/', 'ExampleWorkController@delete')->name('works.delete'); //todo
         // });
         });
 

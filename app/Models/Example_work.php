@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Http\Controllers\ExampleWorkController;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 use PharIo\Manifest\Url;
 
 class Example_work extends Model
@@ -32,6 +33,31 @@ class Example_work extends Model
         'created_at' => 'date',
         'updated_at' => 'date',
     ];
+
+
+    static $columnsEdit = [
+        'title' => 'Заголовок',
+        'description' => 'Описание', 
+        // 'url_files' => 'Ссылки на картинки/скриншоты',
+        'url_work' => 'Ссылка на результат',
+    ];
+    
+    public function getColumns(){
+
+        $tableName = $this->getTable();
+  
+        $columns = Schema::getColumnListing($tableName);
+        
+        foreach($columns as $col){
+            if ($col !== 'id'
+                && array_key_exists($col,self::$columnsEdit)){
+                $res[$col]['name_ru'] = self::$columnsEdit[$col];
+                $res[$col]['type'] = Schema::getColumnType($tableName, $col);
+            }
+        }
+
+        return $res;
+    }
 
     public function getRouteKeyName(){
         return 'slug';

@@ -33,5 +33,5 @@ Breadcrumbs::for('profile.works', function ($trail) {
 });
 Breadcrumbs::for('profile.works.edit', function ($trail, $work) {
     $trail->parent('profile.works');
-    $trail->push($work->title, route('profile.works.edit'));
+    $trail->push($work->title, route('profile.works.edit', $work));
 });

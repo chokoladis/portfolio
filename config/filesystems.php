@@ -73,4 +73,8 @@ return [
         public_path('storage') => storage_path('app/public'),
     ],
 
+    'img' => [
+        'works' => env('IMG_WORKS_DIR'),
+        'workers' => env('IMG_WORKERS_DIR')
+    ]
 ];

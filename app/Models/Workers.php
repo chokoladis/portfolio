@@ -42,10 +42,18 @@ class Workers extends Model
         self::updating(function($model){
 
             $old_avatar = $model->getOriginal('url_avatar');
-            $real_path = public_path(WorkersController::$folderImg. $old_avatar);
+            $real_path = public_path().WorkersController::$folderImg. $old_avatar;
 
             if ($old_avatar && file_exists($real_path)){
                 unlink($real_path);
+            }
+
+            $arPath = explode('/', $old_avatar);
+            $folder = public_path(WorkersController::$folderImg.$arPath[0]);
+            if (is_dir($folder)){
+                $countFiles = count(Storage::files($folder));
+
+                if (!$countFiles) rmdir($folder);
             }
         });
         
@@ -65,9 +73,11 @@ class Workers extends Model
                 }
 
                 $folder = public_path(WorkersController::$folderImg.$arPath[0]);
-                $countFiles = count(Storage::files($folder));
+                if (is_dir($folder)){
+                    $countFiles = count(Storage::files($folder));
 
-                if (!$countFiles) rmdir($folder);
+                    if (!$countFiles) rmdir($folder);
+                }
             }
             // Log::info('Deleted event call: '.$item); 
 

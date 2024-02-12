@@ -39,12 +39,6 @@ class MenuNav extends Model
         'active' => 'Активность',
         'sort' => 'Сортировка'
     ];
-
-    public function getActive(){
-        $query = MenuNav::query();
-        $list = $query->where('active', 1)->get();
-        return $list;
-    }
     
     public function getColumns(){
 
@@ -54,12 +48,18 @@ class MenuNav extends Model
         
         foreach($columns as $col){
             if ($col !== 'id'
-                && !in_array($col,self::$formHidden)){
+                && array_key_exists($col,self::$nameColumns)){
                 $res[$col]['name_ru'] = self::$nameColumns[$col];
                 $res[$col]['type'] = Schema::getColumnType($tableName, $col);
             }
         }
 
         return $res;
+    }
+
+    public function getActive(){
+        $query = MenuNav::query();
+        $list = $query->where('active', 1)->get();
+        return $list;
     }
 }

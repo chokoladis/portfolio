@@ -9,18 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class HelperController extends Controller
 {
-    public static $acceptFileSize = 3150000;
-    public static $workerDirImg = '/storage/workers/img/';
-
-    // public static function jsonRespose(bool $success = true,array|string $response = []){
-    //     $res = [
-    //         'success' => $success,
-    //         'response' => $response
-    //     ];
-
-    //     return json_encode($res,JSON_UNESCAPED_UNICODE);        
-    // }
-
     public static function getAdminUser(){
         $userObj = auth()->user();
         if ($userObj){
@@ -72,67 +60,6 @@ class HelperController extends Controller
         }
 
         return $res;
-    }
-
-
-    public function getNewPhotoPath($request, $propName, $mainDir){
-        
-        // $root = public_path() . self::$folderImg;
-        $root = public_path() . $mainDir;        
-
-        // if ($request->hasFile('photo')) {
-        if ($request->hasFile($propName)) {
-            
-            $photo = $request->file($propName);
-
-            if (is_array($photo)){
-
-                $file_path = '';
-
-                foreach ($photo as $file) {
-                    
-                    $fileAr = $this->generatePhotoPath($file, $mainDir);
-                    $file_path .= $fileAr['subdir'].'/'.$fileAr['file_name'].', ';
-
-                    if (!file_exists($root.$file_path)){
-                        $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
-                    }
-                }
-
-                $file_path = trim($file_path);
-                $file_path_len = mb_strlen($file_path);
-                $file_path = mb_substr($file_path, 0, $file_path_len - 1);
-            } else {
-                $fileAr = $this->generatePhotoPath($photo, $mainDir);
-                $file_path = $fileAr['subdir'].'/'.$fileAr['file_name'];
-
-                if (!file_exists($root.$file_path)){
-                    $photo->move($root.$fileAr['subdir'], $fileAr['file_name']);
-                }
-            }
-            
-        } else {
-            $file_path = '';
-        }
-
-        return $file_path;
-    }
-
-    protected function generatePhotoPath($file, $mainDir){
-
-        $salt = auth()->user()->id.'_2901';
-            
-        $file_name = md5($salt.'_'.$file->getClientOriginalName());
-        $file_name = mb_substr($file_name, 0, 16).'.'.$file->extension();
-        
-        $mk_name = substr($file_name,0,3);
-
-        $folder = public_path() . $mainDir . $mk_name;
-        if (!is_dir($folder)){
-            mkdir($folder, 755);
-        }
-
-        return [ 'subdir' => $mk_name, 'file_name' => $file_name ];
     }
 
     // public function setCookie($name, $value, $minutes = 60){

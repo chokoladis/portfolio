@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 use App\Models\Workers;
 use App\Models\Example_work;
-use App\Http\Controllers\HelperController as Helper;
+use App\Services\ImageService;
+// use App\Http\Controllers\HelperController as Helper;
 use App\Http\Requests\Profile\UpdateImgRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Controllers\WorkersController;
 use App\Http\Requests\Profile\WorksRequest;
 
 
-class ProfileController extends Controller
+class IndexController extends Controller
 {
     public static $defaultFolderImg = '/storage/workers/img/';
     static $error = '';
@@ -59,8 +59,7 @@ class ProfileController extends Controller
     
         $userId = auth()->user()->id;
 
-        $helper = new Helper;
-        $file_path = $helper->getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
+        $file_path = ImageService::getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
 
         if ($file_path) {
 
@@ -68,6 +67,7 @@ class ProfileController extends Controller
                 ->where('user_id', '=', $userId)
                 ->first();
 
+            // dd($workerFind->url_avatar, $file_path);
             $workerFind->url_avatar = $file_path;
 
             $res = $workerFind->save();
@@ -90,10 +90,8 @@ class ProfileController extends Controller
         
         $data = $request->validated(); 
 
-        $workerController = new WorkersController();
-
-        $data['socials'] = $workerController->getSocials($data['socials']);
-        $phone = $workerController->getNumbers($data['phone']);
+        $data['socials'] = WorkersController::getSocials($data['socials']);
+        $phone = WorkersController::getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
         $userId = auth()->user()->id;
@@ -105,7 +103,7 @@ class ProfileController extends Controller
             ->where(['id' => $userId]);
 
         if ($worker->update($data) ){
-            // && $user->update(['name' => $data['name']])){
+            // && $user->update(['name' => $data['name']])){ todo
             return responseJson(true, 'success');
         } else {
             return responseJson(false, '', 'ошибка');
@@ -121,21 +119,5 @@ class ProfileController extends Controller
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
 
-    }
-
-    public function works(WorksRequest $request){
-        
-        $data = $request->validated();
-
-        $perPage = isset($data['perPage']) ? $data['perPage'] : 5;
-        $pageNum = isset($data['pageNum']) ? $data['pageNum'] : 1;
-
-        $userId = auth()->user()->id;
-
-        $works = Example_work::query()
-            ->where(['user_id' => $userId ])
-            ->paginate(perPage: $perPage, page: $pageNum);
-
-        return view('profile.works.index', compact('works'));
     }
 }

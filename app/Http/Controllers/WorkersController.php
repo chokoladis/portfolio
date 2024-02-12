@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 
 class WorkersController extends Controller
 {
-    static $folderImg = '/storage/workers/img/';
     static $error = '';
     static $success = true;
     static $response = '';
@@ -73,13 +72,13 @@ class WorkersController extends Controller
         return $queryWorkers;
     }
 
-    public function isUsername(string $data) : bool {
+    public static function isUsername(string $data) : bool {
 
         preg_match('/[a-zA-Z]+/', $data, $matches_letter);
         return !empty($matches_letter) ? true : false;
     }
 
-    public function getNumbers(string $data) : array {
+    public static function getNumbers(string $data) : array {
 
         preg_match_all('/[\d]/', $data, $matches_num);
         if(!empty($matches_num)){
@@ -90,7 +89,7 @@ class WorkersController extends Controller
         }
     }
 
-    public function getUsersByLikeName(string $name) : array{
+    public static function getUsersByLikeName(string $name) : array{
 
         $userFinder = User::query()
             ->where('name', 'like', '%'.$name.'%')
@@ -120,7 +119,7 @@ class WorkersController extends Controller
 
         // todo
         $helper = new HelperController();
-        $data['url_avatar'] = $helper->getNewPhotoPath($request, 'photo', self::$folderImg);
+        $data['url_avatar'] = $helper->getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
 
         unset($data['photo']);
 
@@ -141,7 +140,7 @@ class WorkersController extends Controller
         return responseJson(self::$success, self::$response, self::$error);
     }
 
-    public function getSocials(array|null $data){
+    public static function getSocials(array|null $data){
 
         if ($data === null)
             return $data;
