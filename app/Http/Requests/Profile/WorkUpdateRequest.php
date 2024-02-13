@@ -22,14 +22,25 @@ class WorkUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => 'string',
             'description' => 'string',
             'url_work' => 'string',
-            'photo' => [File::types(['jpeg','jpg','png','gif', 'svg'])->max(3 * 1024)],
-            // 'url_files' => '',
-            
+            'url_files' => 'array|nullable',
+            'url_files.*' => 'string',
+            'url_files_flags' => 'array|nullable',
+            'url_files_flags.*' => 'accepted',
         ];
+
+        if ($this->input('photo')){
+            $photos = count($this->input('photo'));
+            foreach(range(0, $photos) as $index) {
+                $rules['photo.' . $index] = [File::types(['jpeg','jpg','png','gif', 'svg', 'bmp'])->max(3 * 1024)];
+            }
+        }
+        
+
+        return $rules;
     }
 
 }

@@ -30,21 +30,25 @@
                     @include('compiled.admin.form')
 
                     @if (!empty($arFiles))
-                        <div class="uk-child-width-1-1 uk-child-width-1-3@m uk-child-width-1-4@l">
+                        <div class="uk-child-width-1-1 uk-child-width-1-3@m uk-child-width-1-4@l f_url_files">
                             @foreach ($arFiles as $key => $filePath)
-                                <label for="url_files[{{ $key }}]">
-                                    <input type="checkbox" name="url_files" id="url_files[{{ $key }}]" class="uk-checkbox" checked>{{ __('Картинка - '.$key) }}
+                                <label for="url_files_flags[{{ $key }}]">
+                                    <p>
+                                        <input type="checkbox" name="url_files_flags[{{ $key }}]" id="url_files_{{ $key }}" class="uk-checkbox" checked>{{ __('Картинка - '.$key) }}
+                                    </p>
+                                    <input type="hidden" name="url_files[{{ $key }}]" value="{{ trim($filePath) }}">
                                     <img src="{{ '/storage/works/img/'.trim($filePath) }}" alt="">
                                 </label>
                             @endforeach
                         </div>
                     @endif
-                    <div class="uk-margin js-upload" uk-form-custom>
+                    <div class="uk-margin js-upload uk-width-1-1 uk-width-1-4@s" uk-form-custom>
+                        
                         <label for="photo">
+                            <input type="file" name="photo[]" id="photo" multiple="multiple" accept="image/*">
                             {{ __('Ссылки на картинки/скриншоты') }}
-                            <input type="file" name="photo" id="photo" multiple accept="image/*">
-                            <button class="uk-button uk-button-default" type="button" tabindex="-1">Добавить</button>
-                        </label>                        
+                            <button class="uk-button uk-button-small uk-button-upload" type="button" tabindex="-1">Добавить</button>
+                        </label>
 
                         @if($errors->has('photo'))
                             <div class="error">{{ $errors->first('photo') }}</div>

@@ -41,14 +41,26 @@ class WorksController extends Controller
         return view('profile.works.edit', compact('work'));
     }
 
-    public function update(WorkUpdateRequest $request)
+    public function update(WorkUpdateRequest $request, Example_work $work)
     {
-        if ($request->hasFile('photo')){
-            $ar = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
-            dump($ar);
-        }
-        dd($request->all());
         $data = $request->validated();
+
+        $arModiferUrlFiles = array_intersect_key($data['url_files'],$data['url_files_flags']);
+        $data['url_files'] = implode(', ', $arModiferUrlFiles);
+
+        unset($data['url_files_flags'], $data['photo']);
+
+        if ($request->hasFile('photo')){
+            $photo = $request->file('photo');
+
+            $url_files = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+
+            $url_files = $data['url_files'].', '.$url_files;
+
+            $data['url_files'] = $url_files;
+        }
+
+        $success = Example_work::find($work->id)->update($data);
     
         $perPage = isset($data['perPage']) ? $data['perPage'] : 5;
         $pageNum = isset($data['pageNum']) ? $data['pageNum'] : 1;

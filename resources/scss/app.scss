@@ -79,6 +79,33 @@ ul,li,p{
     text-align: center;
 }
 
+.js-upload{
+
+    label{
+        display: flex;
+        flex-direction: column;
+
+        .uk-button-upload{
+            background: transparent;
+            border: 1px solid $header-bg;
+            margin-top: 5px;
+        }
+    
+        &:hover{
+    
+            .uk-button-upload{
+                background: $header-bg;
+            }
+        }
+    }
+}
+.f_url_files{
+    label{
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .root{
     display: flex;
     flex-direction: column;

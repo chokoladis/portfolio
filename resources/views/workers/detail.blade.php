@@ -16,7 +16,7 @@
         <div class="container">
             <section class="worker">
                 @php
-                    $worker['url_avatar'] = HelperController::$workerDirImg.$worker['url_avatar'];
+                    $worker['url_avatar'] = config('filesystems.img.workers').$worker['url_avatar'];
                     $imgUrl = $worker['url_avatar'] && file_exists(public_path($worker['url_avatar'])) 
                         ? $worker['url_avatar'] : '/storage/general/user.png' ;
 

@@ -18,7 +18,7 @@
         <div class="container">
             <section class="worker">
                 @php
-                    $url_avatar = HelperController::$workerDirImg.$worker->url_avatar;
+                    $url_avatar = config('filesystems.img.workers').$worker->url_avatar;
                     $imgUrl = $worker->url_avatar && file_exists(public_path($url_avatar)) ? $url_avatar : '/storage/general/user.png' ;
 
                     if ($worker->about){

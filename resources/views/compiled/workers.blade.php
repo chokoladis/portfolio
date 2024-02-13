@@ -19,7 +19,7 @@
                 <div class="worker" onclick="location.href='/workers/{{ $worker->code }}/'">
                     <div class="avatar">
                         @php    
-                            echo $worker->url_avatar ? '<img src="'.HelperController::$workerDirImg.$worker->url_avatar.'">':'<span uk-icon="icon: user; ratio:2"></span>';
+                            echo $worker->url_avatar ? '<img src="'.config('filesystems.img.workers').$worker->url_avatar.'">':'<span uk-icon="icon: user; ratio:2"></span>';
                         @endphp
                     </div>                
                     <div class="content">
@@ -43,7 +43,7 @@
                         </ul>                    
                     </div>
                     <div class="bg" style="background-image: url({{ $worker->url_avatar 
-                        ? HelperController::$workerDirImg.$worker->url_avatar 
+                        ? config('filesystems.img.workers').$worker->url_avatar 
                         : '/storage/general/users2.png' }})"></div>
                 </div>
             @endforeach

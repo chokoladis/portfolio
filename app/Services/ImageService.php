@@ -19,12 +19,14 @@ class ImageService {
                 $file_path = '';
 
                 foreach ($photo as $file) {
-                    
-                    $fileAr = self::generatePhotoPath($file, $mainDir);
-                    $file_path .= $fileAr['subdir'].'/'.$fileAr['file_name'].', ';
 
-                    if (!file_exists($root.$file_path)){
-                        $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
+                    if ($file->isValid()){
+                        $fileAr = self::generatePhotoPath($file, $mainDir);
+                        $file_path .= $fileAr['subdir'].'/'.$fileAr['file_name'].', ';
+
+                        if (!file_exists($root.$file_path)){
+                            $file->move($root.$fileAr['subdir'], $fileAr['file_name']);
+                        }
                     }
                 }
 
