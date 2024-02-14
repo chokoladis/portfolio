@@ -51,6 +51,19 @@ ul,li,p{
     border: 0px;
     text-transform: uppercase;
 }
+.uk-button-search{
+    line-height: normal;
+    padding: 0px 20px;
+    height: 35px;
+    max-height: 35px;
+
+    background: transparent;
+    border: 1px solid var(--dual-clr-alternative);
+
+    &:hover{
+        background: var(--dual-clr-alternative);
+    }
+}
 
 .clr-danger{
     color: $clr-danger;
@@ -100,9 +113,14 @@ ul,li,p{
     }
 }
 .f_url_files{
-    label{
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+
+    > div{
+        margin-top: 20px;
+        padding: 0px 5px;
     }
 }
 
@@ -122,6 +140,7 @@ ul,li,p{
 
             ul.header-main{
                 display: flex;
+                align-items: center;
                 padding: 20px 10px;
 
                 li{
@@ -179,9 +198,22 @@ ul,li,p{
                         a{
                             cursor: default;
                         }
+                    }
 
+                    &.search{
+                        margin: 0px auto;
+                        
+                        input[name="search"]{
+                            padding: 15px 10px;
+                            height: 35px;
+                            max-height: 35px;
+                        }
                     }
                     
+                    &:last-of-type{
+                        margin-left: auto;
+                    }
+
                     .dropdown-menu a{
                         color: $header-bg;
 

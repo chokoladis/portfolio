@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
-    return view('home');
-})->name('home');
+Route::get('/', function(){ return view('home'); })->name('home');
+Route::get('/about', function(){ return view('about'); })->name('about');
+Route::get('/search', function(){ return view('search'); })->name('search');
 
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 

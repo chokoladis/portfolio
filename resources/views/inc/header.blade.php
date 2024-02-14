@@ -63,9 +63,19 @@
                         <x-main-menu-li route="{{ route('home') }}">
                             {{ __('Главная') }}
                         </x-main-menu-li>
+                        <x-main-menu-li route="{{ route('about') }}">
+                            {{ __('О проекте') }}
+                        </x-main-menu-li>
 
                         <x-main-menu-list-active />
                         
+                        <li class="search">
+                            <form action="{{ route('search') }}" method="GET">
+                                <input type="search" name="search" minlength="3" maxlength="40" size="30">
+                                <input type="submit" class="uk-button uk-button-search" value="Поиск">
+                            </form>
+                        </li>
+
                         @guest
                             @if (Route::has('login'))
                                 <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>

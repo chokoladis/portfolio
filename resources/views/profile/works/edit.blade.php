@@ -30,15 +30,16 @@
                     @include('compiled.admin.form')
 
                     @if (!empty($arFiles))
-                        <div class="uk-child-width-1-1 uk-child-width-1-3@m uk-child-width-1-4@l f_url_files">
+                        <div class="uk-child-width-1-1 uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-4@l f_url_files">
                             @foreach ($arFiles as $key => $filePath)
-                                <label for="url_files_flags[{{ $key }}]">
-                                    <p>
-                                        <input type="checkbox" name="url_files_flags[{{ $key }}]" id="url_files_{{ $key }}" class="uk-checkbox" checked>{{ __('Картинка - '.$key) }}
-                                    </p>
+                                <div>
+                                    <label>
+                                        <input type="checkbox" name="url_files_flags[{{ $key }}]" class="uk-checkbox" checked>
+                                        <span>{{ __('Картинка - '.$key+1) }}</span>
+                                    </label>
                                     <input type="hidden" name="url_files[{{ $key }}]" value="{{ trim($filePath) }}">
                                     <img src="{{ '/storage/works/img/'.trim($filePath) }}" alt="">
-                                </label>
+                                </div>                                
                             @endforeach
                         </div>
                     @endif

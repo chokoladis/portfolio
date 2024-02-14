@@ -60,6 +60,7 @@ $clr-ring: rgb(3, 179, 3);
     --clr-disable: rgba(218, 218, 218, 0.772);
     --clr-ring: #{$clr-ring};
     --clr-danger: #{$clr-danger};
+    --dual-clr-alternative: #{$header-link-clr-visited-lt-20};
 }
 
 :root.dark{

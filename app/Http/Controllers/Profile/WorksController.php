@@ -45,20 +45,11 @@ class WorksController extends Controller
     {
         $data = $request->validated();
 
-        $arModiferUrlFiles = array_intersect_key($data['url_files'],$data['url_files_flags']);
-        $data['url_files'] = implode(', ', $arModiferUrlFiles);
+        if ($request->hasFile('photo')){
+            $data['url_files'] = $this->getNewFilesPath($request, $data);
+        }
 
         unset($data['url_files_flags'], $data['photo']);
-
-        if ($request->hasFile('photo')){
-            $photo = $request->file('photo');
-
-            $url_files = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
-
-            $url_files = $data['url_files'].', '.$url_files;
-
-            $data['url_files'] = $url_files;
-        }
 
         $success = Example_work::find($work->id)->update($data);
     
@@ -72,6 +63,24 @@ class WorksController extends Controller
             ->paginate(perPage: $perPage, page: $pageNum);
 
         return view('profile.works.index', compact('works'));
+    }
+
+    public function getNewFilesPath($request, $data){
+
+        $ar_url_files = array_intersect_key($data['url_files'],$data['url_files_flags']);
+        $checkbox_url_files = implode(', ', $ar_url_files);
+
+        $upload_url_files = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+
+        $url_files = $checkbox_url_files.', '.$upload_url_files;
+        $arFilesPath = explode(',', $url_files);
+
+        if (count($arFilesPath) > ImageService::LIMIT_FILES){
+            $arFilesPath = array_slice($arFilesPath, 0, 5);
+            $url_files = implode(', ', $arFilesPath);
+        }
+
+        return $url_files;
     }
 
     public function delete(Example_work $work)
