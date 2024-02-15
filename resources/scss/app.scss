@@ -209,10 +209,6 @@ ul,li,p{
                             max-height: 35px;
                         }
                     }
-                    
-                    &:last-of-type{
-                        margin-left: auto;
-                    }
 
                     .dropdown-menu a{
                         color: $header-bg;
@@ -222,6 +218,12 @@ ul,li,p{
                         }
                     }
 
+                }
+
+                .personal{
+                    display: flex;
+                    margin-left: auto;
+                    align-items: center;
                 }
             }
 

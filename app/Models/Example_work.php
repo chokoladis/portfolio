@@ -5,24 +5,38 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Log;
+// use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Http\Controllers\ExampleWorkController;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
-use PharIo\Manifest\Url;
 
 class Example_work extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
+    // use Searchable;
+
     protected $table = 'example_works';
     protected $guarded = [];
 
     protected $hidden = ['deleted_at'];
+
+    public static $searchable = [
+        'title',
+        'description',
+        'url_work'
+    ];
+
+    // public function toSearchableArray()
+    // {
+    //     return [
+    //         'title' => $this->title,
+    //         'description' => $this->description,
+    //         'url_work' => $this->url_work,
+    //     ];
+    // }
 
     protected $casts = [
         'title' => 'string',

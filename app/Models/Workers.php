@@ -18,6 +18,12 @@ class Workers extends Model
 
     protected $guarded = [];
 
+    public static $searchable = [
+        'code',
+        'phone',
+        'about'
+    ];
+
     public function getRouteKeyName(){
         return 'code';
     }
