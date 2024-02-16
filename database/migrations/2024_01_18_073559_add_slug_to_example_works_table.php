@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('example_works', function (Blueprint $table) {
-            $table->string('slug',70)->after('description');
+            $table->string('slug',70)->unique()->index()->after('description');
         });
     }
 

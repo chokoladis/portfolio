@@ -28,6 +28,14 @@ class Workers extends Model
         return 'code';
     }
 
+    public static function getRouteAddress(){
+        return 'workers.detail';
+    }
+    
+    public function getTitle(){
+        return $this->user->name;
+    }
+
     public function getWorks(int $limit = 3)
     {
         return Example_work::query()

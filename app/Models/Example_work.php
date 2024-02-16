@@ -49,7 +49,7 @@ class Example_work extends Model
     ];
 
 
-    static $columnsEdit = [
+    static $columnsEdit = [ // todo from curds.php
         'title' => 'Заголовок',
         'description' => 'Описание', 
         // 'url_files' => 'Ссылки на картинки/скриншоты',
@@ -73,8 +73,16 @@ class Example_work extends Model
         return $res;
     }
 
+    public function getTitle(){
+        return $this->title;
+    }
+
     public function getRouteKeyName(){
         return 'slug';
+    }
+
+    public static function getRouteAddress(){
+        return 'work.detail';
     }
 
     public function user()

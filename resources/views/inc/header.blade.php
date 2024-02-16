@@ -71,7 +71,8 @@
                         
                         <li class="search">
                             <form action="{{ route('search') }}" method="GET">
-                                <input type="search" name="search" minlength="3" maxlength="40" size="30">
+                                <input type="search" name="search" minlength="3" maxlength="40" size="30"
+                                    value="{{ htmlspecialchars(request('search')) }}" autocomplete="on">
                                 <input type="submit" class="uk-button uk-button-search" value="Поиск">
                             </form>
                         </li>

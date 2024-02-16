@@ -5,6 +5,12 @@ Breadcrumbs::for('home', function ($trail) {
     $trail->push('Главная', route('home'));
 });
 
+
+Breadcrumbs::for('search', function ($trail, $input_val) {
+    $trail->parent('home');
+    $trail->push('Поиск - '. $input_val , route('search', ['search' => $input_val]));
+});
+
 Breadcrumbs::for('works', function ($trail) {
     $trail->parent('home');
     $trail->push('Работы', route('work.index'));
