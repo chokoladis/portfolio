@@ -3,6 +3,10 @@
 <ul>
     <li>...</li>
     <li>
+        <b>0.3</b>
+        <p>add global search, use lang file</p>
+    </li>
+    <li>
         <b>0.2</b>
         <p>add breadcrumbs, fix security</p>
     </li>

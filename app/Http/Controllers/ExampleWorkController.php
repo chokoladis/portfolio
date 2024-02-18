@@ -8,6 +8,7 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
 use App\Http\Controllers\HelperController;
+use App\Services\ImageService;
 use Illuminate\Support\Str;
 
 class ExampleWorkController extends Controller
@@ -77,8 +78,7 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
 
-        $helper = new HelperController;
-        $data['url_files'] = $helper->getNewPhotoPath($request, 'url_files', self::$folderImg);
+        $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', self::$folderImg);
 
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 

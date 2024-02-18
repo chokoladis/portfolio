@@ -16,63 +16,80 @@ class SearchController extends Controller
     public function index(Request $request){
 
         $validate = $request->validate([
-            'search' => ['required', 'string', 'min:3' , 'max:40', 'regex:/[а-яё|\d|\s|\w|\.|\,|\-_:\!\(\)]+/i'],
+            'search' => ['required', 'string', 'min:3' , 'max:40', 'regex:/[а-яё\d\s\w\.\,\-_:\!\(\)]+/i'],
+            'page' => 'numeric|nullable|min:1',
+            'per_page' => 'numeric|nullable|min:5|max:50',
             'orderBy' => 'string|nullable',
             'sort' => 'string|nullable'
         ]);
 
-        // todo sort by ?
+        // todo sort by client params
 
         if (!isset($validate['search'])){
             abort(400);
         }
 
+        $validate['search']  = str_replace('%', '', $validate['search']);
+        $searchForSql  = str_replace('_', '\_', $validate['search']);
+        
+
         $searchData = [];
         $total_count = 0;
+        $page = $validate['page'] ?? 1;
+        $per_page = $validate['per_page'] ?? 5;
 
         foreach($this->models as $model => $translation){
             $modelClass = 'App\Models\\'.$model;
-            $query = $modelClass::query();
-
             $fields = $modelClass::$searchable;
 
+            $query = $modelClass::query();            
+
             foreach($fields as $field){
-                $query->orWhere($field, 'like', '%'.$validate['search'].'%');
+                $query->orWhere($field, 'like', '%'.$searchForSql.'%');
             }
+
+            $skip = ($page - 1) * $per_page;
+            $count = $query->count();
+            $total_count += $count;
+
+            $tempData = $query->skip($skip)->take($per_page)->get();
+
+            if ($tempData->count()){
+
+                
+                foreach($tempData as $data){
+
+                    $parsed = [];
+                    $title = $data->getTitle();
+                    $route = route($modelClass::getRouteAddress(), $data);
         
-            $tempData = $query->paginate(); 
-            $total_count += $tempData->count();
-
-            foreach($tempData as $data){
-
-                $parsed = [];
-                $title = $data->getTitle();
-                $route = route($modelClass::getRouteAddress(), $data);
-
-                $arFiltredFields = [];
-                $arTempFields = $data->only($fields);
-                
-                foreach($arTempFields as $code => $value ){
-                    if (str_contains($value, $validate['search'])){
-                        $arFiltredFields[$code] = $value;
+                    $arFiltredFields = [];
+                    $arTempFields = $data->only($fields);
+                    
+                    foreach($arTempFields as $code => $value ){
+                        if (str_contains($value, $validate['search'])){
+                            $arFiltredFields[$code] = $value;
+                        }
                     }
+                    
+                    $parsed = [
+                        'contents' => $arFiltredFields,
+                        'html_title' => $title,
+                        'route' => $route
+                    ];
+        
+                    $searchData[$model]['items'][] = $parsed;
                 }
-                
-                $parsed = [
-                    'contents' => $arFiltredFields,
-                    'html_title' => $title,
-                    'route' => $route
-                ];
-
-                $searchData[$model]['items'][] = $parsed;
+        
+                $searchData[$model]['title'] = trans($translation);
             }
-
-            $searchData[$model]['title'] = trans($translation);
         }
 
-        $result = $searchData; 
+        $pages = intval(round($total_count / $per_page));
 
-        return view('search', compact('result','total_count'));
+        $result = $searchData;
 
+        return view('search', compact('result', 'total_count', 'pages'));
     }
+
 }
