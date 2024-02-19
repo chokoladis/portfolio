@@ -16,10 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->index('user_id', 'workers_user_idx');
             $table->foreign('user_id', 'workers_user_fk')->references('id')->on('users');
+            $table->string('code', 40)->unique()->index();
             $table->string('url_avatar', 512)->nullable();
             $table->string('phone', 20);
             $table->string('about', 1024)->nullable();
             $table->json('socials')->default([]);
+            $table->integer('view_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

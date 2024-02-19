@@ -90,6 +90,10 @@ html{
 
     &.work_have_preview{
         padding-bottom: 50px;
+
+        .addition_info{
+            background: var(--shadow-clr);
+        }
     }
 
     &::after,

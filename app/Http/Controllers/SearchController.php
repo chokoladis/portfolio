@@ -37,6 +37,8 @@ class SearchController extends Controller
         $total_count = 0;
         $page = $validate['page'] ?? 1;
         $per_page = $validate['per_page'] ?? 5;
+        $orderBy = $validate['orderBy'] ?? 'created_at';
+        $sort = $validate['sort'] ?? 'asc';
 
         foreach($this->models as $model => $translation){
             $modelClass = 'App\Models\\'.$model;
@@ -52,6 +54,7 @@ class SearchController extends Controller
             $count = $query->count();
             $total_count += $count;
 
+            $query = $query->orderBy($orderBy, $sort);
             $tempData = $query->skip($skip)->take($per_page)->get();
 
             if ($tempData->count()){
@@ -74,6 +77,8 @@ class SearchController extends Controller
                     
                     $parsed = [
                         'contents' => $arFiltredFields,
+                        'date_insert' => $data->created_at,
+                        // 'views' => $data->views,
                         'html_title' => $title,
                         'route' => $route
                     ];

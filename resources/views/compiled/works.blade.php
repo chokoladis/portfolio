@@ -31,9 +31,16 @@
                             @endforeach
                         </div>
                     @endif
+                    <div class="addition_info">
+                        <div class="date">
+                            {{ $work->created_at->format('d.m.Y H:i') }} 
+                        </div>
+                        <span class="splash">|</span>
+                        <div class="views">
+                            <span uk-icon="eye"></span> {{ $work->view_count }}
+                        </div>
+                    </div>
                 </div>
-                <!-- todo -->
-                <!-- how use multi can-methods ? -->
                 @can('viewAdmin', auth()->user())
                     <div class="area_actions">
                         <div class="custom-btn clr-danger js_work_del">

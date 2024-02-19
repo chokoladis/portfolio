@@ -27,12 +27,12 @@
                             <div class="inputs">
                                 <select name="orderBy" value="{{ request('orderBy') }}" >
                                     <option value="" disabled selected>Сортировка</option>
-                                    <option value="title">По заголовку</option>
+                                    <option value="views">По просмотрам</option>
                                     <option value="created_at">По дате добавления</option>
                                 </select>
                                 <select name="sort">
-                                    <option value="ASC" selected>По возрастанию</option>
-                                    <option value="DESC">По убыванию</option>
+                                    <option value="asc" selected>По возрастанию</option>
+                                    <option value="desc">По убыванию</option>
                                 </select>
                             </div>
                         </li>
@@ -79,6 +79,15 @@
                                             </div>
                                         @endforeach
 
+                                    </div>
+                                    <div class="addition_info">
+                                        <div class="date">
+                                            {{ $item['date_insert']->format('d.m.Y H:i') }} 
+                                        </div>
+                                        <span class="splash">|</span>
+                                        <div class="views">
+                                            <span uk-icon="eye"></span> {{ rand(1,250) }}
+                                        </div>
                                     </div>
                                 </li>
                             @endforeach

@@ -399,6 +399,34 @@ ul,li,p{
         label{
             color: var(--main-clr-text);
         }
+
+        .addition_info{
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            margin-top: 20px;
+            padding: 0px 5px;
+            color: rgb(189, 170, 146);
+
+            .splash{
+                margin: 0 10px;
+                font-size: 14px;
+            }
+
+            .views{
+                display: flex;
+                align-items: center;
+
+                span{
+                    margin-right: 3px;
+
+                    svg{
+                        height: 15px;
+                    }
+                }
+            }
+        }
     }
 
     .area_actions{

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ViewsEvent;
 use App\Http\Requests\ExampleWork\StoreRequest;
 use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
-use App\Http\Controllers\HelperController;
 use App\Services\ImageService;
 use Illuminate\Support\Str;
 
@@ -37,6 +37,7 @@ class ExampleWorkController extends Controller
     }
 
     public function detail(Example_work $work){
+        Event(new ViewsEvent($work));
         return view('works.detail', compact('work'));
     }
 

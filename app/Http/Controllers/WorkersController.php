@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ViewsEvent;
 use App\Models\User;
 use App\Models\Workers;
 use App\Http\Requests\Workers\StoreRequest;
@@ -167,6 +168,8 @@ class WorkersController extends Controller
             'about' => $worker->about,
             'socials' => $worker->socials
         ];
+
+        Event(New ViewsEvent($worker));
 
         return view('workers.detail', compact('worker','works'));
     }

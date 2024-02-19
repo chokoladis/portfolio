@@ -40,7 +40,16 @@
                                     }
                                 }
                             @endphp
-                        </ul>                    
+                        </ul>
+                        <div class="addition_info">
+                            <div class="date">
+                                {{ $worker->created_at->format('d.m.Y H:i') }} 
+                            </div>
+                            <span class="splash">|</span>
+                            <div class="views">
+                                <span uk-icon="eye"></span> {{ rand(1,250) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="bg" style="background-image: url({{ $worker->url_avatar 
                         ? config('filesystems.img.workers').$worker->url_avatar 
