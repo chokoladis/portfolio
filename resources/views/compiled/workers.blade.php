@@ -29,17 +29,17 @@
                             <li class='link-tel'>
                                 <!-- <img src="/storage/general/vibrating-phone.png" alt="vibrating-phone"> -->
                                 <a href="tel:{{ $worker->phone }}">{{ HelperController::phoneOutFormated($worker->phone) }}</a></li>
-                            @php
-                                if ($worker->socials !== null){
-                                    $arSocials = json_decode($worker->socials, 1);
+                                @php
+                                    if ($worker->socials !== null){
+                                        $arSocials = json_decode($worker->socials, 1);
 
-                                    foreach($arSocials as $socialKey => $link){
-                                        $link = htmlspecialchars($link);
-                                        $socialKey = htmlspecialchars($socialKey);
-                                        echo '<li class="social '.$socialKey.'"><a href="'.$link.'" title="'.$link.'"></a></li>';
+                                        foreach($arSocials as $socialKey => $link){
+                                            $link = htmlspecialchars($link);
+                                            $socialKey = htmlspecialchars($socialKey);
+                                            echo '<li class="social '.$socialKey.'"><a href="'.$link.'" title="'.$link.'"></a></li>';
+                                        }
                                     }
-                                }
-                            @endphp
+                                @endphp
                         </ul>
                         <div class="addition_info">
                             <div class="date">
@@ -47,7 +47,7 @@
                             </div>
                             <span class="splash">|</span>
                             <div class="views">
-                                <span uk-icon="eye"></span> {{ rand(1,250) }}
+                                <span uk-icon="eye"></span> {{ $worker->view_count }}
                             </div>
                         </div>
                     </div>

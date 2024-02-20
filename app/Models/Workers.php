@@ -56,18 +56,21 @@ class Workers extends Model
         self::updating(function($model){
 
             $old_avatar = $model->getOriginal('url_avatar');
-            $real_path = public_path().WorkersController::$folderImg. $old_avatar;
+            $new_avatar = $model->url_avatar;
+            if ($new_avatar && $new_avatar != $old_avatar){
+                $real_path = public_path().config('filesystems.img.workers'). $old_avatar;
 
-            if ($old_avatar && file_exists($real_path)){
-                unlink($real_path);
-            }
+                if ($old_avatar && file_exists($real_path)){
+                    unlink($real_path);
+                }
 
-            $arPath = explode('/', $old_avatar);
-            $folder = public_path(WorkersController::$folderImg.$arPath[0]);
-            if (is_dir($folder)){
-                $countFiles = count(Storage::files($folder));
+                $arPath = explode('/', $old_avatar);
+                $folder = public_path(config('filesystems.img.workers').$arPath[0]);
+                if (is_dir($folder)){
+                    $countFiles = count(Storage::files($folder));
 
-                if (!$countFiles) rmdir($folder);
+                    if (!$countFiles) rmdir($folder);
+                }
             }
         });
         
@@ -80,13 +83,13 @@ class Workers extends Model
 
                 $arPath = explode('/', $filePath);
 
-                $filePath = public_path(WorkersController::$folderImg.$filePath);
+                $filePath = public_path(config('filesystems.img.workers').$filePath);
 
                 if (file_exists($filePath)){
                     unlink($filePath);
                 }
 
-                $folder = public_path(WorkersController::$folderImg.$arPath[0]);
+                $folder = public_path(config('filesystems.img.workers').$arPath[0]);
                 if (is_dir($folder)){
                     $countFiles = count(Storage::files($folder));
 

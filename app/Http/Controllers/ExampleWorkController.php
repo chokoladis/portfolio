@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 
 class ExampleWorkController extends Controller
 {
-    static $folderImg = '/storage/works/img/';
     static $error = '';
     static $success = true;
     static $response = '';
@@ -77,9 +76,9 @@ class ExampleWorkController extends Controller
     public function store(StoreRequest $request){
 
         $data = $request->validated();
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = auth()->id();
 
-        $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', self::$folderImg);
+        $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
 
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 

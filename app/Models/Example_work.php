@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
-use App\Http\Controllers\ExampleWorkController;
 use Illuminate\Support\Facades\Schema;
 
 class Example_work extends Model
@@ -113,17 +112,17 @@ class Example_work extends Model
                     $filePath = trim($filePath);
                     $arPath = explode('/', $filePath);
 
-                    $filePath = public_path(ExampleWorkController::$folderImg.$filePath);
+                    $filePath = public_path(config('filesystems.img.works').$filePath);
     
                     if (file_exists($filePath)){
                         unlink($filePath);
                     }
 
-                    $folder = public_path(ExampleWorkController::$folderImg.$arPath[0]);
+                    $folder = public_path(config('filesystems.img.works').$arPath[0]);
                     $countFiles = count(Storage::files($folder));
 
                     if (!$countFiles &&
-                        $folder != public_path(ExampleWorkController::$folderImg)) 
+                        $folder != public_path(config('filesystems.img.works'))) 
                         rmdir($folder);
                 }
             }

@@ -15,7 +15,7 @@ class WorksController extends Controller
 {
     public function index(WorksRequest $request)
     {
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
 
         $works = IndexController::userWorks($userId);
         $worker = IndexController::userWorker($userId);
@@ -25,7 +25,7 @@ class WorksController extends Controller
         $perPage = isset($data['perPage']) ? $data['perPage'] : 5;
         $pageNum = isset($data['pageNum']) ? $data['pageNum'] : 1;
 
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
 
         $works = Example_work::query()
             ->where(['user_id' => $userId ])
@@ -56,7 +56,7 @@ class WorksController extends Controller
         $perPage = isset($data['perPage']) ? $data['perPage'] : 5;
         $pageNum = isset($data['pageNum']) ? $data['pageNum'] : 1;
 
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
 
         $works = Example_work::query()
             ->where(['user_id' => $userId ])
@@ -89,7 +89,7 @@ class WorksController extends Controller
         // can ?
         // work
 
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
 
         $works = Example_work::query()
             ->where(['user_id' => $userId ]);

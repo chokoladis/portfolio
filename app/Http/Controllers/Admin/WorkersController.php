@@ -31,7 +31,7 @@ class WorkersController extends Controller
     {
         $workerById = null;
         if (auth()->user()){
-            $userId = auth()->user()->id;
+            $userId = auth()->id();
             $workerById = Workers::where('user_id', '=', $userId)->first();
         }
 

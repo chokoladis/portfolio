@@ -31,7 +31,7 @@ class WorkersController extends Controller
     {
         $workerById = null;
         if (auth()->user()){
-            $userId = auth()->user()->id;
+            $userId = auth()->id();
             $workerById = Workers::where('user_id', '=', $userId)->first();
         }
 
@@ -157,6 +157,8 @@ class WorkersController extends Controller
 
     public function detail(Workers $worker)
     {
+        Event(New ViewsEvent($worker));
+
         $works = $worker->getWorks();
 
         $worker = [
@@ -166,10 +168,9 @@ class WorkersController extends Controller
             'url_avatar' => $worker->url_avatar,
             'phone' => $worker->phone,
             'about' => $worker->about,
-            'socials' => $worker->socials
+            'socials' => $worker->socials,
+            
         ];
-
-        Event(New ViewsEvent($worker));
 
         return view('workers.detail', compact('worker','works'));
     }

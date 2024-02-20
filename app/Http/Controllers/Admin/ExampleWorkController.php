@@ -76,7 +76,7 @@ class ExampleWorkController extends Controller
     public function store(StoreRequest $request){
 
         $data = $request->validated();
-        $data['user_id'] = auth()->user()->id;
+        $data['user_id'] = auth()->id();
 
         $helper = new HelperController;
         $data['url_files'] = $helper->getNewPhotoPath($request, 'url_files', self::$folderImg);

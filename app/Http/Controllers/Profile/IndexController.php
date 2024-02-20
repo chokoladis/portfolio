@@ -25,7 +25,7 @@ class IndexController extends Controller
 
     public function index()
     {
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
 
         $works = $this->userWorks($userId);
         $worker = $this->userWorker($userId);
@@ -57,7 +57,7 @@ class IndexController extends Controller
 
     public static function changeAvatar(UpdateImgRequest $request){
     
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
 
         $file_path = ImageService::getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
 
@@ -94,7 +94,7 @@ class IndexController extends Controller
         $phone = WorkersController::getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
-        $userId = auth()->user()->id;
+        $userId = auth()->id();
         
         $worker = Workers::query()
             ->where(['user_id' => $userId]);
