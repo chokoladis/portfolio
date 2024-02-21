@@ -370,16 +370,30 @@ ul,li,p{
             // width: fit-content;
             
 
-            .socials{
+            ul{
                 display: flex;
-                justify-content: space-between;
+                // justify-content: space-between;
                 align-items: center;
 
                 li{
                     display: block;
+                    filter: brightness(1);
 
                     a{
                         text-decoration: none;
+
+                        &[type='button']{
+                            display: flex;
+                            align-items: center;
+
+                            *:first-of-type{
+                                margin-right: 3px;
+                            }
+                        }
+                    }
+
+                    &:hover{
+                        filter: brightness(0.8);
                     }
                 }
             }

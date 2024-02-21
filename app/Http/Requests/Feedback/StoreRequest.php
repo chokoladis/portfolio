@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ExampleWork;
+namespace App\Http\Requests\Feedback;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,10 +22,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'description' => 'string',
-            'url_files' => '',
-            'url_work' => 'string',
+            // 'ip_address' => ['required', 'string'],
+            'fio' => [ 'required', 'string', 'min:3', 'max:120', 'regex:/([а-яё-]+) ([а-яё]+) ([а-яё]+)/i' ],
+            "mail" => [ 'required', 'string', 'email:rfc,dns', 'max:255' ],
+            "phone" => [ 'required', 'string', 'regex:/\+([\d]) ([\d]{3}) ([\d]{4}) ([\d]{3})/i' ],
+            "comment" => ['string', 'max:2000']
         ];
     }
 }

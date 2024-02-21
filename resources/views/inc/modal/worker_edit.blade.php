@@ -7,15 +7,15 @@
     <div class="uk-modal-dialog uk-modal-body">
         <div class="custom-close-icon uk-modal-close">X</div>
         <form action="{{ route('profile.update') }}" method="POST" id="worker_edit" accept-charset="multipart/form-data">
-            <h2 class="uk-modal-title">Форма редактирования</h2>
+            <h2 class="uk-modal-title">{{ __('Редактирование профиля') }}</h2>
 
             @csrf
 
             <div class="uk-margin">
-                <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="Телефон" value="{{ $worker->phone }}">
+                <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="{{ __('Телефон') }}" value="{{ $worker->phone }}">
             </div>
             <div class="uk-margin">
-                <textarea class="uk-textarea" name="about" autocomplete="on" placeholder="Текст о вас">{{ $worker->about }}</textarea>
+                <textarea class="uk-textarea" name="about" autocomplete="on" placeholder="{{ __('Текст о вас') }}">{{ $worker->about }}</textarea>
             </div>
             <div class="uk-margin socials">
                 <h4 class='uk-heading-bullet'>Ссылки</h4>
@@ -40,7 +40,7 @@
                 
             </div>
         
-            <input class="uk-button {{ $theme == 'dark' ? 'uk-button-default': 'uk-button-secondary' }}" type="submit" id="js_workers_edit_submit" value="Обновить">
+            <input class="uk-button uk-button-default" type="submit" id="js_workers_edit_submit" value="{{ __('Обновить') }}">
         </form>
     </div>
 </div>

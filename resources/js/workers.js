@@ -2,7 +2,7 @@ import {Helper} from './variables';
 
 $(function(){
 
-    $('#md-worker_new .photo input').on('change', function(){
+    $('#md-worker_add .photo input').on('change', function(){
 
         let file = this.files[0];
         let p = $(this).siblings('p');
@@ -85,7 +85,7 @@ $(function(){
 
             Helper.updWorkersHtml();
 
-            $('button.js-create-worker').remove();
+            $('button.js-add-worker').remove();
             
         } else {
             UIkit.notification({

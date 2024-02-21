@@ -5,7 +5,7 @@ $theme = request()->cookie('theme');
     <div class="uk-modal-dialog uk-modal-body">
         <div class="custom-close-icon uk-modal-close">X</div>
         <form action="" method="POST" id="menu_edit" accept-charset="multipart/form-data">
-            <h2 class="uk-modal-title">Форма редактирования</h2>
+            <h2 class="uk-modal-title">{{ __('Редактирование пункта меню') }}</h2>
             
             @csrf
             
@@ -13,10 +13,10 @@ $theme = request()->cookie('theme');
             <input type="hidden" name="id">
 
             <div class="uk-margin">
-                <input class="uk-input" type="text" name="name" placeholder="Название">
+                <input class="uk-input" type="text" name="name" placeholder="{{ __('Название') }}">
             </div>
             <div class="uk-margin">
-                <input class="uk-input" type="text" name="link" placeholder="Ссылка">
+                <input class="uk-input" type="text" name="link" placeholder="{{ __('Ссылка') }}">
             </div>
             <div class="uk-margin">
                 <select class="uk-select" aria-label="Select" name="role">
@@ -26,14 +26,14 @@ $theme = request()->cookie('theme');
                 </select>
             </div>
             <div class="uk-margin">
-                <label><input class="uk-radio" type="radio" name="active" value="1" checked>Активная</label>
-                <label><input class="uk-radio" type="radio" name="active" value="0">Не активная</label>
+                <label><input class="uk-radio" type="radio" name="active" value="1" checked>{{ __('Активная') }}</label>
+                <label><input class="uk-radio" type="radio" name="active" value="0">{{ __('Не активная') }}</label>
             </div>
             <div class="uk-margin">
-                <input class="uk-input" type="text" name="sort" placeholder="Сортировка">
+                <input class="uk-input" type="text" name="sort" placeholder="{{ __('Сортировка') }}">
             </div>
         
-            <input class="uk-button {{ $theme == 'dark' ? 'uk-button-default': 'uk-button-secondary' }}" type="submit" id="js_menu_edit_submit" value="Обновить">
+            <input class="uk-button uk-button-default" type="submit" id="js_menu_edit_submit" value="{{ __('Обновить') }}">
         </form>
     </div>
 </div>

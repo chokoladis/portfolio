@@ -25,6 +25,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
     // ajax requests
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
+    Route::post('/ajax/feedback', 'FeedbackController@store' )->name('feedback.store');
 
     Route::middleware(['auth'])->group( function() {
         

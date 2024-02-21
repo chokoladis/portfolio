@@ -10,6 +10,10 @@
                 <h2>Раздел <a href="{{ route('work.index') }}">"Работы"</a></h2>
 
                 {{-- <p class="uk-text-warning">{{ __('Данный сервис будет давать возможность разместить своё портфолио и работы') }}</p> --}}
+                
+                <a href="https://github.com/chokoladis/" uk-icon="icon: github; ratio:2;"></a>
+
+                <i>{{ __('Сайт разработан на свободное время какого то разработчика с ником ') }}<b>chokoladis</b></i>
             </div>
         </div>
     </main>

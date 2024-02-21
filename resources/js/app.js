@@ -59,7 +59,7 @@ $(function(){
 
             var itemId = form.find('[name="id"]');
 
-            if (formId == 'work_create'){
+            if (formId == 'work_add'){
                 
                 var file_data = $('input[name="url_files"]')[0].files;
 
@@ -67,8 +67,10 @@ $(function(){
                     sendData.append("url_files[]", file_data[i]);
                 }
 
-            } else if (formId == 'menu_edit'){ // todo admin.js
+            } else if (formId === 'menu_edit'){
                 action = '/admin/menu/'+itemId.val()+'/update/';
+            }  else if (formId === 'feedback') {
+                // 
             } else {
                 return;
             }

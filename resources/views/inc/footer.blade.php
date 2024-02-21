@@ -1,10 +1,15 @@
             <footer>
                 <div class="container">
                     <div class="content">
-                        <ul class="socials">
-                            <li><a href="https://github.com/chokoladis/" uk-icon="icon: github; ratio:2;"></a></li>
+                        <ul>
+                            <li>
+                                <a uk-toggle="target: #md-feedback-add" type="button">
+                                    <span uk-icon="icon:mail" title="Обратная связь"></span>
+                                    <span>{{ __('Обратная связь') }}</span>
+                                </a>
+                            </li>
                         </ul>
-                        <i>Сайт разработан на свободное время какого то разработчика с ником <b>chokoladis</b></i>
+                        
                     </div>
                     <div class="copyrithg">© 2023-2024 localhost.com</div>
                 </div>
@@ -16,9 +21,10 @@
         @stack('scripts')
 
         @include('inc.modal.response')
+        @include('inc.modal.feedback')
         @if(auth()->user() !== null) 
             @if(Route::is('work.*'))
-                @include('inc.modal.work_create')
+                @include('inc.modal.work_add')
                 @include('inc.modal.work_edit')    
             @endif
         @endif

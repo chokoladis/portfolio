@@ -2,11 +2,11 @@
 @php
     $theme = request()->cookie('theme');
 @endphp
-<div id="md-worker_new" uk-modal>
+<div id="md-worker_add" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
         <div class="custom-close-icon uk-modal-close">X</div>
-        <form action="{{ route('workers.store') }}" method="POST" id="worker_new" accept-charset="multipart/form-data">
-            <h2 class="uk-modal-title">Форма создания</h2>
+        <form action="{{ route('workers.store') }}" method="POST" id="worker_add" accept-charset="multipart/form-data">
+            <h2 class="uk-modal-title">{{ __('Создание профиля') }}</h2>
             
             @csrf
             
@@ -14,19 +14,19 @@
 
             <div class="uk-margin">
                 <label class="photo">
-                    <div class="uk-button uk-button-primary">Вставьте ваше фото</div>
+                    <div class="uk-button uk-button-primary">{{ __('Вставьте аватарку') }}</div>
                     <p class="uk-hidden"></p>
                     <input type="file" name="photo" accept="image/*">
                 </label>                
             </div>
             <div class="uk-margin">
-                <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="Телефон">
+                <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="{{ __('Телефон') }}">
             </div>
             <div class="uk-margin">
-                <textarea class="uk-textarea" name="about" autocomplete="on" placeholder="Текст о вас"></textarea>
+                <textarea class="uk-textarea" name="about" autocomplete="on" placeholder="{{ __('Текст о вас') }}"></textarea>
             </div>
             <div class="uk-margin socials">
-                <h4 class='uk-heading-bullet'>Ссылки</h4>
+                <h4 class='uk-heading-bullet'>{{ __('Ссылки') }}</h4>
                 <div class="links uk-child-width-1-2@s uk-child-width-1-1">
                     <label>
                         <img src="/storage/general/links/telegram.svg" alt="telegram"> 
@@ -48,7 +48,7 @@
                 
             </div>
         
-            <input class="uk-button {{ $theme == 'dark' ? 'uk-button-default': 'uk-button-secondary' }}" type="submit" id="js_workers_add_submit" value="Создать">
+            <input class="uk-button uk-button-default" type="submit" id="js_workers_add_submit" value="{{ __('Создать') }}">
         </form>
     </div>
 </div>
