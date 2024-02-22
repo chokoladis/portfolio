@@ -27,25 +27,27 @@ class FeedbackController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        // header();
-        dd(1);
-
         $data = $request->validated();
 
         $clientIP = $request->ip();
 
         $data['ip_address'] = $clientIP;
 
-        $feedback = Feedback::find([ 'ip_address' => $clientIP ])->get(['created_at']);
+        $feedback = Feedback::query()
+            ->where([ 'ip_address' => $clientIP ])
+            ->latest()->first('created_at');
 
         if (!empty($feedback)){
 
             $now = Carbon::now();
             $feedback_create = Carbon::parse($feedback['created_at']);
 
-            $hours = $now->diffInHours($feedback_create);
+            $diff_hours = $now->diffInHours($feedback_create);
 
-            dd($hours);
+            if ($diff_hours < 24){
+                // todo send mess
+                return false;
+            }
         }
 
         $res = Feedback::query()->create($data);
@@ -56,8 +58,6 @@ class FeedbackController extends Controller
             self::$success = false;
             self::$error = __('Не удалось отправить заявку');
         }
-
-        dd($res);
 
         return responseJson(self::$success, self::$response, self::$error);
     }

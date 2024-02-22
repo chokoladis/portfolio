@@ -5,16 +5,14 @@
 <div id="md-feedback-add" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
         <div class="custom-close-icon uk-modal-close">X</div>
-        <form action="{{ route('feedback.store') }}" method="POST" id="feedback" enctype="multipart/form-data">
+        <form action="{{ route('feedback.store') }}" method="POST" id="feedback">
             <h2 class="uk-modal-title">{{ __('Оставьте обратную связь') }}</h2>
 
-            @csrf
-
             <div class="uk-margin">
-                <input class="uk-input" type="text" name="fio" require autocomplete="on" placeholder="{{ __('ФИО') }}">
+                <input class="uk-input" type="text" name="fio" require="true" autocomplete="on" placeholder="{{ __('ФИО') }}">
             </div>
             <div class="uk-margin">
-                <input class="uk-input" type="email" name="mail" require autocomplete="mail" placeholder="{{ __('Почта') }}">
+                <input class="uk-input" type="email" name="mail" require="true" autocomplete="mail" placeholder="{{ __('Почта') }}">
             </div>
             <div class="uk-margin">
                 <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="{{ __('Телефон') }}">

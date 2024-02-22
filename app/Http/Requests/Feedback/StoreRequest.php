@@ -22,8 +22,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'ip_address' => ['required', 'string'],
-            'fio' => [ 'required', 'string', 'min:3', 'max:120', 'regex:/([а-яё-]+) ([а-яё]+) ([а-яё]+)/i' ],
+            'ip_address' => ['string'],
+            'fio' => [ 'required', 'string', 'min:3', 'max:120', 'regex:/([а-яё-]+)([а-яё ]*)/i' ],
             "mail" => [ 'required', 'string', 'email:rfc,dns', 'max:255' ],
             "phone" => [ 'required', 'string', 'regex:/\+([\d]) ([\d]{3}) ([\d]{4}) ([\d]{3})/i' ],
             "comment" => ['string', 'max:2000']

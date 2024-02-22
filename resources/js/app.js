@@ -69,8 +69,6 @@ $(function(){
 
             } else if (formId === 'menu_edit'){
                 action = '/admin/menu/'+itemId.val()+'/update/';
-            }  else if (formId === 'feedback') {
-                // 
             } else {
                 return;
             }
@@ -85,9 +83,8 @@ $(function(){
                 dataType: 'JSON',
                 success: function(json){
                     
-                    
                     if (json.success){
-                        $('#md-response .messsage').text(json.result);
+                        $('#md-response .message').text(json.result);
 
                         if (location.href == '/admin/menu'){
                             Helper.updMenuAdmin();
@@ -98,36 +95,108 @@ $(function(){
                         }
                         
                     } else {
-                        $('#md-response .messsage').text(json.error);
+                        $('#md-response .message').text(json.error);
                     }
 
                     UIkit.modal('#md-response').show();
                 },
                 error :function( data ) {
                     if( data.status === 422 ) {
-                        var errors = $.parseJSON(data.responseText);
-                        $.each(errors, function (key, value) {
-                            console.log(key+ " " +value);
 
-                            $('#response').addClass("alert alert-danger");
-            
-                            if($.isPlainObject(value)) {
-                                $.each(value, function (key, value) {                       
-                                    // console.log(key+ " " +value);
-                                    $('#response').show().append(value+"<br/>");
-            
-                                });
-                            }else{
-                                $('#response').show();
-                                $('#response .messsage').html(data.error+"<br/>");
-                            }
-                        });
+                        var responseText = $.parseJSON(data.responseText);
+                        let errors = responseText.errors;
+
+                        if (errors){
+                            $.each(errors, function (code, textError) {
+                                let text = textError.join();
+                                Helper.showError( form.find('[name='+code+']'), textError);
+                            });
+                        } else {
+                            let mess = data.error ? data.error : responseText.message;
+
+                            $('#md-response').addClass("alert alert-danger");
+                            $('#md-response .message').html(mess+"<br/>");
+                            $('#md-response').show();
+                        }
                     }
                 }
             })
             
         }
     });
+
+    $(document).on('submit', 'form#feedback', function(e){
+
+        e.preventDefault();
+
+        let form = $(this);
+        var action = form.attr('action');
+        var method = form.attr('method');
+        var formData = form.serializeArray();
+        var sendData = new FormData();
+        let errors = 0;
+        var headers = {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        };
+
+        $.each(formData, function (key, input) {
+            
+            let form_input = form.find('[name="'+input.name+'"]');
+            
+            Helper.resetInput(form_input);
+            if (form_input.attr('require') && input.value.length < 1){
+                Helper.showError(form_input, 'Вы не заполнили обязательное поле');
+                errors++;
+            }
+
+            if (input.value != ''){
+                sendData.append(input.name, input.value);
+            }
+        });
+
+        if (errors) return false;
+
+        $.ajax({
+            url: action,
+            method: method,
+            data: sendData,
+            processData: false,
+            contentType: false,
+            headers: headers,
+            dataType: 'JSON',
+            success: function(json){
+                
+                if (json.success){
+                    $('#md-response .message').text(json.result);                    
+                } else {
+                    $('#md-response .message').text(json.error);
+                }
+
+                UIkit.modal('#md-response').show();
+            },
+            error :function( data ) {
+                if( data.status === 422 ) {
+
+                    var responseText = $.parseJSON(data.responseText);
+                    let errors = responseText.errors;
+
+                    if (errors){
+                        $.each(errors, function (code, textError) {
+                            let text = textError.join();
+                            Helper.showError( form.find('[name='+code+']'), textError);
+                        });
+                    } else {
+                        let mess = data.error ? data.error : responseText.message;
+
+                        $('#md-response').addClass("alert alert-danger");
+                        $('#md-response .message').html(mess+"<br/>");
+                        $('#md-response').show();
+                    }
+                }
+            }
+        });
+    });
+
 
     $(document).on('click','.js_menu_del', function(){
 
@@ -148,7 +217,7 @@ $(function(){
 
                 } else {
                     $('#response').show();
-                    $('#response .messsage').html(data.error+"<br/>");
+                    $('#response .message').html(data.error+"<br/>");
                 }
             }
         });
@@ -180,7 +249,7 @@ $(function(){
                     UIkit.modal('#md-menu_edit').show();
                 } else {
                     $('#response').show();
-                    $('#response .messsage').html('Ошибка в запросе при получении данных <br/>');
+                    $('#response .message').html('Ошибка в запросе при получении данных <br/>');
                 }
 
             }

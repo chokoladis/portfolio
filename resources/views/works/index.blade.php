@@ -64,7 +64,7 @@
             @include('compiled.works')
 
             @if(auth()->user() !== null)
-                <button class="uk-button uk-button-default" uk-toggle="target: #md-work_create" type="button">Добавить</button>
+                <button class="uk-button uk-button-default" uk-toggle="target: #md-work_add" type="button">Добавить</button>
             @endif
         </div>
     </main>

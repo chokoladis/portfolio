@@ -40,13 +40,11 @@ $(function(){
             }
         });
 
-        // добавление аватарки
         var file_data = form.find('[name="photo"]')[0].files;
         if (file_data.length > 0 ){
             sendData.append("photo", file_data[0]);
         }
 
-        // добавление соцсетей
         var socials = $('.socials input');
 
         for (var i = 0; i < socials.length; i++) {
@@ -57,7 +55,7 @@ $(function(){
             }
         }
 
-        if (error) //show errors
+        if (error)
             return;
 
         workerAdd(form, sendData);

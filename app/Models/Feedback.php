@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+    protected $hidden = ['deleted_at'];
 }
