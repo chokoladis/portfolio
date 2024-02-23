@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Hash;
 
 class HelperController extends Controller
 {
+    const ORDER_BY = [
+        'view_count' => 'По просмотрам',
+        'created_at' => 'По дате добавления'
+    ];
+    
+    const SORT = [
+        'asc' => 'По возрастанию', 
+        'desc' => 'По убыванию'
+    ];
+
     public static function getAdminUser(){
         $userObj = auth()->user();
         if ($userObj){

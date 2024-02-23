@@ -27,7 +27,7 @@
                     @if (!empty($work->url_files))
                         <div class="works_gallery">
                             @foreach(explode(',', $work->url_files) as $filesPath)
-                                <img src="/storage/works/img/{{ trim($filesPath) }}" class="{{ $imgclass }}">
+                                <img src="{{ config('filesystems.img.works').trim($filesPath) }}" class="{{ $imgclass }}">
                             @endforeach
                         </div>
                     @endif

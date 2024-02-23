@@ -1,6 +1,6 @@
-<?php
+@php
     use App\Http\Controllers\HelperController;
-?>
+@endphp
 @extends('layouts.main')
 
 @section('breadcrumb'){{ Breadcrumbs::render('worker', $worker) }}@endsection

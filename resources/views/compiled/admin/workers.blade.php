@@ -43,7 +43,7 @@
                         </ul>                    
                     </div>
                     <div class="bg" style="background-image: url({{ $worker->url_avatar 
-                        ? HelperController::$workerDirImg.$worker->url_avatar 
+                        ? config('filesystems.img.workers').$worker->url_avatar 
                         : '/storage/general/users2.png' }})"></div>
                 </div>
             @endforeach

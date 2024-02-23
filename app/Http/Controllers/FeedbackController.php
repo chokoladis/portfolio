@@ -5,22 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Feedback\StoreRequest;
 use App\Models\Feedback;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
 {
     static $error = '';
     static $success = true;
     static $response = '';
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // show all feedback in admin
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,52 +35,22 @@ class FeedbackController extends Controller
             $diff_hours = $now->diffInHours($feedback_create);
 
             if ($diff_hours < 24){
-                // todo send mess
-                return false;
+                self::$success = false;
+                self::$error = __('Недавно вы уже отправляли заявку, попробуйте позже');
             }
         }
 
-        $res = Feedback::query()->create($data);
+        if (self::$success !== false){
+            $res = Feedback::query()->create($data);
 
-        if ($res){
-            self::$response = __('Завяка отправлена');
-        } else {
-            self::$success = false;
-            self::$error = __('Не удалось отправить заявку');
+            if ($res){
+                self::$response = __('Завяка отправлена');
+            } else {
+                self::$success = false;
+                self::$error = __('Не удалось отправить заявку');
+            }   
         }
 
         return responseJson(self::$success, self::$response, self::$error);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Feedback $feedback)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Feedback $feedback)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Feedback $feedback)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Feedback $feedback)
-    {
-        //
     }
 }

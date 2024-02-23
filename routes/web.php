@@ -69,14 +69,20 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
             Route::get('/works/', 'ExampleWorkController@index')->name('admin.works.index');
             Route::get('/workers/', 'WorkersController@index')->name('admin.workers.index');
             Route::get('/menu/', 'MenuNavController@index')->name('admin.menu.index');
+            Route::get('/feedback/', 'FeedbackController@index')->name('admin.feedback.index');
         
             Route::group(['prefix' => 'menu'], function() {
                 Route::post('/', 'MenuNavController@store')->name('admin.menu.store');
                 Route::get('/add/', 'MenuNavController@create')->name('admin.menu.create');
-                Route::get('/add/', 'MenuNavController@create')->name('admin.menu.create');
                 Route::get('/{menuNav}/edit/', 'MenuNavController@edit')->name('admin.menu.edit');
                 Route::post('/{menuNav}/update', 'MenuNavController@update')->name('admin.menu.update');
                 Route::get('/{menuNav}/delete/', 'MenuNavController@delete')->name('admin.menu.delete');
+            });
+
+            Route::group(['prefix' => 'feedback'], function() {
+                Route::get('/{feedback}/show/', 'FeedbackController@show')->name('admin.feedback.show');
+                Route::get('/{feedback}/delete/', 'FeedbackController@delete')->name('admin.feedback.delete');
+
             });
         });
     });

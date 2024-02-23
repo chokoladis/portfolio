@@ -1,4 +1,16 @@
 
+.header-filter{
+    select{
+        margin-right: 5px;
+        width: 150px;
+
+        // &:last-of-type{
+        //     margin: 0;
+        // }
+    }    
+}
+
+
 main{
     li{
         .contain{

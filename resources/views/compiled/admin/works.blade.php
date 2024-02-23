@@ -36,6 +36,9 @@
                             </a>
                         </td>
                         <td>
+                            {{  $work->created_at  }}
+                        </td>
+                        <td>
                             <div class="custom-btn clr-primary js_work_edit">
                                 <a href="{{ route('admin.work.edit', $work->slug) }}">{{ __('Редактировать') }}</a>
                             </div>

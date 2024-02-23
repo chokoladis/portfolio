@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Workers;
 use App\Http\Requests\Workers\StoreRequest;
@@ -48,7 +49,7 @@ class WorkersController extends Controller
 
         $workers = $queryWorkers->paginate($perPage)->appends(request()->query());
         
-        return view('workers.index', compact('workers', 'workerById'));
+        return view('admin.workers.index', compact('workers', 'workerById'));
     }
 
     public function filterByProfile($queryWorkers, $fieldProfile){

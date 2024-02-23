@@ -1,5 +1,7 @@
+@php
+    use App\Http\Controllers\HelperController;
+@endphp
 @extends('layouts.main')
-
 
 @section('breadcrumb'){{ Breadcrumbs::render('search', htmlspecialchars(request('search')) ) }}@endsection
 
@@ -19,20 +21,28 @@
                     <input type="hidden" name="search" value="{{ request('search') }}">
                     <input type="hidden" name="page" value="{{ request('page') ?? 1 }}">
 
-                    <ul class="one-row ">
-                        <li class="filter">
+                    <ul class="active">
+                        <li class="filter active">
                             <div class="btn">
                                 <span uk-icon="settings"></span>
                             </div>
                             <div class="inputs">
-                                <select name="orderBy" value="{{ request('orderBy') }}" >
+                                <select name="orderBy" class="uk-select" aria-label="Select">
                                     <option value="" disabled selected>Сортировка</option>
-                                    <option value="views">По просмотрам</option>
-                                    <option value="created_at">По дате добавления</option>
+                                    @php
+                                        foreach (HelperController::ORDER_BY as $code => $value) {
+                                            $sel = $code === request('orderBy') ? 'selected' : '';
+                                            echo '<option value="'.$code.'" '.$sel.'>'.$value.'</option>';
+                                        }                                        
+                                    @endphp
                                 </select>
-                                <select name="sort">
-                                    <option value="asc" selected>По возрастанию</option>
-                                    <option value="desc">По убыванию</option>
+                                <select name="sort" class="uk-select" aria-label="Select">
+                                    @php
+                                        foreach (HelperController::SORT as $code => $value) {
+                                            $sel = $code === request('sort') ? 'selected' : '';
+                                            echo '<option value="'.$code.'" '.$sel.'>'.$value.'</option>';
+                                        }                                        
+                                    @endphp
                                 </select>
                             </div>
                         </li>
@@ -86,7 +96,7 @@
                                         </div>
                                         <span class="splash">|</span>
                                         <div class="views">
-                                            <span uk-icon="eye"></span> {{ rand(1,250) }}
+                                            <span uk-icon="eye"></span> {{ $item['views'] }}
                                         </div>
                                     </div>
                                 </li>
@@ -103,15 +113,22 @@
 
                                 @php
                                     $i = 1;
-                                    // $pages = 20;
+                                    $orderBy = request('orderBy');
+                                    $sort = request('sort');
                                     $current = request('page') ? intval(request('page')) : 1;
+                                    $params = ['search' => request('search'), 'page' => 1];
+
+                                    if ($orderBy)
+                                        $params = array_merge($params, ['orderBy' => $orderBy]);
+                                    if ($sort)       
+                                        $params = array_merge($params, ['sort' => $sort]);
 
                                     $i_right = $current + 5;
                                     $i_left = $current - 5;
 
                                     @endphp
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ route('search', ['search' => request('search'), 'page' => 1]) }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
+                                            <a class="page-link" href="{{ route('search', $params) }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
                                         </li>
                                     @php
 
@@ -119,16 +136,20 @@
                                                                                         
                                         if ($i == $current){ @endphp
                                             <li class="page-item active" aria-current="page"><span class="page-link">{{ $i }}</span></li>
-                                        @php } elseif ($i < $i_right && $i > $i_left) { @endphp
-                                            <li class="page-item"><a class="page-link" href="{{ route('search', ['search' => request('search'), 'page' => $i]) }}">{{ $i }}</a></li>
+                                        @php } elseif ($i < $i_right && $i > $i_left) {
+                                            $params['page'] = $i; 
+                                            @endphp
+                                            <li class="page-item"><a class="page-link" href="{{ route('search', $params) }}">{{ $i }}</a></li>
                                         @php }
 
                                         $i++;
                                     }
                                     
+                                    $params['page'] = $pages; 
+
                                     @endphp
                                     <li class="page-item">
-                                        <a class="page-link" href="{{ route('search', ['search' => request('search'), 'page' => $pages]) }}" rel="next">&rsaquo;</a>
+                                        <a class="page-link" href="{{ route('search', $params) }}" rel="next">&rsaquo;</a>
                                     </li>
                                     @php
                                 @endphp

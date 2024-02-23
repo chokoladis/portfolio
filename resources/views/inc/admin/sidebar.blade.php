@@ -16,6 +16,11 @@
             'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
             'link' => 'admin.workers.index'
         ],
+        'Feedback' =>[
+            'name' =>   'Feedback',
+            'img' =>    '<i class="nav-icon fas fa-solid fa-comment"></i>',
+            'link' => 'admin.feedback.index'
+        ],
     ];
 @endphp
 
