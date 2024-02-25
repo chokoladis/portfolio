@@ -8,12 +8,12 @@ use App\Models\Workers;
 use App\Http\Requests\Workers\StoreRequest;
 use App\Http\Requests\Workers\FilterRequest;
 use App\Http\Controllers\HelperController;
+use App\Services\ImageService;
 use Illuminate\Support\Str;
 
 
 class WorkersController extends Controller
 {
-    static $folderImg = '/storage/workers/img/';
     static $error = '';
     static $success = true;
     static $response = '';
@@ -119,9 +119,7 @@ class WorkersController extends Controller
         $phone = $this->getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
-        // todo
-        $helper = new HelperController();
-        $data['url_avatar'] = $helper->getNewPhotoPath($request, 'photo', self::$folderImg);
+        $data['url_avatar'] = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.workers'));
 
         unset($data['photo']);
 

@@ -23,23 +23,23 @@
 
 @section('content')
 
-    <!-- Content Header (Page header) -->
+     
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">{{ __('Workers') }}</h1>
-                </div><!-- /.col -->
+                </div>  
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/admin/">{{ __('Home') }}</a></li>
                     <li class="breadcrumb-item active">{{ __('Workers') }}</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>  
+            </div> 
+        </div> 
     </div>
-    <!-- /.content-header -->
+     
 
     <header class="header-filter">
         <div class="container">
@@ -59,12 +59,12 @@
         </div>
     </header>
 
-    <!-- Main content -->
+     
     <section class="content">
         <div class="container-fluid">
             @include('compiled.workers')
-        </div><!--/. container-fluid -->
+        </div> 
     </section>
-    <!-- /.content -->
+     
     
 @endsection

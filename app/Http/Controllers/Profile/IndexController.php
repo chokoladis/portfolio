@@ -18,7 +18,6 @@ use App\Http\Requests\Profile\WorksRequest;
 
 class IndexController extends Controller
 {
-    public static $defaultFolderImg = '/storage/workers/img/';
     static $error = '';
     static $success = true;
     static $response = '';
@@ -59,7 +58,7 @@ class IndexController extends Controller
     
         $userId = auth()->id();
 
-        $file_path = ImageService::getNewPhotoPath($request, 'url_avatar', self::$defaultFolderImg);
+        $file_path = ImageService::getNewPhotoPath($request, 'url_avatar', config('filesystems.img.workers'));
 
         if ($file_path) {
 
@@ -67,7 +66,6 @@ class IndexController extends Controller
                 ->where('user_id', '=', $userId)
                 ->first();
 
-            // dd($workerFind->url_avatar, $file_path);
             $workerFind->url_avatar = $file_path;
 
             $res = $workerFind->save();

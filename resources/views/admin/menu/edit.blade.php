@@ -17,30 +17,33 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">
                         <i class="fas fa-link"></i>
-                        {{ __('Меню редактор - создать')}}</h1>
+                        {{ __('Редактирование пункта меню')}}
+                    </h1>
                 </div>  
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
-                    <li class="breadcrumb-item active">Menu</li>
+                    <li class="breadcrumb-item"><a href="/admin/">{{ __('Home') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('Menu') }}</li>
                     </ol>
                 </div>  
             </div> 
         </div> 
     </div>
      
+
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('admin.menu.store') }}" method="POST">
-                @csrf
+            <form action="{{ route('admin.menu.update', $menuNav) }}" method="POST" id="menu_edit" accept-charset="multipart/form-data">
                 
+                @csrf
+        
                 <div class="uk-margin">
                     <input class="uk-input" type="text" name="name"
-                        placeholder="{{ __('Название') }}" required>
+                        placeholder="{{ __('Название') }}" value="{{ $menuNav->name }}">
                 </div>
                 <div class="uk-margin">
                     <input class="uk-input" type="text" name="link" 
-                        placeholder="{{ __('Ссылка') }}" required>
+                        placeholder="{{ __('Ссылка') }}" value="{{ $menuNav->link }}">
                 </div>
                 <div class="uk-margin">
                     <select class="uk-select" aria-label="Select" name="role">
@@ -55,10 +58,10 @@
                 </div>
                 <div class="uk-margin">
                     <input class="uk-input" type="number" name="sort"
-                        placeholder="{{ __('Сортировка') }}">
+                        placeholder="{{ __('Сортировка') }}" value="{{ $menuNav->sort }}">
                 </div>
-
-                <input type="submit" value="{{ __('Добавить') }}" class="uk-button uk-button-primary">
+            
+                <input class="uk-button uk-button-default" type="submit" id="js_menu_edit_submit" value="{{ __('Обновить') }}">
             </form>
         </div>
     </section>

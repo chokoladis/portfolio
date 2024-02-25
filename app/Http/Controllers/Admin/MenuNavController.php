@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MenuNav\StoreRequest;
 use App\Http\Requests\MenuNav\UpdateRequest;
 
-
 class MenuNavController extends Controller
 {
 
@@ -27,10 +26,7 @@ class MenuNavController extends Controller
      */
     public function create()
     {
-        $model = new MenuNav();
-        $columns = $model->getColumns();
-
-        return view('admin.menu.create', compact('columns'));
+        return view('admin.menu.create');
     }
 
     /**
@@ -66,39 +62,24 @@ class MenuNavController extends Controller
      */
     public function edit(MenuNav $menuNav)
     {
-        $ar = [
-            'id' => $menuNav->id,
-            'name' => $menuNav->name,
-            'link' => $menuNav->link,
-            'role' => $menuNav->role,
-            'active' => $menuNav->active,
-            'sort' => $menuNav->sort
-        ];
-
-        $json = json_encode($ar); 
-
-        return $json;
+        return view('admin.menu.edit', compact('menuNav'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateRequest $request, MenuNav $menuNav)
-    {
-        $success = true;
-        
+    {        
         $data = $request->validated(); 
 
         $res = $menuNav->update($data);
 
         if ($res){
-            self::$response = 'Данные успешно обновлены';
+            $listMenu = MenuNav::all();
+            return view('admin.menu.index', compact('listMenu'))->with('success', __('Данные успешно обновлены'));
         } else {
-            self::$success = false;
-            self::$error = __('При изменении данных возникла ошибка');
+            return view('admin.menu.edit')->with('error', __('При изменении данных возникла ошибка'));
         }
-
-        return responseJson(self::$success,self::$response, self::$error);
     }
 
     /**
@@ -111,13 +92,5 @@ class MenuNavController extends Controller
         } else {
             return responseJson(false, '', 'Произошла ошибка при удалении');
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(MenuNav $menuNav)
-    {
-        //
     }
 }

@@ -12,6 +12,10 @@ class MenuNav extends Model
     use HasFactory;
     use SoftDeletes;
 
+    const LIST_ROLE = [
+        'guest', 'user', 'admin'
+    ];
+
     protected $guarded = [];
     protected $hidden = ['created_at','updated_at','deleted_at'];
     static $formHidden = ['created_at','updated_at','deleted_at'];
@@ -32,34 +36,11 @@ class MenuNav extends Model
         'sort' => 'int'
     ];
 
-    static $nameColumns = [
-        'name' => 'Наименование',
-        'link' => 'Ссылка', 
-        'role' => 'Роль',
-        'active' => 'Активность',
-        'sort' => 'Сортировка'
-    ];
-    
-    public function getColumns(){
-
-        $tableName = $this->getTable();
-  
-        $columns = Schema::getColumnListing($tableName);
-        
-        foreach($columns as $col){
-            if ($col !== 'id'
-                && array_key_exists($col,self::$nameColumns)){
-                $res[$col]['name_ru'] = self::$nameColumns[$col];
-                $res[$col]['type'] = Schema::getColumnType($tableName, $col);
-            }
-        }
-
-        return $res;
-    }
-
     public function getActive(){
         $query = MenuNav::query();
         $list = $query->where('active', 1)->get();
         return $list;
     }
+
+    
 }

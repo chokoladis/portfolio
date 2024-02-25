@@ -223,39 +223,6 @@ $(function(){
         });
 
     });
-
-    $(document).on('click','.js_menu_edit', function(){
-
-        let parent = $(this).parents('.link');
-        let menuId = parent.attr('data-id');
-
-        $.ajax({
-            url: '/admin/menu/'+menuId+'/edit/',
-            method: 'GET',
-            dataType: 'json',
-            success: function(data){
-
-                if (data){
-                    let form = $('#md-menu_edit');
-                    form.find('[name="id"]').val(menuId);
-                    form.find('[name="name"]').val(data.name);
-                    form.find('[name="link"]').val(data.link);
-                    form.find('[name="role"] option:contains("'+data.role+'")').prop('selected', true);
-                    
-                    form.find('[name="active"][value="'+data.active+'"]').prop('checked', true);
-
-                    form.find('[name="sort"]').val(data.sort);
-                    
-                    UIkit.modal('#md-menu_edit').show();
-                } else {
-                    $('#response').show();
-                    $('#response .message').html('Ошибка в запросе при получении данных <br/>');
-                }
-
-            }
-        });
-
-    });
     
     $(document).on('click','.header-filter .btn', function(){
 

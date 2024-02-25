@@ -10,10 +10,10 @@ use App\Models\User;
 use App\Http\Controllers\HelperController;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Services\ImageService;
 
 class ExampleWorkController extends Controller
 {
-    static $folderImg = '/storage/works/img/';
     static $error = '';
     static $success = true;
     static $response = '';
@@ -78,8 +78,7 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
 
-        $helper = new HelperController;
-        $data['url_files'] = $helper->getNewPhotoPath($request, 'url_files', self::$folderImg);
+        $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
 
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 
