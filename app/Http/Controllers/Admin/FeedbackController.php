@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Feedback\FilterRequest;
 use App\Models\Feedback;
+use App\Models\Feedback_stats;
 
 class FeedbackController extends Controller
 {
@@ -14,6 +15,13 @@ class FeedbackController extends Controller
 
     public function index(FilterRequest $request)
     {
+        $feedback = Feedback::all();
+        foreach($feedback as $item){
+            
+            Feedback_stats::query()
+                ->create(['feedback_id' => $item->id ]);
+        }
+
         $data = $request->validated();
 
         $page = $data['page'] ?? 1;

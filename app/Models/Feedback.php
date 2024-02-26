@@ -11,4 +11,22 @@ class Feedback extends Model
 
     protected $guarded = [];
     protected $hidden = ['deleted_at'];
+
+    public function stats()
+    {
+        return $this->hasOne(Feedback_stats::class, 'feedback_id', 'id');
+    }
+
+
+    public static function boot() {
+
+        parent::boot();
+
+        static::creating(function($item) {
+
+            Feedback_stats::query()
+                ->create(['feedack_id' => $item->id]);
+
+        });
+    }
 }

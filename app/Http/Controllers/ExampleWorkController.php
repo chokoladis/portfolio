@@ -7,6 +7,7 @@ use App\Http\Requests\ExampleWork\StoreRequest;
 use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
+use App\Models\Example_work_stats;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Support\Str;

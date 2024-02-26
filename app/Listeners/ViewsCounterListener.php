@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\ViewsEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class ViewsCounterListener
 {
@@ -30,7 +28,7 @@ class ViewsCounterListener
         $session_user_view = session($name_session);
         if (!$session_user_view){
             session([$name_session => true]);
-            $event->model->increment('view_count'); 
+            $event->model->stats->increment('view_count'); 
         }
     }
 }

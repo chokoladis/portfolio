@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-// use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
+use App\Models\Example_work_stats;
 use Illuminate\Support\Facades\Schema;
 
 class Example_work extends Model
@@ -89,9 +89,21 @@ class Example_work extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function stats()
+    {
+        return $this->hasOne(Example_work_stats::class, 'work_id', 'id');
+    }
+
     public static function boot() {
 
         parent::boot();
+
+        static::creating(function($item) {
+
+            Example_work_stats::query()
+                ->create(['work_id' => $item->id]);
+
+        });
 
         // static::updating(function($item) {            
 

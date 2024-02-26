@@ -8,6 +8,7 @@ use App\Models\Workers;
 use App\Http\Requests\Workers\StoreRequest;
 use App\Http\Requests\Workers\FilterRequest;
 use App\Http\Controllers\HelperController;
+use App\Models\Workers_stats;
 use App\Services\ImageService;
 use Illuminate\Support\Str;
 

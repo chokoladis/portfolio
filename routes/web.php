@@ -83,8 +83,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 
     
                 Route::group(['prefix' => 'feedback'], function() {
-                    Route::get('/{feedback}/show/', 'FeedbackController@show')->name('admin.feedback.show');
-                    Route::get('/{feedback}/delete/', 'FeedbackController@delete')->name('admin.feedback.delete');
+                    Route::get('/{feedback}/show/', 'FeedbackController@show')->name('feedback.show');
+                    Route::get('/{feedback}/delete/', 'FeedbackController@delete')->name('feedback.delete');
     
                 });
             });

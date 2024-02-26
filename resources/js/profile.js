@@ -110,3 +110,10 @@ async function profileUpdate(form, body){
         });
     }
 }
+
+
+// $('a.js_profile_delete').on('click', function(){
+//     if (confirm('Вы уверенны что хотите удалить профиль?')){
+//         profileDelete();
+//     }
+// });

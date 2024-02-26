@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Models\Example_work;
-use App\Http\Controllers\WorkersController;
 
 class Workers extends Model
 {
@@ -49,9 +48,21 @@ class Workers extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function stats()
+    {
+        return $this->hasOne(Workers_stats::class, 'worker_id', 'id');
+    }
+    
     public static function boot() {
 
         parent::boot();
+
+        static::creating(function($item) {
+
+            Workers_stats::query()
+                ->create(['worker_id' => $item->id]);
+
+        });
 
         self::updating(function($model){
 

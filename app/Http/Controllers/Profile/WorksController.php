@@ -36,48 +36,51 @@ class WorksController extends Controller
 
     public function edit(Example_work $work)
     {
-        $this->authorize('edit', $work);
+        $this->authorize('modify', $work);
 
         return view('profile.works.edit', compact('work'));
     }
 
     public function update(WorkUpdateRequest $request, Example_work $work)
     {
+        $this->authorize('modify', $work);
+
         $data = $request->validated();
 
-        if ($request->hasFile('photo')){
-            $data['url_files'] = $this->getNewFilesPath($request, $data);
-        }
-
+        $data['url_files'] = $this->getNewFilesPath($request, $data);
+        
         unset($data['url_files_flags'], $data['photo']);
 
-        $success = Example_work::find($work->id)->update($data);
-    
-        $perPage = isset($data['perPage']) ? $data['perPage'] : 5;
-        $pageNum = isset($data['pageNum']) ? $data['pageNum'] : 1;
+        $res = $work->update($data);
 
-        $userId = auth()->id();
-
-        $works = Example_work::query()
-            ->where(['user_id' => $userId ])
-            ->paginate(perPage: $perPage, page: $pageNum);
-
-        return view('profile.works.index', compact('works'));
+        if ($res){
+            return redirect()->route('profile.works.index')->with('success', __('Данные успешно обновлены'));
+        } else {
+            return view('profile.works.edit')->with('error', __('При изменении данных возникла ошибка'));
+        }
     }
 
     public function getNewFilesPath($request, $data){
 
-        $ar_url_files = array_intersect_key($data['url_files'],$data['url_files_flags']);
-        $checkbox_url_files = implode(', ', $ar_url_files);
+        $url_files = '';
 
-        $upload_url_files = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+        if (isset($data['url_files_flags'])){
+            $ar_url_files = array_intersect_key($data['url_files'],$data['url_files_flags']);
+            $url_files .= implode(', ', $ar_url_files);
+        }
 
-        $url_files = $checkbox_url_files.', '.$upload_url_files;
-        $arFilesPath = explode(',', $url_files);
+        if ($request->hasFile('photo')){
+            $url_files .= $url_files ? ',' : '';
+            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+        }
 
-        if (count($arFilesPath) > ImageService::LIMIT_FILES){
-            $arFilesPath = array_slice($arFilesPath, 0, 5);
-            $url_files = implode(', ', $arFilesPath);
+        if ($url_files){
+            $arFilesPath = explode(',', $url_files);
+
+            if (count($arFilesPath) > ImageService::LIMIT_FILES){
+                $arFilesPath = array_slice($arFilesPath, 0, 5);
+                $url_files = implode(', ', $arFilesPath);
+            }
         }
 
         return $url_files;
@@ -85,6 +88,8 @@ class WorksController extends Controller
 
     public function delete(Example_work $work)
     {
+        $this->authorize('delete', $work);
+
         dd($work);
         // can ?
         // work

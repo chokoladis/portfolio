@@ -31,17 +31,7 @@ class ExampleWorkPolicy
         //
     }
 
-    public function edit(User $user, Example_work $work): bool
-    {
-        $currentUser = $work->user->id === $user->id;
-        $admin = $user->role == 'admin';
-        return $currentUser || $admin;
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Example_work $work): bool
+    public function modify(User $user, Example_work $work): bool
     {
         $currentUser = $work->user->id === $user->id;
         $admin = $user->role == 'admin';

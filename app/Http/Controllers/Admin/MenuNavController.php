@@ -75,8 +75,7 @@ class MenuNavController extends Controller
         $res = $menuNav->update($data);
 
         if ($res){
-            $listMenu = MenuNav::all();
-            return view('admin.menu.index', compact('listMenu'))->with('success', __('Данные успешно обновлены'));
+            return redirect()->route('admin.menu.index')->with('success', __('Данные успешно обновлены'));
         } else {
             return view('admin.menu.edit')->with('error', __('При изменении данных возникла ошибка'));
         }

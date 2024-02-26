@@ -18,12 +18,10 @@ html{
     display: flex;
     position: relative;
     padding: 15px;
-    
-    
     margin-bottom: 20px;
-
     justify-content: space-between;
     overflow: hidden;
+    height: 190px;
 
     // .border{
     //     position: absolute;
@@ -37,9 +35,13 @@ html{
     // }
 
     .content{
+        height: 100%;
         z-index: 3;
+        display: flex;
         width: 90%;
         position: relative;
+        flex-direction: column;
+        justify-content: space-between;
 
         p{
             white-space: nowrap;
@@ -54,6 +56,10 @@ html{
             display: flex;
             margin-top: 10px;
             width: fit-content;
+
+            // background: black;
+            // padding: 3px 5px;
+            // align-items: center;
         }
 
         .works_gallery{
@@ -64,14 +70,17 @@ html{
             max-width: 100%;
             top: -5px;
             left: -5px;
-            max-height: 140px;
+            max-height: 100%;
 
             img{
                 min-width: 40px;
                 max-height: 100%;
                 width: 20%;
-                filter: blur(1px) opacity(60%);
+                filter: blur(3px) brightness(0.4);
             }
+        }
+        .addition_info{
+            margin-top: auto;
         }
     }
     .area_actions{
@@ -89,10 +98,10 @@ html{
     }
 
     &.work_have_preview{
-        padding-bottom: 50px;
+        padding-bottom: 10px;
 
         .addition_info{
-            background: var(--shadow-clr);
+            // background: var(--shadow-clr);
         }
     }
 

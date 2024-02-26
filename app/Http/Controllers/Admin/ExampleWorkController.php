@@ -111,6 +111,9 @@ class ExampleWorkController extends Controller
 
         $json = json_encode($ar); 
 
+        // todo admin lisense
+        // Event(new ViewsEvent($work));
+
         return $json;
     }
 

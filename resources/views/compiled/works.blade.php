@@ -37,7 +37,7 @@
                         </div>
                         <span class="splash">|</span>
                         <div class="views">
-                            <span uk-icon="eye"></span> {{ $work->view_count }}
+                            <span uk-icon="eye"></span> {{ $work->stats->view_count }}
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
 @section('content')    
     <main>
         <div class="container">
-            <section class="worker">
+            <section class="worker-works">
                 <div class="uk-child-width-1-1 uk-grid-small uk-grid-match" uk-grid>
                     @foreach($works as $work)
                         <div>
@@ -35,7 +35,7 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="paginastion">
+                <div class="paginastion uk-margin-small-top">
                     {{$works->links()}}
                 </div>
             </section>
