@@ -38,28 +38,11 @@
 
             <header class="header">
                 <div class="container">
-                    <!-- <div class="profile">
-                        <div class="present">
-                            <b>username</b>
-                            <hr>
-                        </div>
-                        <ul class="short_action hide">
-                            <li class='animated'><a href="">profile</a></li>
-                            <li class='animated'><a href="">settings</a></li>
-                            <li class='animated'><a href="">logout</a></li>
-                        </ul>
-                    </div> -->
-                    <!-- <div class="search">
-                        <form action="" method="POST" >
-                            <input type="text" name='search' id='search'>
-                            <button type='submit'>
-                                <img src="icon.png" alt="">
-                            </button>
-                        </form>
-                        <img src="icon.png" alt="" class='search-placeholder'>
-                    </div> -->
                     <div class="theme-toggle"></div>
                     <ul class="header-main">
+                        <div class="btn-mob-menu">
+                            <span></span>
+                        </div>
                         <x-main-menu-li route="{{ route('home') }}">
                             {{ __('Главная') }}
                         </x-main-menu-li>
@@ -114,6 +97,45 @@
                     </ul>
                 </div>
             </header>
+
+            <div class="mob-menu">
+                
+                <div class="close">X</div>
+
+                <form action="{{ route('search') }}" method="GET">
+                    <input type="search" name="search" minlength="3" maxlength="40" size="30"
+                        value="{{ Request::get('search') ? Request::get('search') : '' }}" autocomplete="on"
+                        required>
+                    <input type="submit" class="uk-button uk-button-search" value="Поиск">
+                </form>
+                
+                <ul>
+                    <x-main-menu-li route="{{ route('home') }}">
+                        {{ __('Главная') }}
+                    </x-main-menu-li>
+                    <x-main-menu-li route="{{ route('about') }}">
+                        {{ __('О проекте') }}
+                    </x-main-menu-li>
+    
+                    <x-main-menu-list-active />
+
+                    <div class="personal">
+                        @guest
+                            @if (Route::has('login'))
+                                <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>
+                                    {{ __('Вход') }}
+                                </x-main-menu-li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <x-main-menu-li route="{{ route('register') }}" a_class='nav-link'>
+                                    {{ __('Регистрация') }}
+                                </x-main-menu-li>
+                            @endif
+                        @endguest
+                    </div>
+                </ul>
+            </div>
             <!-- <div class="theme-toggle">
                 <img src="/storage/general/switch.png" alt="">
             </div> -->

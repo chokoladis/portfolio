@@ -9,66 +9,58 @@
 @endpush
 
 @php
+    $f_search = request('work') ? true : false;
+    $f_profile = request('profile') ? true : false;
+
     $f_search = false;
     $search_val = '';
 
-    if (isset($_GET['q'])){
+    if (request('work')){
         $f_search = true;
-        $search_val = htmlspecialchars($_GET['q']);
+        $search_val = htmlspecialchars(request('work'));
     }
 
     $f_profile = false;
     $profile_val = '';
 
-    if (isset($_GET['profile'])){
+    if (request('profile')){
         $f_profile = true;
-        $profile_val = htmlspecialchars($_GET['profile']);
-    }
-    
+        $profile_val = htmlspecialchars(request('profile'));
+    }    
 @endphp
+
+@section('title-content') {{ __('Примеры работ') }} @endsection
+
+@section('breadcrumb'){{ Breadcrumbs::render('admin.works') }}@endsection
 
 @section('content')
 
-     
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Examples work</h1>
-                </div>  
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
-                    <li class="breadcrumb-item active">Examples work</li>
-                    </ol>
-                </div>  
-            </div> 
-        </div> 
-    </div>
-     
-    
     <header class="header-filter">
         <div class="container">
             <form action="{{ route('admin.works.index') }}" method="GET" id="work-filter">
-                <ul class="one-row {{ $f_profile || $f_search ? 'active' : '' }} ">
-                    <li class="search {{ $f_search ? 'active' : '' }}">
-                        <div class="btn">
-                            <span uk-icon="search"></span>
-                        </div>
-                        <div class="inputs">
-                            <input type="search" name="q" minlength='2' value="{{ $search_val }}" autocomplete="on" placeholder="Поиск по работам в портфолио">
-                        </div>
-                    </li>
-                    <li class="filter {{ $f_profile ? 'active' : '' }}">
-                        <div class="btn">
-                            <span uk-icon="settings"></span>
-                        </div>
-                        <div class="inputs">
-                            <input type="text" name="profile" minlength='2' value="{{ $profile_val }}" autocomplete="on" placeholder="Поиск по пользователю">
-                        </div>
-                    </li>
-                    <input type="submit" value="Поиск" class="uk-button uk-button-default">
-                </ul>
+                <input type="search" name="work" minlength='2'
+                        value="{{ htmlspecialchars(request('work')) }}" 
+                        autocomplete="on" placeholder="Поиск по работе">
+                    
+                <input type="text" name="profile" minlength='2'
+                    value="{{ htmlspecialchars(request('profile')) }}" 
+                    autocomplete="on" placeholder="Пользователь">
+                
+                <label for="created_at_from">
+                    Время создания с
+                    <input type="datetime-local" name="created_at_from"
+                        value="{{ htmlspecialchars(request('created_at_from')) }}" 
+                        autocomplete="on">
+                </label>
+
+                <label for="created_at_to">
+                    по
+                    <input type="datetime-local" name="created_at_to"
+                        value="{{ htmlspecialchars(request('created_at_to')) }}" 
+                        autocomplete="on">
+                </label>
+
+                <input type="submit" value="Поиск" class="uk-button uk-button-default d-none">
             </form>
         </div>
     </header>

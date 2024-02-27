@@ -78,7 +78,7 @@ class SearchController extends Controller
                     $parsed = [
                         'contents' => $arFiltredFields,
                         'date_insert' => $data->created_at,
-                        'views' => $data->view_count,
+                        'views' => $data->stats->view_count,
                         'html_title' => $title,
                         'route' => $route
                     ];

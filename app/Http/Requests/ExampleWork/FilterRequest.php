@@ -24,6 +24,8 @@ class FilterRequest extends FormRequest
         return [
             'work' => 'string',
             'profile' => 'string',
+            'created_at_from' => 'date|before_or_equal:yesterday',
+            'created_at_to' => 'date|after_or_equal:created_at_from',
         ];
     }
 }

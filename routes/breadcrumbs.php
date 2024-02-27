@@ -58,6 +58,19 @@ Breadcrumbs::for('admin.menu.add', function ($trail) {
     $trail->parent('admin.menu');
     $trail->push('Создание', route('admin.menu.create'));
 });
+
+Breadcrumbs::for('admin.works', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Работы', route('admin.works.index'));
+});
+// Breadcrumbs::for('admin.works.edit', function ($trail, $menuNav) {
+//     $trail->parent('admin.works');
+//     $trail->push('Пункт - '.$menuNav->name, route('admin.menu.edit', $menuNav));
+// });
+// Breadcrumbs::for('admin.menu.add', function ($trail) {
+//     $trail->parent('admin.menu');
+//     $trail->push('Создание', route('admin.menu.create'));
+// });
 // Breadcrumbs::for('profile.works.edit', function ($trail, $work) {
 //     $trail->parent('profile.works');
 //     $trail->push($work->title, route('profile.works.edit', $work));

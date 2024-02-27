@@ -35,6 +35,15 @@ $(function(){
         
     });
 
+    $('.btn-mob-menu').on('click', () => {
+        $('.mob-menu').toggleClass('show');
+    });
+
+    $('.mob-menu .close').on('click', () => {
+        $('.mob-menu').removeClass('show');
+    });
+    
+
     $(document).on('click','form [type="submit"]', function(e){
 
         let form = $(this).parent('form');

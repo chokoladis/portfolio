@@ -8,6 +8,14 @@ return [
             'description' => 'Описание', 
             'url_files' => 'Ссылки на картинки',
             'url_work' => 'Ссылка на результат',
+        ],
+        'fields_admin' => [
+            'id_code' => 'ID | алиас',
+            'user' => 'Пользователь',
+            'title' => 'Заголовок',
+            'description' => 'Описание', 
+            'url_work' => 'Ссылка на результат',
+            'created_at' => 'Время создания',
         ]
     ],
     'Workers' => [

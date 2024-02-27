@@ -6,7 +6,9 @@
     <table class="uk-table">
         <thead>
             <tr>
-                <th></th>
+                @foreach (trans('crud.Example_work.fields_admin') as $filed_code => $trans)
+                    <th>{{ $trans }}</th>
+                @endforeach
             </tr>
         </thead>
         <tbody>
@@ -24,6 +26,9 @@
                             {{  $work->id  }} | {{  $work->slug  }}
                         </td>
                         <td>
+                            {{ $work->user->name }}
+                        </td>
+                        <td>
                             {{  $work->title  }}
                         </td>
                         <td>
@@ -39,6 +44,7 @@
                             {{  $work->created_at  }}
                         </td>
                         <td>
+                            {{-- todo rework --}}
                             <div class="custom-btn clr-primary js_work_edit">
                                 <a href="{{ route('admin.work.edit', $work->slug) }}">{{ __('Редактировать') }}</a>
                             </div>

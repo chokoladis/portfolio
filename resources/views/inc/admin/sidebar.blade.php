@@ -11,6 +11,11 @@
             'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
             'link' => 'admin.works.index'
         ],
+        // 'Users' =>[ todo
+        //     'name' =>   'Users',
+        //     'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
+        //     'link' => 'admin.users.index'
+        // ],
         'Workers' =>[
             'name' =>   'Workers',
             'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
