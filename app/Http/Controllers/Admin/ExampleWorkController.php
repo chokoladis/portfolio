@@ -89,6 +89,10 @@ class ExampleWorkController extends Controller
         return $query;
     }
 
+    public function create(){
+        return view('admin.works.create');
+    }
+
     public function store(StoreRequest $request){
 
         $data = $request->validated();
@@ -99,23 +103,20 @@ class ExampleWorkController extends Controller
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 
         $res = Example_work::firstOrCreate(
-            [ 'title' => $data['title']],
+            [ 'slug' => $data['slug']],
             $data
         );
 
         if ($res->wasRecentlyCreated){
-            self::$response = 'Данные успешно созданы';
+            return redirect()->route('admin.works.index')->with('success', __('Данные успешно созданы'));
         } else {
-            self::$success = false;
-            self::$error = 'Запись с данным заголовком уже есть в БД';
+            return redirect()->route('admin.menu.create')->with('error', __('Запись с данным заголовком уже есть в БД'));
         }
-
-        return responseJson(self::$success, self::$response, self::$error);
     }
 
     public function edit(Example_work $work){
         
-        $this->authorize('edit', $work);
+        $this->authorize('mmodify', $work);
 
         $ar = [
             'id' => $work->id,
@@ -135,7 +136,7 @@ class ExampleWorkController extends Controller
 
     public function update(UpdateRequest $request, Example_work $work){
         
-        $this->authorize('update', $work);
+        $this->authorize('mmodify', $work);
 
         $data = $request->validated(); 
 
@@ -153,7 +154,7 @@ class ExampleWorkController extends Controller
 
     public function delete(Example_work $work){
 
-        $this->authorize('update', $work);
+        $this->authorize('delete', $work);
         
         if ($work->delete()){
             return responseJson(true, __('Запись успешно удаленна'));

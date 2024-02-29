@@ -12,9 +12,9 @@
      
     <section class="content">
         <div class="container-fluid">
-            @include('compiled.menu_list')
+            @include('compiled.admin.menu_list')
             
-            <a href="{{ route('admin.menu.create') }}" class="uk-button uk-button-primary">Добавить</a>
+            <a href="{{ route('admin.menu.create') }}" class="uk-button uk-button-primary">{{ __('Добавить') }}</a>
         </div> 
     </section>
      

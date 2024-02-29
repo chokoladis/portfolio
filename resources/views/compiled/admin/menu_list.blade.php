@@ -52,13 +52,13 @@
                 <span>{{ $item['link'] }}</span>
             </div>
             <div class="area_actions">
-                <div class="custom-btn clr-danger js_menu_del">
-                    <span uk-icon="icon:trash" title="Удалить"></span>
-                </div>
                 <div class="custom-btn clr-primary">
                     <a href="{{ route('admin.menu.edit', $item['id'] ) }}">
                         <span uk-icon="icon:pencil" title="Редактировать"></span>
                     </a>
+                </div>
+                <div class="custom-btn clr-danger js_menu_del">
+                    <span uk-icon="icon:trash" title="Удалить"></span>
                 </div>
             </div>
         </div>                

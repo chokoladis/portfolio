@@ -51,6 +51,14 @@ ul,li,p{
     border: 0px;
     text-transform: uppercase;
 }
+.custom-btn{
+
+    min-width: 20px;
+    
+    a{
+        color: white;
+    }
+}
 .uk-button-search{
     line-height: normal;
     padding: 0px 20px;

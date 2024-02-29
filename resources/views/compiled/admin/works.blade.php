@@ -28,7 +28,7 @@
                         <td>
                             {{ $work->user->name }}
                         </td>
-                        <td>
+                        <td class="js_title_work">
                             {{  $work->title  }}
                         </td>
                         <td>
@@ -46,10 +46,12 @@
                         <td>
                             {{-- todo rework --}}
                             <div class="custom-btn clr-primary js_work_edit">
-                                <a href="{{ route('admin.work.edit', $work->slug) }}">{{ __('Редактировать') }}</a>
+                                <a href="{{ route('admin.work.edit', $work->slug) }}">
+                                    <span uk-icon="icon:pencil" title="Редактировать"></span>
+                                </a>
                             </div>
-                            <div class="custom-btn clr-danger js_work_del">
-                                <a href="{{ route('admin.work.delete', $work->slug) }}">{{ __('Удалить') }}</a>
+                            <div class="custom-btn clr-danger js_admin_work_del" data-route="{{ route('admin.work.delete', $work->slug) }}">
+                                <span uk-icon="icon:trash" title="Удалить"></span>
                             </div>                                                            
                         </td>
                     </tr>

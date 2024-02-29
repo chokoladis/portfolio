@@ -48,7 +48,7 @@
                         <label for="photo">
                             <input type="file" name="photo[]" id="photo" multiple="multiple" accept="image/*">
                             {{ __('Ссылки на картинки/скриншоты') }}
-                            <button class="uk-button uk-button-small uk-button-upload" type="button" tabindex="-1">Добавить</button>
+                            <button class="uk-button uk-button-small uk-button-upload" type="button" tabindex="-1">{{ __('Добавить') }}</button>
                         </label>
 
                         @if($errors->has('photo'))

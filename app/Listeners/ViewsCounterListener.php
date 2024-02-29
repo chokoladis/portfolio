@@ -19,6 +19,7 @@ class ViewsCounterListener
      */
     public function handle(ViewsEvent $event): void
     {
+        // todo viewwed_admin
         $model = $event->model;
 
         $user_id = auth()->id() ?? request()->ip();

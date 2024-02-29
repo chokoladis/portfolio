@@ -2,22 +2,29 @@ import {Helper} from './helpers';
 
 $(function(){
 
-    $(document).on('click','.js_work_del', function(){
+    $(document).on('click','.js_admin_work_del', function(){
 
-        let parent = $(this).parents('.work');
-        let workId = parent.attr('data-id');
+        let tr = $(this).parents('tr');
+        let title = tr.find('.js_title_work');
+        let titleFormated = Helper.escapeHtml(title.text().trim());
+
+        let accept_del = confirm('Вы действительно хотите удалить запись с заголовком - '+titleFormated);
+
+        if (!accept_del) return false;
+
+        let route = $(this).attr('data-route');
 
         $.ajax({
-            url: '/works/'+workId+'/delete/',
+            url: route,
             method: 'GET',
             dataType: 'json',
             success: function(data){
 
+                console.log(data);
+                console.log(tr);
                 if (data.success){
-                    
-                    $('.works_list [data-id="'+workId+'"]').remove();
-                    
-                    Helper.updateWorksHtmlToAdmin();
+
+                    tr.remove();
 
                 } else {
                     $('#response').show();

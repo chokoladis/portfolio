@@ -84,7 +84,7 @@ class ExampleWorkController extends Controller
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 
         $res = Example_work::firstOrCreate(
-            [ 'title' => $data['title']],
+            [ 'slug' => $data['slug']],
             $data
         );
 

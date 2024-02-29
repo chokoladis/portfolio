@@ -71,7 +71,7 @@
             
             @include('compiled.admin.works')
 
-            <button class="uk-button uk-button-primary" uk-toggle="target: #md-work_create" type="button">Добавить</button>
+            <a href="{{ route('admin.work.create') }}" class="uk-button uk-button-primary">{{ __('Добавить') }}</a>
         </div> 
     </section>
      
