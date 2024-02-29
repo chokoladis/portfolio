@@ -18,6 +18,7 @@
         <div class="container-fluid">
             <form action="{{ route('admin.work.store') }}" method="POST">
                 @csrf
+                {{-- test --}}
                 
                 <div class="uk-margin">
                     <input class="uk-input" type="text" name="name"
