@@ -71,7 +71,6 @@
             
             @include('compiled.admin.works')
 
-            <a href="{{ route('admin.work.create') }}" class="uk-button uk-button-primary">{{ __('Добавить') }}</a>
         </div> 
     </section>
      

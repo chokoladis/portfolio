@@ -1,24 +1,19 @@
-{{-- @php
-    use App\Models\MenuNav;
-@endphp --}}
-
 @extends('layouts.admin')
 
 @push('styles')
     @vite(['resources/scss/admin/works.scss'])
 @endpush
 
-@section('title-content') {{ __('Создание примера работы')}} @endsection
+@section('title-content') {{ $work->title }} @endsection
 
-@section('breadcrumb'){{ Breadcrumbs::render('admin.works.add') }}@endsection
+@section('breadcrumb'){{ Breadcrumbs::render('admin.works.edit', $work) }}@endsection
 
 @section('content')
      
     <section class="content">
         <div class="container-fluid">
-            <form action="{{ route('admin.work.store') }}" method="POST">
+            <form action="{{ route('admin.work.update', $work) }}" method="POST">
                 @csrf
-                {{-- test --}}
                 
                 <div class="uk-margin">
                     <input class="uk-input" type="text" name="name"

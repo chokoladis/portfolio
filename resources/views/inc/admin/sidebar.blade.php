@@ -1,4 +1,7 @@
 @php
+    use App\Http\Controllers\Admin\ExampleWorkController;
+    $work_notitice = ExampleWorkController::notViewedAdmin();
+
     $config = [
         'Menu' => [
             'name' =>   'Menu',
@@ -9,7 +12,8 @@
         'Example_work' =>[
             'name' =>   'Examples work',
             'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
-            'link' => 'admin.works.index'
+            'link' => 'admin.works.index',
+            'notites'   => $work_notitice
         ],
         // 'Users' =>[ todo
         //     'name' =>   'Users',
@@ -37,6 +41,9 @@
                 <a href="<?=route($menuItem['link'])?>" class="nav-link">
                     <?=$menuItem['img']?>
                     <p>{{ $menuItem['name'] }}</p>
+                    @if(isset($menuItem['notites']) && $menuItem['notites'] > 0)
+                        <span class="badge badge-info right">{{ $menuItem['notites'] }}</span>
+                    @endif
                 </a>
                 @if(!empty($menuItem['items']))
 

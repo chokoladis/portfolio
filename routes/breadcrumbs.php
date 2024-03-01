@@ -63,13 +63,9 @@ Breadcrumbs::for('admin.works', function ($trail) {
     $trail->parent('admin');
     $trail->push('Работы', route('admin.works.index'));
 });
-Breadcrumbs::for('admin.works.add', function ($trail) {
+Breadcrumbs::for('admin.works.edit', function ($trail, $work) {
     $trail->parent('admin.works');
-    $trail->push('Создание работы', route('admin.work.create'));
-});
-Breadcrumbs::for('admin.works.edit', function ($trail, $menuNav) {
-    $trail->parent('admin.works');
-    $trail->push('Пункт - '.$menuNav->name, route('admin.menu.edit', $menuNav));
+    $trail->push($work->title, route('admin.work.edit', $work));
 });
 // Breadcrumbs::for('admin.menu.add', function ($trail) {
 //     $trail->parent('admin.menu');

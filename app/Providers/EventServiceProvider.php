@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\ViewsAdminEvent;
 use App\Events\ViewsEvent;
+use App\Listeners\ViewedAdminListener;
 use App\Listeners\ViewsCounterListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,7 +24,10 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         ViewsEvent::class => [
-            ViewsCounterListener::class
+            ViewsCounterListener::class,
+        ],
+        ViewsAdminEvent::class => [
+            ViewedAdminListener::class,
         ]
     ];
 

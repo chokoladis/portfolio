@@ -73,10 +73,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 });
                 
                 Route::group(['prefix' => 'works', 'controller' => 'ExampleWorkController'], function() {
-                    Route::name('work.')->group(function(){
-                        Route::get('/add/', 'create')->name('create');
-                        Route::post('/', 'store')->name('store');
-                        
+                    Route::name('work.')->group(function(){                        
                         Route::get('/{work}/edit/', 'edit')->name('edit');
                         Route::post('/{work}/update', 'update')->name('update');
                         Route::get('/{work}/delete/', 'delete')->name('delete');

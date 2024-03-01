@@ -14,14 +14,19 @@
         <tbody>
             @foreach($works as $work)
                 @php 
+                    $class = '';
                     if (str_contains($work->url_work, 'https://') ||
                         str_contains($work->url_work, 'http://')){
                         $link = $work->url_work;
                     } else {
                         $link = 'https://'.$work->url_work;
                     }
+
+                    if ($work->stats){
+                        $class = $work->stats->viewed_admin_at ? '' : 'not_viewed_admin';
+                    }
                 @endphp
-                    <tr>
+                    <tr class="{{ $class }}">
                         <td>
                             {{  $work->id  }} | {{  $work->slug  }}
                         </td>

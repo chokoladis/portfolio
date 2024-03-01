@@ -16,41 +16,6 @@
     }
 }
 
-.works_list{
-    margin: 10px;
-    // padding-top: 20px;
-
-    .work{
-        box-shadow: -6px 0px 0px $second-color-lg;
-
-        .area_actions{
-            flex-direction: row;
-            height: fit-content;
-            margin-top: auto;
-            z-index: 5;
-
-            >div{
-
-                margin: 0;                
-                margin-right: 5px;
-                padding: 5px;
-
-                &:last-of-type{
-                    margin: 0;
-                }
-
-                *{
-                    color: white;
-                }
-            }
-        }
-        
-        &::after, &::before{
-            content: none;
-        }
-        &:hover{
-            box-shadow: 6px 8px 0px $work-hvr;
-        }
-    }
-
+.not_viewed_admin{
+    background: $second-color-dark;
 }

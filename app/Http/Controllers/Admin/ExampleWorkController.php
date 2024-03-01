@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\ExampleWork\StoreRequest;
+use App\Events\ViewsAdminEvent;
 use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
-use App\Services\ImageService;
 
 class ExampleWorkController extends Controller
 {
@@ -89,49 +87,13 @@ class ExampleWorkController extends Controller
         return $query;
     }
 
-    public function create(){
-        return view('admin.works.create');
-    }
-
-    public function store(StoreRequest $request){
-
-        $data = $request->validated();
-        $data['user_id'] = auth()->id();
-
-        $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
-
-        $data['slug'] = Str::slug($data['title'], '_', 'ru');
-
-        $res = Example_work::firstOrCreate(
-            [ 'slug' => $data['slug']],
-            $data
-        );
-
-        if ($res->wasRecentlyCreated){
-            return redirect()->route('admin.works.index')->with('success', __('Данные успешно созданы'));
-        } else {
-            return redirect()->route('admin.menu.create')->with('error', __('Запись с данным заголовком уже есть в БД'));
-        }
-    }
-
     public function edit(Example_work $work){
         
-        $this->authorize('mmodify', $work);
+        $this->authorize('modify', $work);
 
-        $ar = [
-            'id' => $work->id,
-            'title' => $work->title,
-            'description' => $work->description,
-            'url_files' => $work->url_files,
-            'url_work' => $work->url_work
-        ];
+        Event(new ViewsAdminEvent($work));
 
-        $json = json_encode($ar); 
-
-        // todo admin lisense
-        // Event(new ViewsEvent($work));
-
-        return $json;
+        return view('admin.works.edit', compact('work'));
     }
 
     public function update(UpdateRequest $request, Example_work $work){
@@ -149,6 +111,13 @@ class ExampleWorkController extends Controller
             self::$error = 'При изменении данных возникла ошибка';
         }
 
+
+        if ($res->wasRecentlyCreated){
+            return redirect()->route('admin.works.index')->with('success', __('Данные успешно созданы'));
+        } else {
+            return redirect()->route('admin.menu.create')->with('error', __('Запись с данным заголовком уже есть в БД'));
+        }
+
         return responseJson(self::$success, self::$response, self::$error);
     }
 
@@ -161,6 +130,17 @@ class ExampleWorkController extends Controller
         } else {
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
+    }
+
+    public static function notViewedAdmin(){
+
+        // use cache
+        $count = Example_work::where("deleted_at", null)
+            ->join('example_works_stats', 'example_works.id', '=', 'example_works_stats.work_id')
+            ->where('example_works_stats.viewed_admin_at', null)
+            ->count();
+
+        return $count;
     }
 
 }
