@@ -35,6 +35,31 @@ $(function(){
 
     });
 
+    $(document).on('click','.js_admin_work_restore', function(){
+
+        let tr = $(this).parents('tr');
+
+        let route = $(this).attr('data-route');
+
+        $.ajax({
+            url: route,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data){
+
+                if (data.success){
+                    tr.removeClass('deleted');
+                    console.log(data);
+                } else {
+                    $('#response').show();
+                    $('#response .messsage').html(data.error+"<br/>");
+                }
+            }
+        });
+
+    });
+    
+
     $('#js_work_edit_submit').on('click', function(e){
 
         e.preventDefault();

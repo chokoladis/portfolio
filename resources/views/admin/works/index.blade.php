@@ -47,7 +47,7 @@
                     autocomplete="on" placeholder="Пользователь">
                 
                 <label for="created_at_from">
-                    Время создания с
+                    {{ __('Создание с') }}
                     <input type="datetime-local" name="created_at_from"
                         value="{{ htmlspecialchars(request('created_at_from')) }}" 
                         autocomplete="on">
@@ -58,6 +58,10 @@
                     <input type="datetime-local" name="created_at_to"
                         value="{{ htmlspecialchars(request('created_at_to')) }}" 
                         autocomplete="on">
+                </label>
+                <label>
+                    <input type="checkbox" name="show_deleted" class="uk-checkbox" {{ request('show_deleted') ? 'checked' : '' }}>
+                    {{ __('Удаленные') }}
                 </label>
 
                 <input type="submit" value="Поиск" class="uk-button uk-button-default d-none">

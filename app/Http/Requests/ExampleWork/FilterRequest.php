@@ -26,6 +26,30 @@ class FilterRequest extends FormRequest
             'profile' => 'string',
             'created_at_from' => 'date|before_or_equal:yesterday',
             'created_at_to' => 'date|after_or_equal:created_at_from',
+            'show_deleted' => 'boolean',
         ];
+    }
+
+    /**
+     * Prepare inputs for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'show_deleted' => $this->toBoolean($this->show_deleted),
+        ]);
+    }
+
+    /**
+     * Convert to boolean
+     *
+     * @param $booleable
+     * @return boolean
+     */
+    private function toBoolean($booleable)
+    {
+        return filter_var($booleable, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
     }
 }

@@ -24,6 +24,8 @@ class ExampleWorkController extends Controller
         $perPage = $data['per_page'] ?? 5;
         
         $query = Example_work::query();
+        if (isset($data['show_deleted']) && $data['show_deleted'])
+            $query = $query->withTrashed();
         
         $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
@@ -130,6 +132,14 @@ class ExampleWorkController extends Controller
         } else {
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
+    }
+
+    public function restore(Example_work $work){
+
+        dd($work);
+        $work->withTrashed()->restore();
+
+        return redirect()->route('admin.works.index');
     }
 
     public static function notViewedAdmin(){

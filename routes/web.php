@@ -77,6 +77,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                         Route::get('/{work}/edit/', 'edit')->name('edit');
                         Route::post('/{work}/update', 'update')->name('update');
                         Route::get('/{work}/delete/', 'delete')->name('delete');
+                        Route::get('/{work}/restore/', 'restore')->name('restore');
                     });
                 });
     

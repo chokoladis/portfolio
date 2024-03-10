@@ -5,7 +5,7 @@
     form{
         padding: 15px 0;
 
-        input{
+        input:not([type="checkbox"]){
             padding: 5px 10px;
             width: 190px;
         }
@@ -16,6 +16,12 @@
     }
 }
 
-.not_viewed_admin{
-    background: $second-color-dark;
+tr{
+    &.deleted{
+        opacity: .5;
+        background: rgb(255, 146, 146);
+    }
+    &.not_viewed_admin{
+        background: $second-color-dark;
+    }
 }
