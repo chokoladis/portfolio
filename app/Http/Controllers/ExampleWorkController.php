@@ -10,6 +10,7 @@ use App\Models\Example_work;
 use App\Models\Example_work_stats;
 use App\Models\User;
 use App\Services\ImageService;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class ExampleWorkController extends Controller
@@ -23,21 +24,27 @@ class ExampleWorkController extends Controller
 
         $data = $request->validated();
 
-        $page = $data['page'] ?? 1;
-        $perPage = $data['per_page'] ?? 5;
+        $page = $data['page'] ?? Example_work::DEFAULT_PAGE;
+        $perPage = $data['perPage'] ?? Example_work::DEFAULT_PERPAGE;
         
         $query = Example_work::query();
         
         $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
 
-        $works = $query->paginate($perPage)->appends(request()->query());
+        $arKeyCache = ['model' => 'Example_work', 'page' => $page,'perPage' => $perPage];
+
+        $works = Example_work::getCacheList($arKeyCache, $query);
 
         return view('works.index', compact('works'));
     }
 
     public function detail(Example_work $work){
+
         Event(new ViewsEvent($work));
+
+        $work = $work->getCacheOne($work->id);
+
         return view('works.detail', compact('work'));
     }
 
@@ -100,7 +107,7 @@ class ExampleWorkController extends Controller
 
     public function edit(Example_work $work){
         
-        $this->authorize('edit', $work);
+        $this->authorize('modify', $work);
 
         $ar = [
             'id' => $work->id,
@@ -117,7 +124,7 @@ class ExampleWorkController extends Controller
 
     public function update(UpdateRequest $request, Example_work $work){
         
-        $this->authorize('update', $work);
+        $this->authorize('modify', $work);
 
         $data = $request->validated(); 
 
@@ -135,7 +142,7 @@ class ExampleWorkController extends Controller
 
     public function delete(Example_work $work){
 
-        $this->authorize('update', $work);
+        $this->authorize('delete', $work);
         
         if ($work->delete()){
             return responseJson(true, __('Запись успешно удаленна'));

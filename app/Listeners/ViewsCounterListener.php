@@ -28,7 +28,10 @@ class ViewsCounterListener
         $session_user_view = session($name_session);
         if (!$session_user_view){
             session([$name_session => true]);
-            $event->model->stats->increment('view_count'); 
+
+            if ($event->model->stats){
+                $event->model->stats->increment('view_count'); 
+            }
         }
     }
 }

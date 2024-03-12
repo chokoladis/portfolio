@@ -5,6 +5,30 @@ $(function(){
     $(document).on('click','.js_admin_work_del', function(){
 
         let tr = $(this).parents('tr');
+        let route = $(this).attr('data-route');
+
+        $.ajax({
+            url: route,
+            method: 'GET',
+            dataType: 'json',
+            success: function(data){
+
+                if (data.success){
+
+                    tr.remove();
+
+                } else {
+                    $('#response').show();
+                    $('#response .messsage').html(data.error+"<br/>");
+                }
+            }
+        });
+
+    });
+
+    $(document).on('click','.js_admin_work_forceDel', function(){
+
+        let tr = $(this).parents('tr');
         let title = tr.find('.js_title_work');
         let titleFormated = Helper.escapeHtml(title.text().trim());
 
@@ -20,8 +44,6 @@ $(function(){
             dataType: 'json',
             success: function(data){
 
-                console.log(data);
-                console.log(tr);
                 if (data.success){
 
                     tr.remove();

@@ -15,13 +15,6 @@ class FeedbackController extends Controller
 
     public function index(FilterRequest $request)
     {
-        $feedback = Feedback::all();
-        foreach($feedback as $item){
-            
-            Feedback_stats::query()
-                ->create(['feedback_id' => $item->id ]);
-        }
-
         $data = $request->validated();
 
         $page = $data['page'] ?? 1;
@@ -48,5 +41,17 @@ class FeedbackController extends Controller
     public function delete(Feedback $feedback)
     {
         
+    }
+
+    public static function notViewedAdmin(){
+
+        // use cache
+        $count = Feedback::query()
+            ->where("deleted_at", null)
+            ->join('feedback_stats', 'feedback.id', '=', 'feedback_stats.feedback_id')
+            ->where('feedback_stats.viewed_admin_at', null)
+            ->count();
+
+        return $count;
     }
 }

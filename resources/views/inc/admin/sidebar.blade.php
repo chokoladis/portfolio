@@ -1,16 +1,19 @@
 @php
     use App\Http\Controllers\Admin\ExampleWorkController;
+    use App\Http\Controllers\Admin\FeedbackController;
+
     $work_notitice = ExampleWorkController::notViewedAdmin();
+    $feedback_notitice = FeedbackController::notViewedAdmin();
 
     $config = [
         'Menu' => [
-            'name' =>   'Menu',
+            'name' =>   __('Меню'),
             'img' =>    '<i class="nav-icon fas fa-link"></i>',
             'link' => 'admin.menu.index',
             'items' => []
         ],
         'Example_work' =>[
-            'name' =>   'Examples work',
+            'name' =>   __('Примеры работ'),
             'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
             'link' => 'admin.works.index',
             'notites'   => $work_notitice
@@ -21,14 +24,15 @@
         //     'link' => 'admin.users.index'
         // ],
         'Workers' =>[
-            'name' =>   'Workers',
+            'name' =>   __('Профили'),
             'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
             'link' => 'admin.workers.index'
         ],
         'Feedback' =>[
-            'name' =>   'Feedback',
+            'name' =>   __('Обратная связь'),
             'img' =>    '<i class="nav-icon fas fa-solid fa-comment"></i>',
-            'link' => 'admin.feedback.index'
+            'link' => 'admin.feedback.index',
+            'notites'   => $feedback_notitice
         ],
     ];
 @endphp

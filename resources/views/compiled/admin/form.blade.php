@@ -19,7 +19,8 @@
             @case('datetime')
             
                 <div class="uk-margin">
-                    <input type="date" name="{{ $name }}" placeholder="{{ $arColumn['name_ru'] }}" value="{{ $value }}">
+                    <p>{{ $arColumn['name_ru'] }}</p>
+                    <input type="date" name="{{ $name }}" value="{{ $value }}">
 
                     @if($errors->has($name))
                         <div class="error">{{ $errors->first($name) }}</div>
@@ -30,8 +31,8 @@
             @default
 
                 <div class="uk-margin">
-                    <input type="text" name="{{ $name }}" placeholder="{{ $arColumn['name_ru'] }}"
-                        class="uk-input" aria-label="Input" value="{{ $value }}">
+                    <p>{{ $arColumn['name_ru'] }}</p>
+                    <input type="text" name="{{ $name }}" class="uk-input" aria-label="Input" value="{{ $value }}">
 
                     @if($errors->has($name))
                         <div class="error">{{ $errors->first($name) }}</div>

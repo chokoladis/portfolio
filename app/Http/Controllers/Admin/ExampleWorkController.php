@@ -8,6 +8,7 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Services\ImageService;
 
 class ExampleWorkController extends Controller
 {
@@ -100,27 +101,47 @@ class ExampleWorkController extends Controller
 
     public function update(UpdateRequest $request, Example_work $work){
         
-        $this->authorize('mmodify', $work);
+        $this->authorize('modify', $work);
 
         $data = $request->validated(); 
+
+        $data['url_files'] = $this->getNewFilesPath($request, $data);
+        
+        unset($data['url_files_flags'], $data['photo']);
 
         $res = $work->update($data);
 
         if ($res){
-            self::$response = 'Данные успешно обновлены';
+            return redirect()->route('admin.works.index')->with('success', __('Данные успешно обновлены'));
         } else {
-            self::$success = false;
-            self::$error = 'При изменении данных возникла ошибка';
+            return redirect()->route('admin.menu.edit')->with('error', __('При изменении данных возникла ошибка'));
+        }
+    }
+
+    public function getNewFilesPath($request, $data){
+
+        $url_files = '';
+
+        if (isset($data['url_files_flags'])){
+            $ar_url_files = array_intersect_key($data['url_files'],$data['url_files_flags']);
+            $url_files .= implode(', ', $ar_url_files);
         }
 
-
-        if ($res->wasRecentlyCreated){
-            return redirect()->route('admin.works.index')->with('success', __('Данные успешно созданы'));
-        } else {
-            return redirect()->route('admin.menu.create')->with('error', __('Запись с данным заголовком уже есть в БД'));
+        if ($request->hasFile('photo')){
+            $url_files .= $url_files ? ',' : '';
+            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
         }
 
-        return responseJson(self::$success, self::$response, self::$error);
+        if ($url_files){
+            $arFilesPath = explode(',', $url_files);
+
+            if (count($arFilesPath) > ImageService::LIMIT_FILES){
+                $arFilesPath = array_slice($arFilesPath, 0, 5);
+                $url_files = implode(', ', $arFilesPath);
+            }
+        }
+
+        return $url_files;
     }
 
     public function delete(Example_work $work){
@@ -128,18 +149,33 @@ class ExampleWorkController extends Controller
         $this->authorize('delete', $work);
         
         if ($work->delete()){
-            return responseJson(true, __('Запись успешно удаленна'));
+            return responseJson(true, __('Запись помечена на удаление'));
         } else {
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
     }
 
-    public function restore(Example_work $work){
+    public function forceDelete($slug){
 
-        dd($work);
-        $work->withTrashed()->restore();
+        $work = Example_work::query()->where('slug', $slug)->withTrashed()->first();
 
-        return redirect()->route('admin.works.index');
+        $this->authorize('delete', $work);
+        
+        if ($work->forceDelete()){
+            return responseJson(true, __('Запись успешно удалена'));
+        } else {
+            return responseJson(false, '', __('Произошла ошибка при удалении'));
+        }
+    }
+    
+
+    public function restore($slug){
+
+        $work = Example_work::query()->where('slug', $slug)->withTrashed()->restore();
+        if ($work){
+            return redirect()->route('admin.works.index');
+        }
+        
     }
 
     public static function notViewedAdmin(){

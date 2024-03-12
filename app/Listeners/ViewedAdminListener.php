@@ -23,7 +23,7 @@ class ViewedAdminListener
     {
         $model = $event->model;
 
-        if (!$model->stats->viewed_admin_at){
+        if ($model->stats && !$model->stats->viewed_admin_at){
             $model->stats->viewed_admin_at = now();
             $model->stats->save();
         }

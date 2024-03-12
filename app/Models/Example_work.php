@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Models\Example_work_stats;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class Example_work extends Model
@@ -28,15 +30,6 @@ class Example_work extends Model
         'url_work'
     ];
 
-    // public function toSearchableArray()
-    // {
-    //     return [
-    //         'title' => $this->title,
-    //         'description' => $this->description,
-    //         'url_work' => $this->url_work,
-    //     ];
-    // }
-
     protected $casts = [
         'title' => 'string',
         'description' => 'string', 
@@ -46,31 +39,9 @@ class Example_work extends Model
         'created_at' => 'date',
         'updated_at' => 'date',
     ];
-
-
-    static $columnsEdit = [ // todo from curds.php
-        'title' => 'Заголовок',
-        'description' => 'Описание', 
-        // 'url_files' => 'Ссылки на картинки/скриншоты',
-        'url_work' => 'Ссылка на результат',
-    ];
     
-    public function getColumns(){
-
-        $tableName = $this->getTable();
-  
-        $columns = Schema::getColumnListing($tableName);
-        
-        foreach($columns as $col){
-            if ($col !== 'id'
-                && array_key_exists($col,self::$columnsEdit)){
-                $res[$col]['name_ru'] = self::$columnsEdit[$col];
-                $res[$col]['type'] = Schema::getColumnType($tableName, $col);
-            }
-        }
-
-        return $res;
-    }
+    const DEFAULT_PAGE = 1;
+    const DEFAULT_PERPAGE = 5;
 
     public function getTitle(){
         return $this->title;
@@ -94,6 +65,35 @@ class Example_work extends Model
         return $this->hasOne(Example_work_stats::class, 'work_id', 'id');
     }
 
+    public static function getCacheList($arKeyCache, $query){
+
+        $key = implode(',', $arKeyCache);
+        $key = str_replace(',', '_', $key);
+
+        if (!$works = Cache::get($key)){
+            
+            $works = $query->paginate($arKeyCache['perPage'])->appends(request()->query());
+
+            Cache::put($key,$works, 21600 ); // 6hours
+        }
+
+        return $works;
+    }
+
+    public static function getCacheOne($id){
+        
+        $key = static::class.'_'.$id;
+
+        if (!$work = Cache::get($key)){
+            
+            $work = Example_work::find($id);
+
+            Cache::put($key,$work, 21600 ); // 6hours
+        }
+
+        return $work;
+    }
+
     public static function boot() {
 
         parent::boot();
@@ -105,41 +105,40 @@ class Example_work extends Model
 
         });
 
-        // static::updating(function($item) {            
+        static::updating(function($item) {            
+            Cache::delete(static::class.'_'.$item->id);
+            Cache::delete(static::class.'_'.self::DEFAULT_PAGE.'_'.self::DEFAULT_PERPAGE);
+        });
 
-        //     Log::info('Updating event call: '.$item);   
+        static::deleting(function($item) {
 
-        //     $item->slug = Str::slug($item->name);
+            if ($item->deleted_at){ // удаляется жестко
 
-        // });
+                if ($item->url_files){
 
-        static::deleted(function($item) {            
+                    $arUrlFiles = explode(',', $item->url_files);
+        
+                    foreach($arUrlFiles as $filePath){
 
-            if ($item->url_files){
-
-                $arUrlFiles = explode(',', $item->url_files);
+                        $filePath = trim($filePath);
+                        $arPath = explode('/', $filePath);
     
-                foreach($arUrlFiles as $filePath){
-                    
-                    $filePath = trim($filePath);
-                    $arPath = explode('/', $filePath);
+                        $filePath = public_path(config('filesystems.img.works').$filePath);
+        
+                        if (file_exists($filePath)){
+                            unlink($filePath);
+                        }
 
-                    $filePath = public_path(config('filesystems.img.works').$filePath);
+                        $folder = public_path(config('filesystems.img.works').$arPath[0]);
+                        $countFiles = count(Storage::files($folder));
     
-                    if (file_exists($filePath)){
-                        unlink($filePath);
+                        if (!$countFiles &&
+                            $folder != public_path(config('filesystems.img.works'))) 
+                            rmdir($folder);
                     }
-
-                    $folder = public_path(config('filesystems.img.works').$arPath[0]);
-                    $countFiles = count(Storage::files($folder));
-
-                    if (!$countFiles &&
-                        $folder != public_path(config('filesystems.img.works'))) 
-                        rmdir($folder);
                 }
             }
 
         });
-
     }
 }

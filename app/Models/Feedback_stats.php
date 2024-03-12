@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feedback_stats extends Model
 {
+    protected $guarded = [];
+    
     use HasFactory;
 }

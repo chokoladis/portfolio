@@ -22,6 +22,8 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'page' => 'numeric',
+            'perPage' => 'numeric|min:5|max:20',
             'work' => 'string',
             'profile' => 'string',
             'created_at_from' => 'date|before_or_equal:yesterday',

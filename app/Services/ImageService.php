@@ -5,6 +5,7 @@ namespace App\Services;
 class ImageService {
 
     const ACCEPT_FILE_SIZE = 3150000;
+    const ACCEPT_FILE_SIZE_MB = self::ACCEPT_FILE_SIZE/1048576;
     const LIMIT_FILES = 5;
 
     public static function getNewPhotoPath($request, $propName, $mainDir){
