@@ -12,7 +12,7 @@
                 <input class="uk-input" type="text" name="fio" require="true" autocomplete="on" placeholder="{{ __('ФИО') }}">
             </div>
             <div class="uk-margin">
-                <input class="uk-input" type="email" name="mail" require="true" autocomplete="mail" placeholder="{{ __('Почта') }}">
+                <input class="uk-input" type="email" name="email" require="true" autocomplete="email" placeholder="{{ __('Почта') }}">
             </div>
             <div class="uk-margin">
                 <input class="uk-input js-phone-mask" name="phone" require="true" autocomplete="tel" placeholder="{{ __('Телефон') }}">

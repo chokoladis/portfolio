@@ -19,6 +19,10 @@ class HelperController extends Controller
         'desc' => 'По убыванию'
     ];
 
+    const PER_PAGE = [
+        5, 10, 15, 20
+    ];
+
     public static function getAdminUser(){
         $userObj = auth()->user();
         if ($userObj){

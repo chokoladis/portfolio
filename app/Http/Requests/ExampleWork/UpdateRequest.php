@@ -25,6 +25,9 @@ class UpdateRequest extends FormRequest
             'title' => 'required|string',
             'description' => 'string',
             'url_work' => 'string',
+            'url_files' => 'array|nullable',
+            'url_files.*' => 'string',
+            'url_files_flags' => 'array|nullable',
         ];
     }
 }

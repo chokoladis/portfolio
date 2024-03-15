@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->ipAddress('ip_address');
             $table->string('fio', 120);
-            $table->string('mail', 255);
+            $table->string('email', 190);
             $table->string('phone', 20);
             $table->text('comment');
             $table->timestamps();

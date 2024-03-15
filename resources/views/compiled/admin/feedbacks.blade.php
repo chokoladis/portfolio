@@ -22,8 +22,8 @@
                         {{  $item->fio  }}
                     </td>
                     <td>
-                        <a href="mailto:{{ $item->mail }}" class="link">
-                            <i>{{ $item->mail }}</i>
+                        <a href="mailto:{{ $item->email }}" class="link">
+                            <i>{{ $item->email }}</i>
                         </a>
                     </td>
                     <td>

@@ -19,7 +19,7 @@
                 @csrf
                 
                 @php 
-                    $columns = $work->getColumns(); 
+                    $columns = $work->getColumns();
                     $arFiles = $work->url_files ? explode(',', $work->url_files) : [];
                     $model = $work;
                 @endphp

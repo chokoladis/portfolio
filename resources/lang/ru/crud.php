@@ -44,7 +44,7 @@ return [
         'fields' =>[
             'ip_address' => 'IP Адрес',
             'fio' => 'ФИО', 
-            'mail' => 'Почта',
+            'email' => 'Почта',
             'phone' => 'Телефон',
             'comment' => 'Комментарий'
         ]

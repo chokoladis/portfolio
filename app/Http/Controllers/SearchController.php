@@ -59,7 +59,6 @@ class SearchController extends Controller
 
             if ($tempData->count()){
 
-                
                 foreach($tempData as $data){
 
                     $parsed = [];

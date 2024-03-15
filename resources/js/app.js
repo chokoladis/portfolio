@@ -206,6 +206,14 @@ $(function(){
         });
     });
 
+    $('select[name="perPage"]').on('change', function(){
+        let val = $(this).val();
+        let urlParse = new URL(location.href);
+        let perPage = urlParse.searchParams.get('perPage');
+        urlParse.searchParams.set('perPage', val);
+        location.href = urlParse.href;
+    });
+
 
     $(document).on('click','.js_menu_del', function(){
 

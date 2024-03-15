@@ -30,6 +30,6 @@ class AppServiceProvider extends ServiceProvider
         View::share('G_menuNav', $menuNav->getActive());
         // View::share('G_theme', $helper->getCookie('theme'));
 
-        Paginator::defaultView('vendor.pagination.bootstrap-5');
+        Paginator::defaultView('vendor.pagination.bootstrap-5-perpage');
     }
 }

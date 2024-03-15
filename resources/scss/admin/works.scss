@@ -18,8 +18,8 @@
 
 tr{
     &.deleted{
-        opacity: .5;
-        background: rgb(255, 146, 146);
+        opacity: .7;
+        background: rgba(100,50,50,0.5);
     }
     &.not_viewed_admin{
         background: $second-color-dark;

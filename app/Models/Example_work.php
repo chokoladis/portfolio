@@ -30,6 +30,12 @@ class Example_work extends Model
         'url_work'
     ];
 
+    static $columnsInputs = [
+        'title' => 'Заголовок',
+        'description' => 'Описание', 
+        'url_work' => 'Ссылка на результат',
+    ];
+
     protected $casts = [
         'title' => 'string',
         'description' => 'string', 
@@ -92,6 +98,26 @@ class Example_work extends Model
         }
 
         return $work;
+    }
+
+    public function getColumns(){
+
+        $tableName = $this->getTable();
+
+        $columns = Schema::getColumnListing($tableName);
+
+        foreach($columns as $col){
+            
+            if (isset(self::$columnsInputs[$col])){
+                $translate = trans('crud.Example_work.fields.'.$col);
+                if ($translate){
+                    $res[$col]['name_ru'] = $translate;
+                    $res[$col]['type'] = Schema::getColumnType($tableName, $col);
+                }
+            }
+        }
+
+        return $res;
     }
 
     public static function boot() {

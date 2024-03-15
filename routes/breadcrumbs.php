@@ -45,7 +45,7 @@ Breadcrumbs::for('profile.works.edit', function ($trail, $work) {
 Breadcrumbs::for('admin', function ($trail) {
     $trail->push('Панель', route('admin.index'));
 });
-
+// 
 Breadcrumbs::for('admin.menu', function ($trail) {
     $trail->parent('admin');
     $trail->push('Меню', route('admin.menu.index'));
@@ -58,7 +58,7 @@ Breadcrumbs::for('admin.menu.add', function ($trail) {
     $trail->parent('admin.menu');
     $trail->push('Создание', route('admin.menu.create'));
 });
-
+// 
 Breadcrumbs::for('admin.works', function ($trail) {
     $trail->parent('admin');
     $trail->push('Работы', route('admin.works.index'));
@@ -67,6 +67,16 @@ Breadcrumbs::for('admin.works.edit', function ($trail, $work) {
     $trail->parent('admin.works');
     $trail->push($work->title, route('admin.work.edit', $work));
 });
+// 
+Breadcrumbs::for('admin.feedback', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Обратная связь', route('admin.feedback.index'));
+});
+Breadcrumbs::for('admin.feedback.show', function ($trail, $feedback) {
+    $trail->parent('admin.feedback');
+    $trail->push('Заявка от '.$feedback->email, route('admin.feedback.show', $feedback));
+});
+
 // Breadcrumbs::for('admin.menu.add', function ($trail) {
 //     $trail->parent('admin.menu');
 //     $trail->push('Создание', route('admin.menu.create'));
