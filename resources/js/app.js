@@ -206,11 +206,10 @@ $(function(){
         });
     });
 
-    $('select[name="perPage"]').on('change', function(){
+    $('select[name="per_page"]').on('change', function(){
         let val = $(this).val();
         let urlParse = new URL(location.href);
-        let perPage = urlParse.searchParams.get('perPage');
-        urlParse.searchParams.set('perPage', val);
+        urlParse.searchParams.set('per_page', val);
         location.href = urlParse.href;
     });
 

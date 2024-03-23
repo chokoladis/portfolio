@@ -1,26 +1,20 @@
 @extends('layouts.admin')
 
 @push('styles')
-    @vite(['resources/scss/works.scss'])
-    @vite(['resources/scss/admin/works.scss'])
-@endpush
-@push('scripts')
-    @vite(['resources/js/admin/works.js'])
+    @vite(['resources/scss/workers.scss'])
+    @vite(['resources/scss/admin/workers.scss'])
 @endpush
 
-@section('title-content') {{ __('Примеры работ') }} @endsection
+@section('title-content') {{ __('Профили') }} @endsection
 
-@section('breadcrumb'){{ Breadcrumbs::render('admin.works') }}@endsection
+@section('breadcrumb'){{ Breadcrumbs::render('admin.workers') }}@endsection
 
 @section('content')
 
     <header class="header-filter">
         <div class="container">
-            <form action="{{ route('admin.works.index') }}" method="GET" id="work-filter">
-                <input type="search" name="work" minlength='2'
-                        value="{{ htmlspecialchars(request('work')) }}" 
-                        autocomplete="on" placeholder="Поиск по работе">
-                    
+            <form action="{{ route('admin.workers.index') }}" method="GET" enctype="multipart/form-data">
+
                 <input type="text" name="profile" minlength='2'
                     value="{{ htmlspecialchars(request('profile')) }}" 
                     autocomplete="on" placeholder="Пользователь">
@@ -38,12 +32,12 @@
                         value="{{ htmlspecialchars(request('created_at_to')) }}" 
                         autocomplete="on">
                 </label>
-                <label>
+                {{-- <label>
                     <input type="checkbox" name="show_deleted" class="uk-checkbox" {{ request('show_deleted') ? 'checked' : '' }}>
                     {{ __('Удаленные') }}
-                </label>
+                </label> --}}
 
-                <input type="submit" value="Поиск" class="uk-button uk-button-default d-none">
+                <input type="submit" value="Применить" class="uk-button uk-button-default d-none">
             </form>
         </div>
     </header>
@@ -52,7 +46,7 @@
     <section class="content">
         <div class="container-fluid">
             
-            @include('compiled.admin.works')
+            @include('compiled.admin.workers')
 
         </div> 
     </section>

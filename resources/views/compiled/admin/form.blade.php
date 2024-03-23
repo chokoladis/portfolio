@@ -28,6 +28,30 @@
                 </div>
 
                 @break
+
+            @case('json')
+
+                @php
+                    $arCheckbox = json_decode($value,1);    
+                @endphp
+                
+                <div class="json_object" data-json-key="{{ $name }}">
+
+                    <h5>{{ $arColumn['name_ru'] }}</h5>
+
+                    @foreach ($arCheckbox as $key => $jsonVal)
+                        <div class="uk-margin-small">
+                            <p>{{ $key }}</p>
+                            <input type="text" name="{{ $key }}" value="{{ $jsonVal }}">
+
+                            @if($errors->has($name))
+                                <div class="error">{{ $errors->first($name) }}</div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+
+                @break
             @default
 
                 <div class="uk-margin">

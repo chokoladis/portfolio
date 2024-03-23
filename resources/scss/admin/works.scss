@@ -1,21 +1,5 @@
 @import 'variables';
 
-.header-filter{
-
-    form{
-        padding: 15px 0;
-
-        input:not([type="checkbox"]){
-            padding: 5px 10px;
-            width: 190px;
-        }
-
-        label{
-            margin: 0;
-        }
-    }
-}
-
 tr{
     &.deleted{
         opacity: .7;

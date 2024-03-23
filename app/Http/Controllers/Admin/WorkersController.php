@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ViewsAdminEvent;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Workers;
@@ -14,42 +15,27 @@ use Illuminate\Support\Str;
 
 class WorkersController extends Controller
 {
-    static $error = '';
-    static $success = true;
-    static $response = '';
-
-    const SOCIAL_LIST = [ // placeholder
-        'telegram' => '', 
-        'github' => '',
-        'hh' => '',
-        'kwork' => ''
-    ];
-
     /**
      * Display a listing of the resource.
      */
     public function index(FilterRequest $request)
     {
-        $workerById = null;
-        if (auth()->user()){
-            $userId = auth()->id();
-            $workerById = Workers::where('user_id', '=', $userId)->first();
-        }
-
         $data = $request->validated();
 
-        $queryWorkers = Workers::query();
+        $query = Workers::query();
+
+        if (isset($data['show_deleted']) && $data['show_deleted'])
+            $query = $query->withTrashed();
+        
+        $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
+        $query = HelperController::filterByCreatedAt($query, $data);
 
         $page = $data['page'] ?? 1;
         $perPage = $data['per_page'] ?? 5;
 
-        if (isset($data['profile'])){
-            $queryWorkers = $this->filterByProfile($queryWorkers, $data['profile']);
-        }
-
-        $workers = $queryWorkers->paginate($perPage)->appends(request()->query());
+        $workers = $query->paginate($perPage)->appends(request()->query());
         
-        return view('admin.workers.index', compact('workers', 'workerById'));
+        return view('admin.workers.index', compact('workers'));
     }
 
     public function filterByProfile($queryWorkers, $fieldProfile){
@@ -130,14 +116,14 @@ class WorkersController extends Controller
             $data
         );
 
-        if ($res->wasRecentlyCreated){
-            self::$response = __('Профиль Workers создан');
-        } else {
-            self::$success = false;
-            self::$error = __('Профиль Workers с такими данными уже есть в БД');
-        }
+        // if ($res->wasRecentlyCreated){
+        //     self::$response = __('Профиль Workers создан');
+        // } else {
+        //     self::$success = false;
+        //     self::$error = __('Профиль Workers с такими данными уже есть в БД');
+        // }
 
-        return responseJson(self::$success, self::$response, self::$error);
+        // return responseJson(self::$success, self::$response, self::$error);
     }
 
     public function getSocials(array|null $data){
@@ -154,21 +140,34 @@ class WorkersController extends Controller
         return json_encode($data);
     }
 
-    public function detail(Workers $worker)
+    public function edit(Workers $worker)
     {
+        $this->authorize('modify', $worker);
+
+        Event(new ViewsAdminEvent($worker));
+
         $works = $worker->getWorks();
+ 
+        return view('admin.workers.edit', compact('worker', 'works')); //'workerAr',
+    }
 
-        $worker = [
-            'id' => $worker->id,
-            'code' => $worker->code,
-            'name' => $worker->user->name,
-            'url_avatar' => $worker->url_avatar,
-            'phone' => $worker->phone,
-            'about' => $worker->about,
-            'socials' => $worker->socials
-        ];
+    public function update(Workers $worker)
+    {
+        dd($worker);
 
-        return view('workers.detail', compact('worker','works'));
+        return view('admin.workers.edit', compact('worker','works'));
+    }
+
+    public function delete($worker){
+
+        dd($worker);
+
+    }
+
+    public function forceDelete($worker){
+
+        dd($worker);
+        
     }
 
     public function getTransliteName(){

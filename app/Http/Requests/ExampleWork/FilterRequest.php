@@ -24,8 +24,8 @@ class FilterRequest extends FormRequest
         return [
             'page' => 'numeric',
             'per_page' => 'numeric|min:5|max:20',
-            'work' => 'string',
-            'profile' => 'string',
+            'work' => 'string|nullable',
+            'profile' => 'string|nullable',
             'created_at_from' => 'date|before_or_equal:yesterday',
             'created_at_to' => 'date|after_or_equal:created_at_from',
             'show_deleted' => 'boolean',

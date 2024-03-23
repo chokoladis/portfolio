@@ -76,6 +76,22 @@ class HelperController extends Controller
         return $res;
     }
 
+    public static function filterByCreatedAt($query, $data){
+
+        $created_at_from = isset($data['created_at_from']) ? $data['created_at_from'] : null ;
+        $created_at_to = isset($data['created_at_to']) ? $data['created_at_to'] : null ;
+
+        if ($created_at_from || $created_at_to){
+
+            $created_at_from = $created_at_from ?? '01.01.2023 00:00:00';
+            $created_at_to = $created_at_to ?? now();
+
+            $query->whereBetween('created_at', [$created_at_from, $created_at_to]);
+        }
+
+        return $query;
+    }
+
     // public function setCookie($name, $value, $minutes = 60){
     // //     // $cookie = Cookie($name, $value, $minutes);
 

@@ -44,7 +44,7 @@
 
             <div class="d-flex">
 
-                <select name="per_page" class="mr-3">
+                <select name="per_page" class="mr-3 me-3">
                     @php
                         $perPage = request('per_page') ?? 5;
 

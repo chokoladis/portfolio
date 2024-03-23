@@ -46,7 +46,7 @@
                                 </select>
                             </div>
                         </li>
-                        <input type="submit" value="Поиск" class="uk-button uk-button-default">
+                        <input type="submit" value="Применить" class="uk-button uk-button-default">
                     </ul>
                 </form>
             </div>
@@ -96,7 +96,7 @@
                                         </div>
                                         <span class="splash">|</span>
                                         <div class="views">
-                                            <span uk-icon="eye"></span> {{ $item['views'] }}
+                                            <span uk-icon="eye"></span> {{ $item['views'] ?? '-' }}
                                         </div>
                                     </div>
                                 </li>
@@ -106,59 +106,75 @@
                         </div>
                     @endforeach
 
-                    @if($pages > 1)
-                        <nav class="d-flex justify-items-center justify-content-between">
-                            <div class="d-flex justify-content-between flex-fill">
+                    <nav class="d-flex justify-items-center justify-content-between">
+                        <div class="d-flex flex-fill">
+
+                            <select name="per_page" class="me-3">
+                                @php
+                                    $perPage = request('per_page') ?? 5;
+            
+                                    $list = HelperController::PER_PAGE;
+            
+                                    foreach ($list as $count) {
+            
+                                        $select = $perPage == $count ? 'selected' : '';
+            
+                                        echo "<option $select>$count</option>";
+                                    }
+                                @endphp
+                            </select>
+
+                            @if($pages > 1)
                                 <ul class="pagination">
 
-                                @php
-                                    $i = 1;
-                                    $orderBy = request('orderBy');
-                                    $sort = request('sort');
-                                    $current = request('page') ? intval(request('page')) : 1;
-                                    $params = ['search' => request('search'), 'page' => 1];
+                                    @php
+                                        $i = 1;
+                                        $orderBy = request('orderBy');
+                                        $sort = request('sort');
+                                        $current = request('page') ? intval(request('page')) : 1;
+                                        $params = ['search' => request('search'), 'page' => 1];
 
-                                    if ($orderBy)
-                                        $params = array_merge($params, ['orderBy' => $orderBy]);
-                                    if ($sort)       
-                                        $params = array_merge($params, ['sort' => $sort]);
+                                        if ($orderBy)
+                                            $params = array_merge($params, ['orderBy' => $orderBy]);
+                                        if ($sort)       
+                                            $params = array_merge($params, ['sort' => $sort]);
 
-                                    $i_right = $current + 5;
-                                    $i_left = $current - 5;
+                                        $i_right = $current + 5;
+                                        $i_left = $current - 5;
 
-                                    @endphp
+                                        @endphp
+                                            <li class="page-item">
+                                                <a class="page-link" href="{{ route('search', $params) }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
+                                            </li>
+                                        @php
+
+                                        while ($pages >= $i) {                        
+                                                                                            
+                                            if ($i == $current){ @endphp
+                                                <li class="page-item active" aria-current="page"><span class="page-link">{{ $i }}</span></li>
+                                            @php } elseif ($i < $i_right && $i > $i_left) {
+                                                $params['page'] = $i; 
+                                                @endphp
+                                                <li class="page-item"><a class="page-link" href="{{ route('search', $params) }}">{{ $i }}</a></li>
+                                            @php }
+
+                                            $i++;
+                                        }
+                                        
+                                        $params['page'] = $pages; 
+
+                                        @endphp
                                         <li class="page-item">
-                                            <a class="page-link" href="{{ route('search', $params) }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
+                                            <a class="page-link" href="{{ route('search', $params) }}" rel="next">&rsaquo;</a>
                                         </li>
-                                    @php
-
-                                    while ($pages >= $i) {                        
-                                                                                        
-                                        if ($i == $current){ @endphp
-                                            <li class="page-item active" aria-current="page"><span class="page-link">{{ $i }}</span></li>
-                                        @php } elseif ($i < $i_right && $i > $i_left) {
-                                            $params['page'] = $i; 
-                                            @endphp
-                                            <li class="page-item"><a class="page-link" href="{{ route('search', $params) }}">{{ $i }}</a></li>
-                                        @php }
-
-                                        $i++;
-                                    }
-                                    
-                                    $params['page'] = $pages; 
-
+                                        @php
                                     @endphp
-                                    <li class="page-item">
-                                        <a class="page-link" href="{{ route('search', $params) }}" rel="next">&rsaquo;</a>
-                                    </li>
-                                    @php
-                                @endphp
                                 
                                 </ul>
-                            </div>
-                        </nav>
-                    @endif
-        
+                            @endif
+                        
+                        </div>
+                    </nav>
 
                 @else
                     <p class="uk-text-warning">{{ __('По текущему запросу ничего не надено') }}</p>

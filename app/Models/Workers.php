@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Schema;
 
 use App\Models\User;
 use App\Models\Example_work;
@@ -23,6 +24,12 @@ class Workers extends Model
         'about'
     ];
 
+    static $columnsInputs = [
+        'phone' => 'Телефон', 
+        'about' => 'О себе',
+        'socials' => 'Соц.ссылки',
+    ];
+
     public function getRouteKeyName(){
         return 'code';
     }
@@ -33,6 +40,26 @@ class Workers extends Model
     
     public function getTitle(){
         return $this->user->name;
+    }
+
+    public function getColumns(){
+
+        $tableName = $this->getTable();
+
+        $columns = Schema::getColumnListing($tableName);
+
+        foreach($columns as $col){
+            
+            if (isset(self::$columnsInputs[$col])){
+                $translate = trans('crud.Workers.fields.'.$col);
+                if ($translate){
+                    $res[$col]['name_ru'] = $translate;
+                    $res[$col]['type'] = Schema::getColumnType($tableName, $col);
+                }
+            }
+        }
+
+        return $res;
     }
 
     public function getWorks(int $limit = 3)

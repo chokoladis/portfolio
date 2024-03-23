@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Example_work_stats;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 class Example_work extends Model

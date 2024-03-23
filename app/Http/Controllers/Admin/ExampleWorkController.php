@@ -8,6 +8,7 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HelperController;
 use App\Services\ImageService;
 
 class ExampleWorkController extends Controller
@@ -30,7 +31,7 @@ class ExampleWorkController extends Controller
         
         $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
-        $query = $this->filterByCreatedAt($query, $data);
+        $query = HelperController::filterByCreatedAt($query, $data);
 
         $works = $query->paginate($perPage)->appends(request()->query());
 
@@ -72,22 +73,6 @@ class ExampleWorkController extends Controller
         }
 
         return $arUsersId;
-    }
-
-    public function filterByCreatedAt($query, $data){
-
-        $created_at_from = isset($data['created_at_from']) ? $data['created_at_from'] : null ;
-        $created_at_to = isset($data['created_at_to']) ? $data['created_at_to'] : null ;
-
-        if ($created_at_from || $created_at_to){
-
-            $created_at_from = $created_at_from ?? '01.01.2023 00:00:00';
-            $created_at_to = $created_at_to ?? now();
-
-            $query->whereBetween('created_at', [$created_at_from, $created_at_to]);
-        }
-
-        return $query;
     }
 
     public function edit(Example_work $work){

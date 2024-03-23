@@ -1,55 +1,77 @@
-<?php
+@php
     use App\Http\Controllers\HelperController;
-?>
+@endphp
 @if(!$workers->count())
     <div class="result_query">
         {{ __('По данному запросу нет записей') }}
     </div>
 @else
-    <div class="workers_list">
-        
-        @if(count($workers) < 1 && auth()->user() === null)
-            <div class="title">
-                <img src="" alt="">
-                <h2>Ой, на сайте ни одного workers профиля</h2>
-            </div>
-            <p>Вы можете <a href="{{ route('login') }}">авторизоваться</a> и создать первый <b>профиль-workers</b> на сайте</p>
-        @elseif(count($workers) > 0)
+    <table class="uk-table">
+        <thead>
+            <tr>
+                @foreach (trans('crud.Workers.fields_admin') as $filed_code => $trans)
+                    <th>{{ $trans }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
             @foreach($workers as $worker)
-                <div class="worker" onclick="location.href='/workers/{{ $worker->code }}/'">
-                    <div class="avatar">
-                        @php    
-                            echo $worker->url_avatar ? '<img src="'.HelperController::$workerDirImg.$worker->url_avatar.'">':'<span uk-icon="icon: user; ratio:2"></span>';
-                        @endphp
-                    </div>                
-                    <div class="content">
-                        <h4>{{ $worker->user->name }}</h4>
-                        <p>{{ $worker->about }}</p>
-                        <ul class="links">
-                            <li class='link-tel'>
-                                <!-- <img src="/storage/general/vibrating-phone.png" alt="vibrating-phone"> -->
-                                <a href="tel:{{ $worker->phone }}">{{ HelperController::phoneOutFormated($worker->phone) }}</a></li>
-                            @php
-                                if ($worker->socials !== null){
-                                    $arSocials = json_decode($worker->socials, 1);
-
-                                    foreach($arSocials as $socialKey => $link){
-                                        $link = htmlspecialchars($link);
-                                        $socialKey = htmlspecialchars($socialKey);
-                                        echo '<li class="social '.$socialKey.'"><a href="'.$link.'" title="'.$link.'"></a></li>';
-                                    }
-                                }
-                            @endphp
-                        </ul>                    
-                    </div>
-                    <div class="bg" style="background-image: url({{ $worker->url_avatar 
-                        ? config('filesystems.img.workers').$worker->url_avatar 
-                        : '/storage/general/users2.png' }})"></div>
+                @php 
+                    $class = $worker->deleted_at ? 'deleted ' : '';
+                    if ($worker->stats){
+                        $class .= $worker->stats->viewed_admin_at ? '' : 'not_viewed_admin ';
+                    }
+                @endphp
+                    <tr class="{{ $class }}">
+                        <td>
+                            {{  $worker->id  }} | {{  $worker->code  }}
+                        </td>
+                        <td>
+                            @if ($worker->url_avatar)
+                                <img src="{{ config('filesystem.img.workers').$worker->url_avatar }}">
+                            @else 
+                                <span uk-icon="icon: user; ratio:2"></span>
+                            @endif
+                        </td>
+                        <td>
+                            {{ $worker->user->name }}
+                        </td>
+                        <td style="min-width: 140px;">
+                            <a href="tel:{{ $worker->phone }}">{{ HelperController::phoneOutFormated($worker->phone) }}</a>
+                        </td>
+                        <td>
+                            <p class="short">
+                                {{ $worker->about }}
+                            </p>
+                        </td>
+                        <td>
+                            {{  $worker->created_at  }}
+                        </td>
+                        <td>
+                            @if (!$worker->deleted_at)
+                                <div class="custom-btn clr-primary js_work_edit">
+                                    <a href="{{ route('admin.worker.edit', $worker->code) }}">
+                                        <span uk-icon="icon:pencil" title="{{ __('Редактировать') }}"></span>
+                                    </a>
+                                </div>
+                                <div class="custom-btn clr-warning js_admin_work_del" data-route="{{ route('admin.worker.delete', $worker->code) }}">
+                                    <span uk-icon="icon:crosshairs" title="{{ __('Пометить на удаление') }}"></span>
+                                </div>
+                            @else
+                                <div class="custom-btn clr-danger js_admin_work_forceDel" data-route="{{ route('admin.worker.forceDelete', $worker->code) }}">
+                                    <span uk-icon="icon:trash" title="{{ __('Удалить') }}"></span>
+                                </div>
+                                <div class="custom-btn clr-warning js_admin_work_restore" data-route="{{ route('admin.worker.restore', $worker->code) }}">
+                                    <span uk-icon="icon:history" title="{{ __('Вернуть') }}"></span>
+                                </div>                            
+                            @endif
+                                                                                
+                        </td>
+                    </tr>
                 </div>
             @endforeach
-        @endif
-
-    </div>
+        </tbody>
+    </table>
     <div class="paginastion">
         {{$workers->links()}}
     </div>

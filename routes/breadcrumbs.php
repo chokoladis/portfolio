@@ -65,7 +65,16 @@ Breadcrumbs::for('admin.works', function ($trail) {
 });
 Breadcrumbs::for('admin.works.edit', function ($trail, $work) {
     $trail->parent('admin.works');
-    $trail->push($work->title, route('admin.work.edit', $work));
+    $trail->push($work->title, route('admin.works.edit', $work));
+});
+// 
+Breadcrumbs::for('admin.workers', function ($trail) {
+    $trail->parent('admin');
+    $trail->push('Профили', route('admin.workers.index'));
+});
+Breadcrumbs::for('admin.workers.edit', function ($trail, $worker) {
+    $trail->parent('admin.workers');
+    $trail->push($worker->user->name, route('admin.workers.edit', $worker));
 });
 // 
 Breadcrumbs::for('admin.feedback', function ($trail) {

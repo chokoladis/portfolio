@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Workers;
 use App\Policies\ExampleWorkPolicy;
 use App\Policies\UserPolicy;
-use App\Policies\WorkersPolicy;
+use App\Policies\WorkerPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Example_work::class => ExampleWorkPolicy::class,
-        User::class => UserPolicy::class
+        User::class => UserPolicy::class,
+        Workers::class => WorkerPolicy::class
     ];
 
     /**

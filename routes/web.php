@@ -73,7 +73,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 });
                 
                 Route::group(['prefix' => 'works', 'controller' => 'ExampleWorkController'], function() {
-                    Route::name('work.')->group(function(){                        
+                    Route::name('works.')->group(function(){                        
                         Route::get('/{work}/edit/', 'edit')->name('edit');
                         Route::post('/{work}/update', 'update')->name('update');
                         Route::get('/{work}/delete/', 'delete')->name('delete');
@@ -81,8 +81,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                         Route::get('/{work}/restore/', 'restore')->name('restore');
                     });
                 });
-    
                 
+                Route::group(['prefix' => 'workers', 'controller' => 'WorkersController'], function() {
+                    Route::name('workers.')->group(function(){                        
+                        Route::get('/{worker}/edit/', 'edit')->name('edit');
+                        Route::post('/{worker}/update', 'update')->name('update');
+                        Route::get('/{worker}/delete/', 'delete')->name('delete');
+                        Route::get('/{worker}/forceDelete/', 'forceDelete')->name('forceDelete');
+                        // Route::get('/{worker}/restore/', 'restore')->name('restore');
+                    });
+                });
     
                 Route::group(['prefix' => 'feedback'], function() {
                     Route::get('/{feedback}/show/', 'FeedbackController@show')->name('feedback.show');
