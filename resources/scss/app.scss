@@ -140,6 +140,14 @@ ul,li,p{
     background: var(--header-link-clr-visited-lt);
 }
 
+.pagination-per_page{
+    margin-right: 10px;
+    padding: 0px 15px 0px;
+}
+.pagination-per_page, .pagination *{
+    font-size: 14px;
+}
+
 .root{
     display: flex;
     flex-direction: column;

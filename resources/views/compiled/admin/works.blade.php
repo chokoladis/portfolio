@@ -52,18 +52,18 @@
                         <td>
                             @if (!$work->deleted_at)
                                 <div class="custom-btn clr-primary js_work_edit">
-                                    <a href="{{ route('admin.work.edit', $work->slug) }}">
+                                    <a href="{{ route('admin.works.edit', $work->slug) }}">
                                         <span uk-icon="icon:pencil" title="{{ __('Редактировать') }}"></span>
                                     </a>
                                 </div>
-                                <div class="custom-btn clr-warning js_admin_work_del" data-route="{{ route('admin.work.delete', $work->slug) }}">
+                                <div class="custom-btn clr-warning js_admin_work_del" data-route="{{ route('admin.works.delete', $work->slug) }}">
                                     <span uk-icon="icon:crosshairs" title="{{ __('Пометить на удаление') }}"></span>
                                 </div>
                             @else
-                                <div class="custom-btn clr-danger js_admin_work_forceDel" data-route="{{ route('admin.work.forceDelete', $work->slug) }}">
+                                <div class="custom-btn clr-danger js_admin_work_forceDel" data-route="{{ route('admin.works.forceDelete', $work->slug) }}">
                                     <span uk-icon="icon:trash" title="{{ __('Удалить') }}"></span>
                                 </div>
-                                <div class="custom-btn clr-warning js_admin_work_restore" data-route="{{ route('admin.work.restore', $work->slug) }}">
+                                <div class="custom-btn clr-warning js_admin_work_restore" data-route="{{ route('admin.works.restore', $work->slug) }}">
                                     <span uk-icon="icon:history" title="{{ __('Вернуть') }}"></span>
                                 </div>                            
                             @endif

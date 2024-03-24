@@ -50,18 +50,18 @@
                         <td>
                             @if (!$worker->deleted_at)
                                 <div class="custom-btn clr-primary js_work_edit">
-                                    <a href="{{ route('admin.worker.edit', $worker->code) }}">
+                                    <a href="{{ route('admin.workers.edit', $worker->code) }}">
                                         <span uk-icon="icon:pencil" title="{{ __('Редактировать') }}"></span>
                                     </a>
                                 </div>
-                                <div class="custom-btn clr-warning js_admin_work_del" data-route="{{ route('admin.worker.delete', $worker->code) }}">
+                                <div class="custom-btn clr-warning js_admin_work_del" data-route="{{ route('admin.workers.delete', $worker->code) }}">
                                     <span uk-icon="icon:crosshairs" title="{{ __('Пометить на удаление') }}"></span>
                                 </div>
                             @else
-                                <div class="custom-btn clr-danger js_admin_work_forceDel" data-route="{{ route('admin.worker.forceDelete', $worker->code) }}">
+                                <div class="custom-btn clr-danger js_admin_work_forceDel" data-route="{{ route('admin.workers.forceDelete', $worker->code) }}">
                                     <span uk-icon="icon:trash" title="{{ __('Удалить') }}"></span>
                                 </div>
-                                <div class="custom-btn clr-warning js_admin_work_restore" data-route="{{ route('admin.worker.restore', $worker->code) }}">
+                                <div class="custom-btn clr-warning js_admin_work_restore" data-route="{{ route('admin.workers.restore', $worker->code) }}">
                                     <span uk-icon="icon:history" title="{{ __('Вернуть') }}"></span>
                                 </div>                            
                             @endif
