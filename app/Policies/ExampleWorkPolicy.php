@@ -48,12 +48,10 @@ class ExampleWorkPolicy
         return $currentUser || $admin;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Example_work $work): bool
+    public function recycle(User $user): bool
     {
-        //
+        // dd($user);
+        return $user->role == 'admin';
     }
 
     /**

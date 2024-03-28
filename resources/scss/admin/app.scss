@@ -11,6 +11,27 @@
     background: #faa05a;
 }
 
+ul{
+    li{
+
+        .nav-treeview{
+            border: 1px solid rgba(200,200,200, 0.7);
+            border-top: 0px;
+            border-radius: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+
+            a{
+                padding-left: 25px;
+            }
+        }
+
+        // &.menu-open{
+            
+        // }
+    }
+}
+
 body{
      
     .uk-modal{

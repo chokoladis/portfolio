@@ -75,11 +75,17 @@ class Example_work extends Model
         $key = implode(',', $arKeyCache);
         $key = str_replace(',', '_', $key);
 
-        if (!$works = Cache::get($key)){
-            
-            $works = $query->paginate($arKeyCache['perPage'])->appends(request()->query());
+        $request = array_diff_key(request()->all(), $arKeyCache);
 
-            Cache::put($key,$works, 21600 ); // 6hours
+        if (empty($request)){
+            if (!$works = Cache::get($key)){
+
+                $works = $query->paginate($arKeyCache['per_page'])->appends(request()->query());
+    
+                Cache::put($key,$works, 21600 ); // 6hours
+            }
+        } else {
+            $works = $query->paginate($arKeyCache['per_page'])->appends(request()->query());
         }
 
         return $works;

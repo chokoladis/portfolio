@@ -1,6 +1,6 @@
-<?php
+@php
     use App\Http\Controllers\HelperController;
-?>
+@endphp
 @if(!$workers->count())
     <div class="result_query">
         {{ __('По данному запросу нет записей') }}
@@ -27,7 +27,6 @@
                         <p>{{ $worker->about }}</p>
                         <ul class="links">
                             <li class='link-tel'>
-                                <!-- <img src="/storage/general/vibrating-phone.png" alt="vibrating-phone"> -->
                                 <a href="tel:{{ $worker->phone }}">{{ HelperController::phoneOutFormated($worker->phone) }}</a></li>
                                 @php
                                     if ($worker->socials !== null){

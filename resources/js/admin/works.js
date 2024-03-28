@@ -1,5 +1,19 @@
 import {Helper} from './helpers';
 
+function getCheckedWorks(){
+    let checkboxes = $('.work-action-checkbox:checked');
+    let data = new FormData();
+    
+    for( let key in checkboxes){
+        if (key == 'length') break;
+
+        let el = checkboxes[key];
+
+        data.append('works[]', el.id);
+    }
+    return data;
+}
+
 $(function(){
 
     $(document).on('click','.js_admin_work_del', function(){
@@ -147,4 +161,44 @@ $(function(){
         location.href = url;
     });
 
+    $('.works-actions .js-delete').on('click', () => {
+
+        let arDeleting = getCheckedWorks();
+        let send = arDeleting; 
+        checkboxesAction('/admin/works/recycle/delete', send);
+    });
+
+    $('.works-actions .js-restore').on('click', () => {
+
+        let arRestore = getCheckedWorks();
+        // ajax for restore
+    });
+
+    async function checkboxesAction(action, arr){
+
+        const query = await fetch(action, 
+            {
+                method: 'POST',
+                body: arr,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            }
+        );
+
+        let response = await query.json();
+
+        if (response.success){
+            
+            $('#md-response .messsage').text(response.result);
+            UIkit.modal('#md-response').show();
+
+            Helper.updateWorksHtmlToAdmin();
+            
+        } else {
+            UIkit.notification({
+                message: response.error,
+                status: 'danger',
+                timeout: 5000
+            });
+        }
+    }
 });

@@ -17,12 +17,19 @@
             'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
             'link' => 'admin.works.index',
             'notites'   => $work_notitice,
+            'open' => Route::is('admin.works.*'),
             'items' => [
+                'list' => [
+                    'name' =>   __('Список'),
+                    'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
+                    'link' => 'admin.works.index',
+                    'notites'   => $work_notitice,
+                ],
                 'recycle' =>[
                     'name' => __('Корзина'),
                     'img' => '<i class="nav-icon fas fa-solid fa-recycle"></i>',
                     'link' => 'admin.works.recycle'
-                ]
+                ],
             ]
         ],
         // 'Users' =>[ todo
@@ -48,7 +55,7 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
         @foreach($config as $menuItem)
-            <li class="nav-item">
+            <li class="nav-item {{ isset($menuItem['open']) && $menuItem['open'] ? 'menu-is-opening menu-open' : '' }}">
                 <a href="{{ route($menuItem['link']) }}" class="nav-link">
                     {!! $menuItem['img'] !!}
                     <p>{{ $menuItem['name'] }}</p>

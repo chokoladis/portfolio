@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperController;
 use App\Services\ImageService;
+use Illuminate\Auth\Middleware\Authorize;
 
 class ExampleWorkController extends Controller
 {
@@ -172,6 +173,42 @@ class ExampleWorkController extends Controller
             ->count();
 
         return $count;
+    }
+
+
+    public function recycle(FilterRequest $request){
+
+        $data = $request->validated();
+
+        $page = $data['page'] ?? 1;
+        $perPage = $data['per_page'] ?? 5;
+        
+        $query = Example_work::query()->onlyTrashed();
+        
+        $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
+        $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
+        $query = HelperController::filterByCreatedAt($query, $data);
+
+        $works = $query->paginate($perPage)->appends(request()->query());
+
+        return view('admin.works.recycle', compact('works'));
+    }
+
+    public function recycleDelete(){
+
+        $this->authorize('recycle');
+
+        $data = request()->validate([
+            'works' => 'required|array',
+            'works.*' => 'numeric'
+        ]);
+        $worksId = $data['works'];
+
+        $works = Example_work::query()->withTrashed()->where('id', $worksId)->get();
+
+        $res = $works->destroy();
+        dump($works,$res);
+        return view('admin.works.recycle', compact('works'));
     }
 
 }

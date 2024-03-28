@@ -25,14 +25,14 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
 
         $page = $data['page'] ?? Example_work::DEFAULT_PAGE;
-        $perPage = $data['perPage'] ?? Example_work::DEFAULT_PERPAGE;
+        $perPage = $data['per_page'] ?? Example_work::DEFAULT_PERPAGE;
         
         $query = Example_work::query();
         
         $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;
 
-        $arKeyCache = ['model' => 'Example_work', 'page' => $page,'perPage' => $perPage];
+        $arKeyCache = ['model' => 'Example_work', 'page' => $page,'per_page' => $perPage];
 
         $works = Example_work::getCacheList($arKeyCache, $query);
 

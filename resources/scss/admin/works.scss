@@ -9,3 +9,26 @@ tr{
         background: $second-color-dark;
     }
 }
+
+// trashe
+.works-actions{
+    display: flex;
+    margin-top: 20px;
+    border: 1px solid;
+    padding: 5px;
+
+    b{
+        margin-right: 15px;
+    }
+    .action{
+        margin-right: 7px;
+        cursor: pointer;
+
+        &:last-of-type{
+            margin: 0;
+        }
+        &:hover{
+            text-decoration:underline;
+        }
+    }
+}

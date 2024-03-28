@@ -8,15 +8,15 @@
     @vite(['resources/js/admin/works.js'])
 @endpush
 
-@section('title-content') {{ __('Примеры работ') }} @endsection
+@section('title-content') {{ __('Корзина') }} @endsection
 
-@section('breadcrumb'){{ Breadcrumbs::render('admin.works') }}@endsection
+@section('breadcrumb'){{ Breadcrumbs::render('admin.works.recycle') }}@endsection
 
 @section('content')
 
     <header class="header-filter">
         <div class="container">
-            <form action="{{ route('admin.works.index') }}" method="GET" id="work-filter">
+            <form action="{{ route('admin.works.recycle') }}" method="GET" id="work-filter">
                 <input type="search" name="work" minlength='2'
                         value="{{ htmlspecialchars(request('work')) }}" 
                         autocomplete="on" placeholder="Поиск по работе">
@@ -38,21 +38,22 @@
                         value="{{ htmlspecialchars(request('created_at_to')) }}" 
                         autocomplete="on">
                 </label>
-                <label>
-                    <input type="checkbox" name="show_deleted" class="uk-checkbox" {{ request('show_deleted') ? 'checked' : '' }}>
-                    {{ __('Удаленные') }}
-                </label>
 
                 <input type="submit" value="Поиск" class="uk-button uk-button-default d-none">
             </form>
         </div>
     </header>
 
-     
     <section class="content">
         <div class="container-fluid">
-            
-            @include('compiled.admin.works')
+
+            <div class="works-actions">
+                <b>{{ __('Применить к выделенным:') }}</b>
+                <div class="action js-delete">{{ __('Удалить') }}</div>
+                <div class="action js-restore">{{ __('Восстановить') }}</div>
+            </div>
+
+            @include('compiled.admin.works-recycle')
 
         </div> 
     </section>
