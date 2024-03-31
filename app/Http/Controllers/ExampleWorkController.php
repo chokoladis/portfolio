@@ -96,10 +96,10 @@ class ExampleWorkController extends Controller
         );
 
         if ($res->wasRecentlyCreated){
-            self::$response = 'Данные успешно созданы';
+            self::$response = __('Данные успешно созданы');
         } else {
             self::$success = false;
-            self::$error = 'Запись с данным заголовком уже есть в БД';
+            self::$error = __('Запись с данным заголовком уже есть в БД');
         }
 
         return responseJson(self::$success, self::$response, self::$error);

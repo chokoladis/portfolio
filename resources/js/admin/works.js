@@ -161,17 +161,17 @@ $(function(){
         location.href = url;
     });
 
+    // recycle
     $('.works-actions .js-delete').on('click', () => {
 
         let arDeleting = getCheckedWorks();
-        let send = arDeleting; 
-        checkboxesAction('/admin/works/recycle/delete', send);
+        checkboxesAction('/admin/works/recycle/delete', arDeleting);
     });
 
     $('.works-actions .js-restore').on('click', () => {
 
         let arRestore = getCheckedWorks();
-        // ajax for restore
+        checkboxesAction('/admin/works/recycle/restore', arRestore);
     });
 
     async function checkboxesAction(action, arr){
@@ -180,7 +180,7 @@ $(function(){
             {
                 method: 'POST',
                 body: arr,
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             }
         );
 

@@ -7,30 +7,6 @@ use App\Models\User;
 
 class ExampleWorkPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Example_work $work): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        //
-    }
-
     public function modify(User $user, Example_work $work): bool
     {
         $currentUser = $work->user->id === $user->id;
@@ -50,7 +26,6 @@ class ExampleWorkPolicy
 
     public function recycle(User $user): bool
     {
-        // dd($user);
         return $user->role == 'admin';
     }
 

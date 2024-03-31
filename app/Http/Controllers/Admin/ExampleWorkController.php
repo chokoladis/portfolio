@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HelperController;
 use App\Services\ImageService;
-use Illuminate\Auth\Middleware\Authorize;
+use Illuminate\Support\Facades\Gate;
 
 class ExampleWorkController extends Controller
 {
@@ -196,7 +196,7 @@ class ExampleWorkController extends Controller
 
     public function recycleDelete(){
 
-        $this->authorize('recycle');
+        Gate::define('recycle','App\Policies\ExampleWorkPolicy@recycle');
 
         $data = request()->validate([
             'works' => 'required|array',
@@ -204,11 +204,32 @@ class ExampleWorkController extends Controller
         ]);
         $worksId = $data['works'];
 
-        $works = Example_work::query()->withTrashed()->where('id', $worksId)->get();
+        $res = Example_work::query()->where('id', $worksId)->forceDelete();
 
-        $res = $works->destroy();
-        dump($works,$res);
-        return view('admin.works.recycle', compact('works'));
+        if ($res){
+            return responseJson(true, ['message' => __('Работы были удалены')]);
+        } else{
+            return responseJson(false, error: ['error' => __('Ошибка удаления')] );
+        }
+    }
+
+    public function recycleRestore(){
+
+        Gate::define('recycle','App\Policies\ExampleWorkPolicy@recycle');
+
+        $data = request()->validate([
+            'works' => 'required|array',
+            'works.*' => 'numeric'
+        ]);
+        $worksId = $data['works'];
+
+        $res = Example_work::query()->where('id', $worksId)->restore();
+
+        if ($res){
+            return responseJson(true, ['message' => __('Работы были восстановлены')]);
+        } else{
+            return responseJson(false, error: ['error' => __('Ошибка восстановления')] );
+        }
     }
 
 }
