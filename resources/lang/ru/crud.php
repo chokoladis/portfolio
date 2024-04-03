@@ -18,6 +18,22 @@ return [
             'created_at' => 'Время создания',
         ]
     ],
+    'Users' => [
+        'title' => 'Пользователи',
+        'fields' =>[
+            'name' => 'ФИО',
+            'email' => 'Почта',
+            'role' => 'Роль', 
+            'password' => 'Пароль'
+        ],
+        'fields_admin' => [
+            'id' => 'ID',
+            'name' => 'ФИО',
+            'email' => 'Почта',
+            'role' => 'Роль', 
+            'created_at' => 'Время создания',
+        ]
+    ],
     'Workers' => [
         'title' => 'Профили',
         'fields' =>[

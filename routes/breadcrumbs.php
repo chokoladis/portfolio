@@ -71,6 +71,15 @@ Breadcrumbs::for('admin.works.recycle', function ($trail) {
     $trail->parent('admin.works');
     $trail->push( __('Корзина'), route('admin.works.recycle'));
 });
+//
+Breadcrumbs::for('admin.users', function ($trail) {
+    $trail->parent('admin');
+    $trail->push( __('Пользователи'), route('admin.users.index'));
+});
+Breadcrumbs::for('admin.users.edit', function ($trail, $user) {
+    $trail->parent('admin.users');
+    $trail->push($user->name, route('admin.users.edit', $user));
+});
 // 
 Breadcrumbs::for('admin.workers', function ($trail) {
     $trail->parent('admin');

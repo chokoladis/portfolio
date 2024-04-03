@@ -74,4 +74,9 @@ class UserPolicy
     {
         //
     }
+
+    public function modify(User $user, User $model): bool
+    {
+        return $model->id === $user->id || $user->role === 'admin';
+    }
 }

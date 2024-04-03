@@ -58,6 +58,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
             Route::name('admin.')->group(function(){
                 Route::get('/', 'HelperController@index')->name('index');
                 Route::get('/works/', 'ExampleWorkController@index')->name('works.index');
+                Route::get('/users/', 'UsersController@index')->name('users.index');
                 Route::get('/workers/', 'WorkersController@index')->name('workers.index');
                 Route::get('/menu/', 'MenuNavController@index')->name('menu.index');
                 Route::get('/feedback/', 'FeedbackController@index')->name('feedback.index');
@@ -83,6 +84,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                         Route::get('/recycle/', 'recycle')->name('recycle');
                         Route::post('/recycle/delete', 'recycleDelete')->name('recycleDelete');
                         Route::post('/recycle/restore', 'recycleRestore')->name('recycleRestore');
+                    });
+                });
+                
+                Route::group(['prefix' => 'users', 'controller' => 'UsersController'], function() {
+                    Route::name('users.')->group(function(){                        
+                        Route::get('/{user}/edit/', 'edit')->name('edit');
+                        Route::post('/{user}/update', 'update')->name('update');
+                        // Route::get('/{worker}/delete/', 'delete')->name('delete');
+                        // Route::get('/{worker}/forceDelete/', 'forceDelete')->name('forceDelete');
+                        // Route::get('/{worker}/restore/', 'restore')->name('restore');
                     });
                 });
                 

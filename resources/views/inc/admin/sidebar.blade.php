@@ -32,11 +32,11 @@
                 ],
             ]
         ],
-        // 'Users' =>[ todo
-        //     'name' =>   'Users',
-        //     'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
-        //     'link' => 'admin.users.index'
-        // ],
+        'Users' =>[
+            'name' => __('Пользователи'),
+            'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',
+            'link' => 'admin.users.index'
+        ],
         'Workers' =>[
             'name' =>   __('Профили'),
             'img' =>    '<i class="nav-icon fas fa-solid fa-person-rays"></i>',

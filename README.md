@@ -3,6 +3,10 @@
 <ul>
     <li>...</li>
     <li>
+        <b>0.35</b>
+        <p>add recycle for works (force delete, restore)</p>
+    </li>
+    <li>
         <b>0.3</b>
         <p>add global search, use lang file</p>
     </li>

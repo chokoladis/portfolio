@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Workers;
 use App\Models\Example_work;
+use Illuminate\Support\Facades\Schema;
 
 class User extends Authenticatable
 {
@@ -45,6 +46,17 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    static $columnsInputs = [
+        'name' => 'Телефон', 
+        'email' => 'Почта',
+        'role' => 'Роль',
+        'password' => 'Пароль',
+    ];
+
+    const ROLES = [
+        'admin', 'user'
+    ];
+
     public function workers()
     {
         return $this->hasOne(Workers::class);
@@ -53,5 +65,25 @@ class User extends Authenticatable
     public function exampleWorks()
     {
         return $this->hasMany(Example_work::class);
+    }
+
+    public function getColumns(){
+
+        $tableName = $this->getTable();
+
+        $columns = Schema::getColumnListing($tableName);
+
+        foreach($columns as $col){
+            
+            if (isset(self::$columnsInputs[$col])){
+                $translate = trans('crud.Users.fields.'.$col);
+                if ($translate){
+                    $res[$col]['name_ru'] = $translate;
+                    $res[$col]['type'] = Schema::getColumnType($tableName, $col);
+                }
+            }
+        }
+
+        return $res;
     }
 }
