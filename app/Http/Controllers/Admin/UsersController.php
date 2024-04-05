@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 // use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-// use App\Models\Workers;
+use App\Http\Requests\Users\StoreRequest;
 use App\Http\Requests\Users\FilterRequest;
 use App\Http\Requests\Users\UpdateRequest;
 use App\Http\Controllers\HelperController;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Validator;
 
 class UsersController extends Controller
 {
@@ -51,13 +52,38 @@ class UsersController extends Controller
 
     public function update(UpdateRequest $request, User $user)
     {
-        dump($request);
-        dd($user);
-        // Hash::make('password')
-        // if (error){
-        //     return view('admin.user.edit', compact('worker','works'));
-        // } else {
+        $arErrors = [];
+        $data = $request->validated(); 
 
-        // }
+        if ($data['email'] !== $user->email
+            && $countThisEmail = User::query()->where('email', $data['email'])->count()){
+
+            $arErrors['email'] = __('Пользователь с данным email уже зарегестрирован');
+        }
+
+        if (!password_verify($data['password'], $user->password)){
+            $data['password'] = Hash::make($data['password']);
+        }
+        
+        if (!empty($arErrors)){
+            return redirect()->route('admin.users.edit', $user)->with('arErrors', $arErrors);
+        } else {
+            
+            $user->setRawAttributes($data);
+            $user->save();
+
+            return redirect()->route('admin.users.index');
+        }
+    }
+
+    public function store(StoreRequest $request){
+
+        $data = $request->validate();
+
+        return User::create(
+            array_merge(
+                $data, ['password' => Hash::make($data['password'])]
+            )
+        );
     }
 }

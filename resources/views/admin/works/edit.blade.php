@@ -60,6 +60,8 @@
                 </div>
                     
             </form>
+
+            <x-model-additional :model="$work" crud="Example_work" new_line="true"></x-model-additional>
         </div>
     </section>
 

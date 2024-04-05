@@ -9,7 +9,7 @@
     <table class="uk-table">
         <thead>
             <tr>
-                @foreach (trans('crud.Workers.fields_admin') as $filed_code => $trans)
+                @foreach (trans('crud.Workers.fields_list_admin') as $filed_code => $trans)
                     <th>{{ $trans }}</th>
                 @endforeach
             </tr>

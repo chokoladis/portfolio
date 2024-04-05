@@ -15,12 +15,12 @@
                                 @csrf
 
                                 <div class="uk-width-1-1 mb-3">
-                                    <label for="name" class="uk-form-label">{{ __('Имя') }}</label>
+                                    <label for="fio" class="uk-form-label">{{ __('ФИО') }}</label>
 
                                     <div class="">
-                                        <input id="name" type="text" class="uk-input @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" maxlength="30" autofocus>
+                                        <input id="fio" type="text" class="uk-input @error('name') is-invalid @enderror" name="fio" value="{{ old('fio') }}" required autocomplete="name" maxlength="120" autofocus>
 
-                                        @error('name')
+                                        @error('fio')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

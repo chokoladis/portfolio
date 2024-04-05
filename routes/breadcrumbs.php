@@ -78,7 +78,7 @@ Breadcrumbs::for('admin.users', function ($trail) {
 });
 Breadcrumbs::for('admin.users.edit', function ($trail, $user) {
     $trail->parent('admin.users');
-    $trail->push($user->name, route('admin.users.edit', $user));
+    $trail->push($user->fio, route('admin.users.edit', $user));
 });
 // 
 Breadcrumbs::for('admin.workers', function ($trail) {

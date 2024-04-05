@@ -23,8 +23,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [ 'required', 'string' ],
-            'email' => [ 'required', 'email' ],
+            'fio' => [ 'required', 'string', 'min:3', 'max:120', 'regex:/([а-яёa-z-]+)([а-яёa-z ]*)/i' ],
+            'email' => ['required', 'string', 'email', 'max:70', 'regex:/[\w\d]+@[\w\d]+\.[\w\d]+/i'], //'unique:users',
             'role' => [ 'required', 'string' ],
             'password' => ['required', 'string', Password::min(8)],
         ];

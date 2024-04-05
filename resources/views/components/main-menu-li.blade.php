@@ -4,10 +4,7 @@
 
 @props(['route', 'a_class'])
 
-@php 
-    //dump(Route::is($route));
-    //dump(request()->route());
-    
+@php     
     $a_class = $a_class ?? '' ;
     $route_out_slesh = mb_substr($route,0,1) == '/' ? mb_substr( $route, 1, mb_strlen($route) - 1 ) : $route;
     $is_active = request()->is($route_out_slesh) || Route::is($route) ? true : false; 

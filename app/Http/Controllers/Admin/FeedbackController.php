@@ -27,6 +27,20 @@ class FeedbackController extends Controller
         return view('admin.feedback.index', compact('feedbacks'));
     }
 
+    public function recycle(FilterRequest $request)
+    {
+        $data = $request->validated();
+
+        $page = $data['page'] ?? 1;
+        $perPage = $data['per_page'] ?? 5;
+        
+        $query = Feedback::query()->onlyTrashed();
+
+        $feedbacks = $query->paginate($perPage)->appends(request()->query());
+
+        return view('admin.feedback.recycle', compact('feedbacks'));
+    }
+
     /**
      * Display the specified resource.
      */

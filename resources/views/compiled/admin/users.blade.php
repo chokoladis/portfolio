@@ -6,7 +6,7 @@
     <table class="uk-table">
         <thead>
             <tr>
-                @foreach (trans('crud.Users.fields_admin') as $filed_code => $trans)
+                @foreach (trans('crud.Users.fields_list_admin') as $filed_code => $trans)
                     <th>{{ $trans }}</th>
                 @endforeach
             </tr>
@@ -18,7 +18,7 @@
                         {{  $user->id  }}
                     </td>
                     <td>
-                        {{ $user->name }}
+                        {{ $user->fio }}
                     </td>
                     <td>
                         <a href="mailto:{{ $user->email }}">{{ $user->email }}</a>

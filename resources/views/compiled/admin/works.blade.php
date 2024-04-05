@@ -6,7 +6,7 @@
     <table class="uk-table">
         <thead>
             <tr>
-                @foreach (trans('crud.Example_work.fields_admin') as $filed_code => $trans)
+                @foreach (trans('crud.Example_work.fields_list_admin') as $filed_code => $trans)
                     <th>{{ $trans }}</th>
                 @endforeach
             </tr>
@@ -32,7 +32,7 @@
                             {{  $work->id  }} | {{  $work->slug  }}
                         </td>
                         <td>
-                            {{ $work->user->name }}
+                            <a href="{{ route('admin.users.edit', $work->user ) }}">{{ $work->user->fio }}</a>
                         </td>
                         <td class="js_title_work">
                             {{  $work->title  }}

@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'fio',
         'email',
         'password',
     ];
@@ -47,14 +47,14 @@ class User extends Authenticatable
     ];
 
     static $columnsInputs = [
-        'name' => 'Телефон', 
+        'fio' => 'ФИО', 
         'email' => 'Почта',
         'role' => 'Роль',
         'password' => 'Пароль',
     ];
 
     const ROLES = [
-        'admin', 'user'
+        'admin', 'moderator', 'user', 
     ];
 
     public function workers()

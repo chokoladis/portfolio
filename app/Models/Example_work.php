@@ -129,7 +129,7 @@ class Example_work extends Model
 
         parent::boot();
 
-        static::creating(function($item) {
+        static::created(function($item) {
 
             Example_work_stats::query()
                 ->create(['work_id' => $item->id]);

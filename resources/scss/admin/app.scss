@@ -77,9 +77,40 @@ body{
         justify-content: space-between;
         align-items: center;
     }
-    // &.layout-footer-fixed{
-    //     .wrapper .content-wrapper{
-    //         padding-bottom: 20px;
-    //     }
-    // }
+    .model-additional{
+        margin-top: 30px;
+        background: rgb(61, 64, 80);
+        color: rgb(205, 205, 205);
+        padding: 15px;
+
+        h4{
+            margin-bottom: 10px;
+        }
+        
+        .data{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .attr{
+                width: 49%;
+
+                p{
+                    margin-bottom: 10px;
+                    width: max-content;
+                    background: rgb(3, 116, 56);
+                    padding: 5px;
+                    max-width: 100%;
+                }                
+            }
+        }
+        .attr{
+            margin-top: 5px;
+
+            span{
+                color: rgb(171, 171, 171);
+                margin-left: 10px;
+            }
+        }
+    }
 }

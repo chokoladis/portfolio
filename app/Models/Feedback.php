@@ -22,10 +22,10 @@ class Feedback extends Model
 
         parent::boot();
 
-        static::creating(function($item) {
+        static::created(function($item) {
 
             Feedback_stats::query()
-                ->create(['feedack_id' => $item->id]);
+                ->create(['feedback_id' => $item->id]);
 
         });
     }

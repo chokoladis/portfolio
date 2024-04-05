@@ -84,7 +84,7 @@ class Workers extends Model
 
         parent::boot();
 
-        static::creating(function($item) {
+        static::created(function($item) {
 
             Workers_stats::query()
                 ->create(['worker_id' => $item->id]);

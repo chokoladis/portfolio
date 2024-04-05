@@ -4,11 +4,7 @@
 
 @extends('layouts.admin')
 
-{{-- @push('styles')
-    @vite(['resources/scss/admin/works.scss'])
-@endpush --}}
-
-@section('title-content') {{ $user->name }} @endsection
+@section('title-content') {{ $user->fio }} @endsection
 
 @section('breadcrumb'){{ Breadcrumbs::render('admin.users.edit', $user) }}@endsection
 
@@ -19,21 +15,27 @@
             <form action="{{ route('admin.users.update', $user) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
-                @php 
-                    dump($user);
-                    
-                    $name_val = old('name') ? old('name') : $user->name;
+                @php
+                    if (session('arErrors')){
+                        foreach (session('arErrors') as $error) {
+                            echo '<div class="uk-alert-danger" uk-alert>
+                                    <a href class="uk-alert-close" uk-close></a>
+                                    <p>'.$error.'</p>
+                                </div>';
+                        }
+                    }
+                    $fio_val = old('fio') ? old('fio') : $user->fio;
                     $email_val = old('email') ? old('email') : $user->email;
                     $role_val = old('role') ? old('role') : $user->role;
                     $pass_val = old('password') ? old('password') : $user->password;
                 @endphp
 
                 <div class="uk-margin">
-                    <p>{{ trans('crud.Users.fields.name') }}</p>
-                    <input type="text" name="name" class="uk-input" aria-label="Input" value="{{ $name_val }}">
+                    <p>{{ trans('crud.Users.fields.fio') }}</p>
+                    <input type="text" name="fio" class="uk-input" aria-label="Input" value="{{ $fio_val }}">
 
-                    @if($errors->has('name'))
-                        <div class="error">{{ $errors->first('name') }}</div>
+                    @if($errors->has('fio'))
+                        <div class="error">{{ $errors->first('fio') }}</div>
                     @endif
                 </div>
                 <div class="uk-margin">
@@ -72,6 +74,8 @@
                 </div>
                     
             </form>
+
+            <x-model-additional :model="$user" crud="Users"></x-model-additional>
         </div>
     </section>
 

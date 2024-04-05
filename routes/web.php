@@ -98,7 +98,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 });
                 
                 Route::group(['prefix' => 'workers', 'controller' => 'WorkersController'], function() {
-                    Route::name('workers.')->group(function(){                        
+                    Route::name('workers.')->group(function(){
                         Route::get('/{worker}/edit/', 'edit')->name('edit');
                         Route::post('/{worker}/update', 'update')->name('update');
                         Route::get('/{worker}/delete/', 'delete')->name('delete');
@@ -107,9 +107,15 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                     });
                 });
     
-                Route::group(['prefix' => 'feedback'], function() {
-                    Route::get('/{feedback}/show/', 'FeedbackController@show')->name('feedback.show');
-                    Route::get('/{feedback}/delete/', 'FeedbackController@delete')->name('feedback.delete');
+                Route::group(['prefix' => 'feedback', 'controller' => 'FeedbackController'], function() {
+                    Route::name('feedback.')->group(function(){
+                        Route::get('/{feedback}/show/', 'show')->name('show');
+                        Route::get('/{feedback}/delete/', 'delete')->name('delete');
+
+                        Route::get('/recycle/', 'recycle')->name('recycle');
+                        Route::post('/recycle/delete', 'recycleDelete')->name('recycleDelete');
+                        Route::post('/recycle/restore', 'recycleRestore')->name('recycleRestore');
+                    });
                 });
             });
         });

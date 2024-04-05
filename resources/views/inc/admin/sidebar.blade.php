@@ -21,7 +21,7 @@
             'items' => [
                 'list' => [
                     'name' =>   __('Список'),
-                    'img' =>    '<i class="nav-icon fas fa-solid fa-briefcase"></i>',
+                    'img' =>    '<i class="nav-icon fas fa-solid fa-list-ul"></i>',
                     'link' => 'admin.works.index',
                     'notites'   => $work_notitice,
                 ],
@@ -46,7 +46,21 @@
             'name' =>   __('Обратная связь'),
             'img' =>    '<i class="nav-icon fas fa-solid fa-comment"></i>',
             'link' => 'admin.feedback.index',
-            'notites'   => $feedback_notitice
+            'notites'   => $feedback_notitice,
+            'open' => Route::is('admin.feedback.*'),
+            'items' => [
+                'list' => [
+                    'name' =>   __('Список'),
+                    'img' =>    '<i class="nav-icon fas fa-solid fa-list-ul"></i>',
+                    'link' => 'admin.feedback.index',
+                    'notites'   => $feedback_notitice,
+                ],
+                'recycle' =>[
+                    'name' => __('Корзина'),
+                    'img' => '<i class="nav-icon fas fa-solid fa-recycle"></i>',
+                    'link' => 'admin.feedback.recycle'
+                ],
+            ]
         ],
     ];
 @endphp

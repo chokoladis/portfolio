@@ -9,10 +9,7 @@
     <section class="content">
         <div class="container-fluid">
 
-            {{-- todo rows data html --}}
-            @php 
-                dump($feedback);                
-            @endphp
+            <x-model-additional :model="$feedback" crud="Feedback" new_line="true"></x-model-additional>
 
         </div>
     </section>
