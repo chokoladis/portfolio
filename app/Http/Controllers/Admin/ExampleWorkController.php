@@ -159,7 +159,9 @@ class ExampleWorkController extends Controller
 
         $work = Example_work::query()->where('slug', $slug)->withTrashed()->restore();
         if ($work){
-            return redirect()->route('admin.works.index');
+            return responseJson(true, '');
+        } else {
+            return responseJson(false, error: __('Ошибка при восстановлении') );
         }
         
     }

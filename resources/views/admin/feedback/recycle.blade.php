@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
-@section('title-content') {{ __('Обратная связь') }} @endsection
+@section('title-content') {{ __('Корзина') }} @endsection
 
-@section('breadcrumb'){{ Breadcrumbs::render('admin.feedback') }}@endsection
+@section('breadcrumb'){{ Breadcrumbs::render('admin.feedback.recycle') }}@endsection
 
 @section('content')
     

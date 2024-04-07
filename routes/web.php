@@ -47,11 +47,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         });
         
         Route::group(['prefix' => 'works'], function(){
-        // Route::middleware(['isBelongsToUser:Example_work::class'])->group( function() {
             Route::get('/{work}/edit/', 'ExampleWorkController@edit')->name('works.edit');
             Route::post('/{work}/update/', 'ExampleWorkController@update')->name('works.update');
             Route::get('/{work}/delete/', 'ExampleWorkController@delete')->name('works.delete'); //todo
-        // });
         });
 
         Route::group(['middleware' => 'admin', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
@@ -69,7 +67,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                         Route::get('/add/', 'create')->name('create');
                         Route::get('/{menuNav}/edit/', 'edit')->name('edit');
                         Route::post('/{menuNav}/update', 'update')->name('update');
-                        Route::get('/{menuNav}/delete/', 'delete')->name('delete');
+                        Route::post('/{menuNav}/delete/', 'delete')->name('delete');
                     });
                 });
                 
@@ -77,8 +75,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                     Route::name('works.')->group(function(){                        
                         Route::get('/{work}/edit/', 'edit')->name('edit');
                         Route::post('/{work}/update', 'update')->name('update');
-                        Route::get('/{work}/delete/', 'delete')->name('delete');
-                        Route::get('/{work}/forceDelete/', 'forceDelete')->name('forceDelete');
+                        Route::post('/{work}/delete/', 'delete')->name('delete');
+                        Route::post('/{work}/forceDelete/', 'forceDelete')->name('forceDelete');
                         Route::get('/{work}/restore/', 'restore')->name('restore');
 
                         Route::get('/recycle/', 'recycle')->name('recycle');
@@ -91,7 +89,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                     Route::name('users.')->group(function(){                        
                         Route::get('/{user}/edit/', 'edit')->name('edit');
                         Route::post('/{user}/update', 'update')->name('update');
-                        // Route::get('/{worker}/delete/', 'delete')->name('delete');
+                        Route::post('/{user}/delete/', 'delete')->name('delete');
                         // Route::get('/{worker}/forceDelete/', 'forceDelete')->name('forceDelete');
                         // Route::get('/{worker}/restore/', 'restore')->name('restore');
                     });
@@ -101,8 +99,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                     Route::name('workers.')->group(function(){
                         Route::get('/{worker}/edit/', 'edit')->name('edit');
                         Route::post('/{worker}/update', 'update')->name('update');
-                        Route::get('/{worker}/delete/', 'delete')->name('delete');
-                        Route::get('/{worker}/forceDelete/', 'forceDelete')->name('forceDelete');
+                        Route::post('/{worker}/delete/', 'delete')->name('delete');
+                        Route::post('/{worker}/forceDelete/', 'forceDelete')->name('forceDelete');
                         // Route::get('/{worker}/restore/', 'restore')->name('restore');
                     });
                 });

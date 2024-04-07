@@ -87,7 +87,7 @@ Breadcrumbs::for('admin.workers', function ($trail) {
 });
 Breadcrumbs::for('admin.workers.edit', function ($trail, $worker) {
     $trail->parent('admin.workers');
-    $trail->push($worker->user->name, route('admin.workers.edit', $worker));
+    $trail->push($worker->user->fio, route('admin.workers.edit', $worker));
 });
 // 
 Breadcrumbs::for('admin.feedback', function ($trail) {
@@ -98,12 +98,3 @@ Breadcrumbs::for('admin.feedback.show', function ($trail, $feedback) {
     $trail->parent('admin.feedback');
     $trail->push( __('Заявка от ').$feedback->email, route('admin.feedback.show', $feedback));
 });
-
-// Breadcrumbs::for('admin.menu.add', function ($trail) {
-//     $trail->parent('admin.menu');
-//     $trail->push( __('Создание'), route('admin.menu.create'));
-// });
-// Breadcrumbs::for('profile.works.edit', function ($trail, $work) {
-//     $trail->parent('profile.works');
-//     $trail->push($work->title, route('profile.works.edit', $work));
-// });

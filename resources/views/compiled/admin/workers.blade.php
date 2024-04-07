@@ -34,7 +34,9 @@
                             @endif
                         </td>
                         <td>
-                            {{ $worker->user->name }}
+                            <a href="{{ route('admin.users.edit', $worker->user->id) }}">
+                                {{ $worker->user->fio }}
+                            </a>
                         </td>
                         <td style="min-width: 140px;">
                             <a href="tel:{{ $worker->phone }}">{{ HelperController::phoneOutFormated($worker->phone) }}</a>

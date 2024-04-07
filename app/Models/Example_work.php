@@ -16,7 +16,6 @@ class Example_work extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    // use Searchable;
 
     protected $table = 'example_works';
     protected $guarded = [];

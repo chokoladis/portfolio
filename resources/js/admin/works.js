@@ -32,8 +32,8 @@ $(function(){
                     tr.remove();
 
                 } else {
-                    $('#response').show();
                     $('#response .messsage').html(data.error+"<br/>");
+                    UIkit.modal('#md-response').show();
                 }
             }
         });
@@ -63,8 +63,8 @@ $(function(){
                     tr.remove();
 
                 } else {
-                    $('#response').show();
                     $('#response .messsage').html(data.error+"<br/>");
+                    UIkit.modal('#md-response').show();
                 }
             }
         });
@@ -84,11 +84,10 @@ $(function(){
             success: function(data){
 
                 if (data.success){
-                    tr.removeClass('deleted');
-                    console.log(data);
+                    tr.remove();
                 } else {
-                    $('#response').show();
                     $('#response .messsage').html(data.error+"<br/>");
+                    UIkit.modal('#md-response').show();
                 }
             }
         });
