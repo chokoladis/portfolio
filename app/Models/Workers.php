@@ -39,7 +39,7 @@ class Workers extends Model
     }
     
     public function getTitle(){
-        return $this->user->name;
+        return $this->user->fio;
     }
 
     public function getColumns(){

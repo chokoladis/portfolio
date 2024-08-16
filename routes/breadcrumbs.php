@@ -26,7 +26,11 @@ Breadcrumbs::for('workers', function ($trail) {
 });
 Breadcrumbs::for('worker', function ($trail, $worker) {
     $trail->parent('workers');
+<<<<<<< Updated upstream
     $trail->push($worker['name'], route('workers.detail', $worker['code']));
+=======
+    $trail->push($worker['fio'], route('workers.detail', $worker['code']));
+>>>>>>> Stashed changes
 });
 
 Breadcrumbs::for('profile', function ($trail) {

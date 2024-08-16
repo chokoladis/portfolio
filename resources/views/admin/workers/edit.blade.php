@@ -7,7 +7,7 @@
     @vite(['resources/scss/admin/works.scss'])
 @endpush
 
-@section('title-content') {{ $worker->name }} @endsection
+@section('title-content') {{ $worker->fio }} @endsection
 
 @section('breadcrumb'){{ Breadcrumbs::render('admin.workers.edit', $worker) }}@endsection
 

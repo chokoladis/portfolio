@@ -23,7 +23,7 @@
                         @endphp
                     </div>                
                     <div class="content">
-                        <h4>{{ $worker->user->name }}</h4>
+                        <h4>{{ $worker->user->fio }}</h4>
                         <p>{{ $worker->about }}</p>
                         <ul class="links">
                             <li class='link-tel'>
@@ -42,11 +42,19 @@
                         </ul>
                         <div class="addition_info">
                             <div class="date">
+<<<<<<< Updated upstream
                                 {{ $worker->created_at->format('d.m.Y H:i') }} 
                             </div>
                             <span class="splash">|</span>
                             <div class="views">
                                 <span uk-icon="eye"></span> {{ $worker->view_count }}
+=======
+                                {{ $worker->created_at->diffForHumans() }} 
+                            </div>
+                            <span class="splash">|</span>
+                            <div class="views">
+                                <span uk-icon="eye"></span> {{ $worker->stats?->view_count }}
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>

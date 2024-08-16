@@ -4,7 +4,7 @@
 @extends('layouts.main')
 
 @section('breadcrumb'){{ Breadcrumbs::render('worker', $worker) }}@endsection
-@section('page.title'){{ __('Пользователи - '.$worker['name']) }}@endsection
+@section('page.title'){{ __('Пользователи - '.$worker['fio']) }}@endsection
 
 @push('styles')
     @vite(['resources/scss/profile.scss'])
@@ -36,7 +36,11 @@
                         <img src="{{ $imgUrl }}" alt="user avatar">
                     </div>
                     <div class="main_info">
+<<<<<<< Updated upstream
                         <h3 class="name">{{ $worker['name'] }}</h3>
+=======
+                        <h3 class="name">{{ $worker['fio'] }}</h3>
+>>>>>>> Stashed changes
                         <div class="links">
                             <a href="tel:{{ $phone }}">
                                 <div class="icon">

@@ -29,4 +29,11 @@ class StoreRequest extends FormRequest
             "comment" => ['string', 'max:2000']
         ];
     }
+    
+    public function messages(){
+        return [
+            'phone.regex' => 'Поле не прошло валидацию'
+        ];
+    }
+
 }

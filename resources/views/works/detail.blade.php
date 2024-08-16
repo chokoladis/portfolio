@@ -39,7 +39,11 @@
                 </div>
                 <div class="uk-card-body">
                     
+<<<<<<< Updated upstream
                     <a href="{{ $linkToWorker }}" class="uk-card-badge uk-label">{{ $work->user->name }}</a>
+=======
+                    <a href="{{ $linkToWorker }}" class="uk-card-badge uk-label">{{ $work->user->fio }}</a>
+>>>>>>> Stashed changes
                     <h3 class="uk-card-title">{{ $work->title }}</h3>
                     <a href="{{ $link }}">{{ $work->url_work }}</a>
                     <p>{{ $work->description }}</p>

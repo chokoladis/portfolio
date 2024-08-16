@@ -40,7 +40,7 @@
                         <input type="submit" value="Изменить">
                     </form>
                     <div class="main_info">
-                        <h3 class="name">{{ $worker->name }}</h3>
+                        <h3 class="name">{{ $worker->fio }}</h3>
                         <div class="links">
                             <a href="tel:{{ $phone }}">
                                 <div class="icon">

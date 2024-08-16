@@ -85,14 +85,14 @@
                                         <span>{{ __('Найдено в') }}</span>
                                         @foreach($item['contents'] as $code => $value)
                                             <div class="uk-flex">
-                                                <p>"{{ trans('crud.'.$model.'.fields.'.$code) }}" - <b>{{ $value }}</b></p>                                                
+                                                <p>"{{ trans('crud.'.$model.'.search.'.$code) }}" - <b>{{ $value }}</b></p>                                                
                                             </div>
                                         @endforeach
 
                                     </div>
                                     <div class="addition_info">
                                         <div class="date">
-                                            {{ $item['date_insert']->format('d.m.Y H:i') }} 
+                                            {{ $item['date_insert']->diffForHumans() }}
                                         </div>
                                         <span class="splash">|</span>
                                         <div class="views">

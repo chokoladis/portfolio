@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class HelperController extends Controller
 {
     const ORDER_BY = [
-        'view_count' => 'По просмотрам',
+        // 'view_count' => 'По просмотрам',
         'created_at' => 'По дате добавления'
     ];
     

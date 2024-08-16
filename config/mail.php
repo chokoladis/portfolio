@@ -97,10 +97,11 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
+    'default_email' => 'admin@you-portfolio.online',
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@you-portfolio.online'),
+        'name' => env('MAIL_FROM_NAME', 'Admin'),
     ],
 
     /*

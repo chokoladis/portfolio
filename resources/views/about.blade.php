@@ -7,13 +7,20 @@
                 <div class="uk-card-title uk-text-center uk-text-small uk-margin-small-top">{{ __('Как пользоваться') }}</div>
 
                 <hr class="uk-divider-icon">
-                <h2>Раздел <a href="{{ route('work.index') }}">"Работы"</a></h2>
+                <div class="mb-4">
+                    <h2>{{ __('Раздел') }} <a href="{{ route('work.index') }}">{{ __('"Работы"') }}</a></h2>
+                    <p>{{ __('В этом разделе вы можете просматривать, оставленные зарегестрированными пользователями, примеры цифровых работ') }}</p>
+                </div>
+                <div class="mb-4">
+                    <h2>{{ __('Раздел') }} <a href="{{ route('workers.index') }}">{{ __('"Профили"') }}</a></h2>
+                    <sub class="text-warning">{{ __('Доступен только для авторизированных') }}</sub>
+                    <p>{{ __('В этом разделе список зарегестрированных профилей, которые ищут работу') }}</p>
+                </div>
 
-                {{-- <p class="uk-text-warning">{{ __('Данный сервис будет давать возможность разместить своё портфолио и работы') }}</p> --}}
-                
-                <a href="https://github.com/chokoladis/" uk-icon="icon: github; ratio:2;"></a>
+                <div class="mb-4">
+                    <h4>{{ __('Также есть страница') }} <a href="{{ route('search', ['search' => 'test']) }}">{{ __('поиска') }}</a></h4>
+                </div>
 
-                <i>{{ __('Сайт разработан на свободное время какого то разработчика с ником ') }}<b>chokoladis</b></i>
             </div>
         </div>
     </main>

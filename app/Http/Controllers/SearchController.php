@@ -13,6 +13,10 @@ class SearchController extends Controller
         'Workers' => 'crud.Workers.title',
     ];
 
+    static $allowNoAuth = [
+        'Example_work'
+    ];
+
     public function index(Request $request){
 
         $validate = $request->validate([
@@ -21,11 +25,11 @@ class SearchController extends Controller
             'per_page' => 'numeric|nullable|min:5|max:50',
             'orderBy' => 'string|nullable',
             'sort' => 'string|nullable'
+        ], $messages = [
+            'required' => 'Поле обязательно для заполнения',
+            'min' => 'Слишком мало букав',
+            'max' => 'Слишком много букав'
         ]);
-
-        if (!isset($validate['search'])){
-            abort(400);
-        }
 
         $validate['search']  = str_replace('%', '', $validate['search']);
         $searchForSql  = str_replace('_', '\_', $validate['search']);
@@ -39,6 +43,10 @@ class SearchController extends Controller
         $sort = $validate['sort'] ?? 'asc';
 
         foreach($this->models as $model => $translation){
+
+            if (!$this->checkPermission($model))
+                continue;
+
             $modelClass = 'App\Models\\'.$model;
             $fields = $modelClass::$searchable;
 
@@ -57,29 +65,27 @@ class SearchController extends Controller
 
             if ($tempData->count()){
 
+                $arFiltredFields = [];
+
                 foreach($tempData as $data){
 
-                    $parsed = [];
-                    $title = $data->getTitle();
-                    $route = route($modelClass::getRouteAddress(), $data);
-        
-                    $arFiltredFields = [];
-                    $arTempFields = $data->only($fields);
-                    
-                    foreach($arTempFields as $code => $value ){
+                    foreach($data->only($fields) as $code => $value ){
                         if (str_contains($value, $validate['search'])){
                             $arFiltredFields[$code] = $value;
                         }
                     }
+
+                    $views = $data->stats?->view_count;
+                    $views = $views > 1000 ? $views / 1000 . 'k' : $views;
                     
                     $parsed = [
-                        'contents' => $arFiltredFields,
+                        'contents' => $arFiltredFields ?? [],
                         'date_insert' => $data->created_at,
-                        'views' => $data->stats?->view_count,
-                        'html_title' => $title,
-                        'route' => $route
+                        'views' => $views,
+                        'html_title' => $data->getTitle(),
+                        'route' => route($modelClass::getRouteAddress(), $data)
                     ];
-        
+
                     $searchData[$model]['items'][] = $parsed;
                 }
         
@@ -94,4 +100,15 @@ class SearchController extends Controller
         return view('search', compact('result', 'total_count', 'pages'));
     }
 
+    public function checkPermission(string $model){
+
+        if (auth()->id() && auth()->user()->email_verified_at){
+            return true;
+        } elseif (!in_array($model, self::$allowNoAuth)){
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 }

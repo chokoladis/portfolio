@@ -15,6 +15,14 @@
                 } else {
                     $link = 'https://'.$work->url_work;
                 }
+
+                $views = $work->stats?->view_count;
+                                    
+                if ($views) {
+                    $views = $views > 1000 ? $views / 1000 . 'k' : $views;
+                } else {
+                    $views = '-';
+                }
             @endphp
             <div class="work {{ $addClass }}" data-id="{{ $work->slug }}">
                 <div class="content" onclick="location.href='{{ route('work.detail', $work->slug) }}'">
@@ -33,11 +41,11 @@
                     @endif
                     <div class="addition_info">
                         <div class="date">
-                            {{ $work->created_at->format('d.m.Y H:i') }} 
+                            {{ $work->created_at->diffForHumans() }} 
                         </div>
                         <span class="splash">|</span>
                         <div class="views">
-                            <span uk-icon="eye"></span> {{ $work->stats ? $work->stats->view_count : '-' }}
+                            <span uk-icon="eye"></span> {{ $views }}
                         </div>
                     </div>
                 </div>

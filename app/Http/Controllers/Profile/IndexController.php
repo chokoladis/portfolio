@@ -50,7 +50,7 @@ class IndexController extends Controller
     public static function userWorker(int $userId){
         return DB::table('workers')
                 ->join('users', 'workers.user_id', '=', 'users.id')
-                ->select('users.name', 'workers.*')
+                ->select('users.fio', 'workers.*')
                 ->where('workers.user_id', '=', $userId)->first();
     }
 

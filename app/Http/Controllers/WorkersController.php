@@ -164,7 +164,7 @@ class WorkersController extends Controller
         $worker = [
             'id' => $worker->id,
             'code' => $worker->code,
-            'name' => $worker->user->name,
+            'fio' => $worker->user->fio,
             'url_avatar' => $worker->url_avatar,
             'phone' => $worker->phone,
             'about' => $worker->about,
