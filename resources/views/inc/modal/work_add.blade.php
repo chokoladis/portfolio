@@ -18,7 +18,7 @@
                 <textarea class="uk-textarea" name="description" placeholder="{{ __('Описание') }}"></textarea>
             </div>
             <div class="uk-margin">
-                <input type="file" name="url_files" multiple="multiple" accept="image/*">
+                <input type="file" name="url_files" multiple="multiple">
             </div>
             <div class="uk-margin">
                 <input class="uk-input" type="text" name="url_work" placeholder="{{ __('Ссылка на сайт') }}">

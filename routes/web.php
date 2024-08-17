@@ -2,10 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-<<<<<<< Updated upstream
-=======
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
->>>>>>> Stashed changes
 
 
 Route::get('/', function(){ return view('home'); })->name('home');
@@ -130,13 +127,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 });
 
 
-<<<<<<< Updated upstream
-
-// about me -  мой путь в разработке
-// hobby - чем увлекаюсь
-
-Auth::routes();
-=======
 Auth::routes();
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
@@ -144,4 +134,3 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
  
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
->>>>>>> Stashed changes

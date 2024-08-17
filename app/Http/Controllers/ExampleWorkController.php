@@ -9,6 +9,7 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\Example_work_stats;
 use App\Models\User;
+use App\Services\FileService;
 use App\Services\ImageService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -85,6 +86,10 @@ class ExampleWorkController extends Controller
 
         $data = $request->validated();
         $data['user_id'] = auth()->id();
+
+        
+        $fileService = new FileService($request, 'url_files', config('filesystems.img.works'));
+        $fileService->handlerFiles();
 
         $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
 

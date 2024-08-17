@@ -14,15 +14,10 @@
         <meta name="author" content="chokoladis">
         <meta name="keywords" content="{{ _('Создать портфолио, свое портфолио') }}">
         <meta name="description" content="{{ _('Создай свое портфолио бесплатно за 5 минут!') }}">
-        <link rel="shortcut icon" href="portfolioicon.png" type="image/x-png">
+        <link rel="shortcut icon" href="/portfolioicon.png" type="image/x-png">
         
         <title>@yield('page.title', config('app.name'))</title>
         
-<<<<<<< Updated upstream
-        <title>@yield('page.title', config('app.name'))</title>
-        <!-- UIkit CSS -->
-=======
->>>>>>> Stashed changes
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
 
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
@@ -85,11 +80,7 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-<<<<<<< Updated upstream
-                                        {{ Auth::user()->name }}
-=======
                                         {{ mb_strlen(auth()->user()->fio) > 13 ? mb_substr(auth()->user()->fio, 0, 13).'...' : auth()->user()->fio  }}
->>>>>>> Stashed changes
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

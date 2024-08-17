@@ -10,10 +10,6 @@
                             </li>
                         </ul>
                         
-<<<<<<< Updated upstream
-                    </div>
-                    <div class="copyrithg">© 2023-2024 localhost.com</div>
-=======
                     </div>
                     <div class="mt-5">
                         
@@ -21,7 +17,6 @@
                     <div class="copyrithg">
                         <br>© you-profile.online, 2023-2024
                     </div>
->>>>>>> Stashed changes
                 </div>
             </footer>
 
@@ -39,17 +34,6 @@
         @vite(['resources/js/app.js'])
         @stack('scripts')
 
-<<<<<<< Updated upstream
-        @include('inc.modal.response')
-        @include('inc.modal.feedback')
-        @if(auth()->user() !== null) 
-            @if(Route::is('work.*'))
-                @include('inc.modal.work_add')
-                @include('inc.modal.work_edit')    
-            @endif
-        @endif
-        <!-- <a href="https://www.flaticon.com/free-icons/portfolio" title="portfolio icons">Portfolio icons created by Freepik - Flaticon</a> -->
-=======
         <!-- Top.Mail.Ru counter -->
         <script type="text/javascript">
             var _tmr = window._tmr || (window._tmr = []);
@@ -64,6 +48,5 @@
         </script>
         <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3546049;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
         <!-- /Top.Mail.Ru counter -->
->>>>>>> Stashed changes
     </body>
 </html>

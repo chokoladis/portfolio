@@ -36,11 +36,7 @@
                         <img src="{{ $imgUrl }}" alt="user avatar">
                     </div>
                     <div class="main_info">
-<<<<<<< Updated upstream
-                        <h3 class="name">{{ $worker['name'] }}</h3>
-=======
                         <h3 class="name">{{ $worker['fio'] }}</h3>
->>>>>>> Stashed changes
                         <div class="links">
                             <a href="tel:{{ $phone }}">
                                 <div class="icon">

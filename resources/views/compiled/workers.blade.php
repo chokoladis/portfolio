@@ -42,19 +42,11 @@
                         </ul>
                         <div class="addition_info">
                             <div class="date">
-<<<<<<< Updated upstream
-                                {{ $worker->created_at->format('d.m.Y H:i') }} 
-                            </div>
-                            <span class="splash">|</span>
-                            <div class="views">
-                                <span uk-icon="eye"></span> {{ $worker->view_count }}
-=======
                                 {{ $worker->created_at->diffForHumans() }} 
                             </div>
                             <span class="splash">|</span>
                             <div class="views">
                                 <span uk-icon="eye"></span> {{ $worker->stats?->view_count }}
->>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>

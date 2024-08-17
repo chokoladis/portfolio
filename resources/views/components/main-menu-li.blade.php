@@ -11,11 +11,7 @@
 @endphp
 
 <li {{ $attributes->class([
-<<<<<<< Updated upstream
-        ( $is_active ? 'active' : 'animated')
-=======
         ( $is_active ? 'animated active' : 'animated')
->>>>>>> Stashed changes
     ])  }}>
     <a class="{{ $a_class }}" href="{{ $route }}">{{ $slot }}</a>
 </li>

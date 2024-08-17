@@ -10,7 +10,7 @@ class ImageService {
 
     public static function getNewPhotoPath($request, $propName, $mainDir){
         
-        $root = public_path() . $mainDir;        
+        $root = public_path() . $mainDir;
 
         if ($request->hasFile($propName)) {
             
