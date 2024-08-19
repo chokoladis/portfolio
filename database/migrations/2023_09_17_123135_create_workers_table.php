@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('url_avatar', 512)->nullable();
             $table->string('phone', 20);
             $table->string('about', 1024)->nullable();
-            $table->json('socials')->default([]);
+            $table->json('socials')->default(null);
             $table->timestamps();
             $table->softDeletes();
         });

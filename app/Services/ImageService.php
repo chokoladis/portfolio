@@ -66,5 +66,5 @@ class ImageService {
         }
 
         return [ 'subdir' => $mk_name, 'file_name' => $file_name ];
-    }   
+    }
 }

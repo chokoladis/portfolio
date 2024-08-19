@@ -9,8 +9,8 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\Example_work_stats;
 use App\Models\User;
-use App\Services\FileService;
 use App\Services\ImageService;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
@@ -87,11 +87,19 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
 
-        
-        $fileService = new FileService($request, 'url_files', config('filesystems.img.works'));
-        $fileService->handlerFiles();
+        $fileService = new FileService($request, 'url_files', config('filesystems.clients.works'));
+        $arResFiles = $fileService->handlerFiles();
 
-        $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
+        dd($arResFiles);
+        
+        if ($arResFiles['file_saved']){
+            $result = 'Нектороые файлы не были записаны:';
+        }
+
+        if (!empty($arResFiles['errors'])){
+
+        }
+        // $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
 
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 
