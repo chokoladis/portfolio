@@ -7,9 +7,7 @@ use App\Http\Requests\ExampleWork\StoreRequest;
 use App\Http\Requests\ExampleWork\UpdateRequest;
 use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
-use App\Models\Example_work_stats;
 use App\Models\User;
-use App\Services\ImageService;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -91,7 +89,7 @@ class ExampleWorkController extends Controller
         $arResFiles = $fileService->handlerFiles();
 
         dd($arResFiles);
-        
+
         if ($arResFiles['file_saved']){
             $result = 'Нектороые файлы не были записаны:';
         }

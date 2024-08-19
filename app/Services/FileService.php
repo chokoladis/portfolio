@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Exception;
-use \Imagick;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 
@@ -146,38 +145,61 @@ class FileService
             $mime = $this->file->getMimeType();
             $arMime = explode('/', $mime);
 
-            if ($arMime[0] === 'video'){
-                $this->compressVideo($this->file);
-            } elseif($arMime[0] === 'image'){
-                $this->compressImage($this->file);
-            }
-
             $file_name = md5($salt . '_' . $this->file->getClientOriginalName());
-            $file_name = mb_substr($file_name, 0, 16) . '.' . $this->file->extension();
 
-            $mk_name = substr($file_name, 0, 3);
+            $subdir = substr($file_name, 0, 3);
 
-            $folder = public_path() . '/'. $this->currentDir .'/' . $mk_name;
+            $folder = public_path() . '/'. $this->currentDir .'/' . $subdir;
             if (!is_dir($folder)) {
                 mkdir($folder, 755);
             }
 
-            return ['subdir' => $mk_name, 'file_name' => $file_name];
+            if ($arMime[0] === 'video'){
+                $file_name = $this->compressVideo($folder, $file_name, $this->file);
+            } elseif($arMime[0] === 'image'){
+                $file_name = $this->compressImage($folder, $file_name, $this->file);
+            } 
+
+            if (!$file_name){
+                $file_name = mb_substr($file_name, 0, 16) . '.' . $this->file->extension();
+            }
+
+            return ['subdir' => $subdir, 'file_name' => $file_name];
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public static function compressImage(UploadedFile $file){
+    public static function compressImage(string $folder_path, string $file_name, UploadedFile $file){
 
-        // $r = new \Imagick();
-        
-        
-        // dd($r);
+        $file_name = mb_substr($file_name, 0, 16) . '.webp';
+        $fullPath = $folder_path.$file_name;
+
+        try{
+            exec('magick '.$file->getRealPath().' -quality 80 '.$fullPath);
+            
+            return $file_name;
+
+        } catch (\Throwable $th) {
+            // throw $th; to log
+            return false;
+        }
     }
 
-    public static function compressVideo(UploadedFile $file){
+    public static function compressVideo(string $folder_path, string $file_name, UploadedFile $file){
 
+        $file_name = mb_substr($file_name, 0, 16) . '.' . $file->extension();
+        $fullPath = $folder_path.$file_name;
+        
+        try {
+            exec("ffmpeg -i ".$file->getRealPath()." -b:v 800 $fullPath");
+            
+            return $file_name;
+
+        } catch (\Throwable $th) {
+            // throw $th; to log
+            return false;
+        }
     }
 
     public function addError(string $error)
