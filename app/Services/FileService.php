@@ -5,6 +5,7 @@ namespace App\Services;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class FileService
 {
@@ -17,7 +18,26 @@ class FileService
     public $request;
     public string $propertyName;
     public string $currentDir;
-    static public $allowExt = [
+    static $imgExt = [
+        'png',
+        'webp',
+        'jpeg',
+        'jpg',
+        'gif',
+    ];
+    static $videoExt = [
+        'mp4',
+        'avi',
+        'mov',
+        'webm',
+        'mkv',
+        'wmv',
+        'amv',
+        'm4v',
+        '3gp',
+        'mpeg-4',
+    ];
+    static $allowExt = [
         'png',
         'webp',
         'jpeg',
@@ -71,7 +91,11 @@ class FileService
 
             if (is_array($files)) {
 
-                foreach ($files as $file) {
+                foreach ($files as $i => $file) {
+
+                    if ($i + 1 > self::LIMIT_FILES){
+                        break;
+                    }
 
                     $this->file = $file;
 
@@ -100,11 +124,12 @@ class FileService
             $root = public_path() . $this->currentDir;
 
             $fileAr = self::preparationSave($this->file);
+
             $file_path = $fileAr['subdir'] . '/' . $fileAr['file_name'];
 
-            if (!file_exists($root . $file_path)) {
-                $this->file->move($root . $fileAr['subdir'], $fileAr['file_name']);
-            }
+            // if (!file_exists($root . $file_path)) {
+            //     $this->file->move($root . $fileAr['subdir'], $fileAr['file_name']);
+            // }
 
             $this->arSaved[] = [
                 'originalName' => $this->file->getClientOriginalName(),
@@ -119,7 +144,7 @@ class FileService
 
     public function isHaveErrors()
     {
-        $ext = $this->file->getClientOriginalExtension();
+        $ext = strtolower($this->file->getClientOriginalExtension());
 
         if (!in_array($ext, self::$allowExt)) {
             return $this->addError('Файл - ' . $this->file->getClientOriginalName() . ' имеет не поддерживаемое расширение');
@@ -140,6 +165,8 @@ class FileService
     {
 
         try {
+            $root = public_path() . $this->currentDir;
+
             $salt = auth()->user()->id . '_' . time();
 
             $mime = $this->file->getMimeType();
@@ -149,19 +176,31 @@ class FileService
 
             $subdir = substr($file_name, 0, 3);
 
-            $folder = public_path() . '/'. $this->currentDir .'/' . $subdir;
+            // temp check
+            $tempPath = 'temp/'.$subdir. $file_name. '.' .$this->file->getClientOriginalExtension();
+
+            $tempStore = $this->file->move($root.'temp/'.$subdir, $file_name. '.' .$this->file->getClientOriginalExtension());
+
+            Log::alert($tempStore);
+
+            $folder = public_path() . $this->currentDir  . $subdir;
+
             if (!is_dir($folder)) {
-                mkdir($folder, 755);
+                mkdir($folder, 0755);
             }
 
             if ($arMime[0] === 'video'){
-                $file_name = $this->compressVideo($folder, $file_name, $this->file);
-            } elseif($arMime[0] === 'image'){
-                $file_name = $this->compressImage($folder, $file_name, $this->file);
-            } 
 
-            if (!$file_name){
-                $file_name = mb_substr($file_name, 0, 16) . '.' . $this->file->extension();
+                $file_name = $this->compressVideo($tempPath, $this->currentDir, $folder, $file_name, $this->file)
+                    ?? mb_substr($file_name, 0, 16) . '.' . $this->file->getClientOriginalExtension();
+
+            } elseif($arMime[0] === 'image'){
+
+                $file_name = $this->compressImage($tempPath, $this->currentDir, $folder, $file_name, $this->file)
+                    ?? mb_substr($file_name, 0, 16) . '.' . $this->file->getClientOriginalExtension();
+
+            } else {
+                $file_name = mb_substr($file_name, 0, 16) . '.' . $this->file->getClientOriginalExtension();
             }
 
             return ['subdir' => $subdir, 'file_name' => $file_name];
@@ -170,34 +209,51 @@ class FileService
         }
     }
 
-    public static function compressImage(string $folder_path, string $file_name, UploadedFile $file){
+    public static function compressImage(string $tempPath, string $currDir, string $folder_path, string $file_name, UploadedFile $file){
+
+        $root = public_path() . $currDir;
 
         $file_name = mb_substr($file_name, 0, 16) . '.webp';
         $fullPath = $folder_path.$file_name;
 
+        dump($tempPath);
+        dump($file);
+        // dump($file->getRealPath());
+
         try{
-            exec('magick '.$file->getRealPath().' -quality 80 '.$fullPath);
-            
+            $exec = exec('magick '.$root. $tempPath.' -quality 20 '.$root. $fullPath);
+
+            Log::error($exec);
+
             return $file_name;
 
         } catch (\Throwable $th) {
-            // throw $th; to log
+            Log::error($th);
             return false;
         }
     }
 
-    public static function compressVideo(string $folder_path, string $file_name, UploadedFile $file){
+    public static function compressVideo(string $tempPath, string $currDir, string $folder_path, string $file_name, UploadedFile $file){
 
-        $file_name = mb_substr($file_name, 0, 16) . '.' . $file->extension();
+        $root = public_path() . $currDir;
+
+        $file_name = mb_substr($file_name, 0, 16) . '.' . $file->getClientOriginalExtension();
         $fullPath = $folder_path.$file_name;
         
+        dump($tempPath);
+        dump($root. $tempPath);
+        dump($fullPath);
+        // dump($file->getRealPath());
+
         try {
-            exec("ffmpeg -i ".$file->getRealPath()." -b:v 800 $fullPath");
+            $exec = exec("ffmpeg -i ".$root. $tempPath." -b:v 400 $fullPath");
             
+            Log::error($exec);
+
             return $file_name;
 
         } catch (\Throwable $th) {
-            // throw $th; to log
+            Log::error($th);
             return false;
         }
     }

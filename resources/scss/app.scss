@@ -830,6 +830,11 @@ ul,li,p{
 }
 
 
+.uk-modal{
+    .message{
+        margin-top: 20px;
+    }
+}
 .uk-modal-dialog{
     background: var(--body-bg);
     color: var(--main-clr-text);

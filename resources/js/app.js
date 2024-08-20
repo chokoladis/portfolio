@@ -93,7 +93,14 @@ $(function(){
                 success: function(json){
                     
                     if (json.success){
-                        $('#md-response .message').text(json.result);
+
+                        let message = `<h4>${json.result}</h4>`;
+                        
+                        if (json.error){
+                            message += `<p class='uk-text-warning'>${json.error}</p>`;
+                        }
+
+                        $('#md-response .message').html(message);
 
                         if (location.href == '/admin/menu'){
                             Helper.updMenuAdmin();

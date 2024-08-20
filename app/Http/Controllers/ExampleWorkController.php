@@ -47,39 +47,6 @@ class ExampleWorkController extends Controller
         return view('works.detail', compact('work'));
     }
 
-    public function filterByWork($query, $data){
-        return $query->where('title', 'like', '%'.$data.'%')
-                ->orWhere('description', 'like', '%'.$data.'%')
-                ->orWhere('url_work', 'like', '%'.$data.'%')
-                ->orWhere('slug', 'like', '%'.$data.'%');
-    }
-
-    public function filterByProfile($query, $data){
-
-        $arUsersId = $this->getUsersByLikeName($data);
-        $arUsersId = !empty($arUsersId) ? $arUsersId : [0];
-
-        return $query->whereIn('user_id', $arUsersId);
-    }
-
-    public function getUsersByLikeName(string $data) : array{
-
-        $userFinder = User::query()
-            ->where('name', 'like', '%'.$data.'%')
-            ->orWhere('email', 'like', '%'.$data.'%')
-            ->get();
-
-        $arUsersId = [];
-
-        foreach($userFinder as $user){
-            if ($user->role !== 'admin'){
-                $arUsersId[] = $user->id;
-            }
-        }
-
-        return $arUsersId;
-    }
-
     public function store(StoreRequest $request){
 
         $data = $request->validated();
@@ -87,17 +54,26 @@ class ExampleWorkController extends Controller
 
         $fileService = new FileService($request, 'url_files', config('filesystems.clients.works'));
         $arResFiles = $fileService->handlerFiles();
-
-        dd($arResFiles);
+        $filePath = '';
 
         if ($arResFiles['file_saved']){
-            $result = 'Нектороые файлы не были записаны:';
+            $count = count($arResFiles['file_saved']) - 1;
+            foreach ($arResFiles['file_saved'] as $key => $value) {
+                $c = $key == $count ? '' : ',';
+                $filePath .= $value['path'].$c;
+            }
         }
 
         if (!empty($arResFiles['errors'])){
-
+            $resError = 'Нектороые файлы не были записаны: ';
+            $count = count($arResFiles['errors']) - 1;
+            foreach ($arResFiles['errors'] as $key => $value) {
+                $c = $key == $count ? '' : '<br>';
+                $resError .= $value.$c;
+            }
         }
-        // $data['url_files'] = ImageService::getNewPhotoPath($request, 'url_files', config('filesystems.img.works'));
+
+        $data['url_files'] = $filePath;
 
         $data['slug'] = Str::slug($data['title'], '_', 'ru');
 
@@ -108,7 +84,11 @@ class ExampleWorkController extends Controller
 
         if ($res->wasRecentlyCreated){
             self::$response = __('Данные успешно созданы');
+            if (isset($resError)){
+                self::$error = $resError;
+            }
         } else {
+            // delete created uploading files
             self::$success = false;
             self::$error = __('Запись с данным заголовком уже есть в БД');
         }
@@ -160,6 +140,39 @@ class ExampleWorkController extends Controller
         } else {
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
+    }
+
+    public function filterByWork($query, $data){
+        return $query->where('title', 'like', '%'.$data.'%')
+                ->orWhere('description', 'like', '%'.$data.'%')
+                ->orWhere('url_work', 'like', '%'.$data.'%')
+                ->orWhere('slug', 'like', '%'.$data.'%');
+    }
+
+    public function filterByProfile($query, $data){
+
+        $arUsersId = $this->getUsersByLikeName($data);
+        $arUsersId = !empty($arUsersId) ? $arUsersId : [0];
+
+        return $query->whereIn('user_id', $arUsersId);
+    }
+
+    public function getUsersByLikeName(string $data) : array{
+
+        $userFinder = User::query()
+            ->where('name', 'like', '%'.$data.'%')
+            ->orWhere('email', 'like', '%'.$data.'%')
+            ->get();
+
+        $arUsersId = [];
+
+        foreach($userFinder as $user){
+            if ($user->role !== 'admin'){
+                $arUsersId[] = $user->id;
+            }
+        }
+
+        return $arUsersId;
     }
 
 }

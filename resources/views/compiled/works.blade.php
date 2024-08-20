@@ -34,9 +34,13 @@
                     </a>
                     @if (!empty($work->url_files))
                         <div class="works_gallery">
-                            @foreach(explode(',', $work->url_files) as $filesPath)
-                                <img src="{{ config('filesystems.img.works').trim($filesPath) }}" class="{{ $imgclass }}">
-                            @endforeach
+                            @php
+                                foreach(explode(',', $work->url_files) as $filesPath){
+                                    if (is_image($filesPath)){
+                                        echo '<img src="'. config('filesystems.clients.works').trim($filesPath).'" class="'.$imgclass.'">';
+                                    }
+                                }
+                            @endphp
                         </div>
                     @endif
                     <div class="addition_info">

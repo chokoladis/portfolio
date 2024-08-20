@@ -22,6 +22,7 @@ html{
     justify-content: space-between;
     overflow: hidden;
     height: 190px;
+    cursor: pointer;
 
     // .border{
     //     position: absolute;
@@ -50,6 +51,7 @@ html{
             display: block; 
             -webkit-box-orient: vertical; 
             overflow: hidden; 
+            cursor: auto;
         }
 
         .link{
