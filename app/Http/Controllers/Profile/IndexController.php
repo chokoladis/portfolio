@@ -13,8 +13,9 @@ use App\Services\ImageService;
 use App\Http\Requests\Profile\UpdateImgRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Controllers\WorkersController;
+use App\Http\Requests\Profile\ChangeUserInfoRequest;
 use App\Http\Requests\Profile\WorksRequest;
-
+use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
@@ -112,8 +113,17 @@ class IndexController extends Controller
 
     }
 
-    public function changeUserInfo(){
+    public function changeUserInfo(ChangeUserInfoRequest $request){
 
-        // Hash::make
+        $data = $request->validated();
+        
+        if ($data['password']){
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        $user = User::query()->where('id', auth()->id())->first();
+        $user->update($data);
+
+        return redirect()->route('profile.index');
     }
 }
