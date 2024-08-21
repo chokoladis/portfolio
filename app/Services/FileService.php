@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 
 class FileService
 {
-    const ACCEPT_FILE_SIZE = 15728640; // bites
+    const ACCEPT_FILE_SIZE = 15728640; // bytes
     const LIMIT_FILES = 5;
 
     private UploadedFile $file;
@@ -166,6 +166,7 @@ class FileService
 
         try {
             $root = public_path() . $this->currentDir;
+            $ext = strtolower($this->file->getClientOriginalExtension());
 
             $salt = auth()->user()->id . '_' . time();
 
@@ -173,17 +174,18 @@ class FileService
             $arMime = explode('/', $mime);
 
             $file_name = md5($salt . '_' . $this->file->getClientOriginalName());
-
             $subdir = substr($file_name, 0, 3);
 
             // temp check
-            $tempPath = 'temp/'.$subdir. $file_name. '.' .$this->file->getClientOriginalExtension();
+            $fullTempPath = $root. 'temp/'.$subdir.'/'. $file_name. '.' .$ext;
 
-            $tempStore = $this->file->move($root.'temp/'.$subdir, $file_name. '.' .$this->file->getClientOriginalExtension());
+            if (!is_dir($root.'temp/')){
+                mkdir($root.'temp/', 0755);
+            }
 
-            Log::alert($tempStore);
+            $this->file->move($root.'temp/'.$subdir, $file_name. '.' .$ext);
 
-            $folder = public_path() . $this->currentDir  . $subdir;
+            $folder = public_path() . $this->currentDir  . $subdir.'/';
 
             if (!is_dir($folder)) {
                 mkdir($folder, 0755);
@@ -191,39 +193,36 @@ class FileService
 
             if ($arMime[0] === 'video'){
 
-                $file_name = $this->compressVideo($tempPath, $this->currentDir, $folder, $file_name, $this->file)
-                    ?? mb_substr($file_name, 0, 16) . '.' . $this->file->getClientOriginalExtension();
+                $file_name = $this->compressVideo($fullTempPath, $folder, $file_name, $this->file)
+                    ?? mb_substr($file_name, 0, 16) . '.' . $ext;
 
-            } elseif($arMime[0] === 'image'){
+            } elseif($arMime[0] === 'image' && $ext !== 'webp'
+                || ($ext === 'webp' && $this->file->getSize() > 300000)){ // webp size > 300kb
 
-                $file_name = $this->compressImage($tempPath, $this->currentDir, $folder, $file_name, $this->file)
-                    ?? mb_substr($file_name, 0, 16) . '.' . $this->file->getClientOriginalExtension();
+                $file_name = $this->compressImage($fullTempPath, $folder, $file_name, $this->file)
+                    ?? mb_substr($file_name, 0, 16) . '.' . $ext;
 
             } else {
-                $file_name = mb_substr($file_name, 0, 16) . '.' . $this->file->getClientOriginalExtension();
+                $file_name = mb_substr($file_name, 0, 16) . '.' . $ext;
             }
 
             return ['subdir' => $subdir, 'file_name' => $file_name];
         } catch (\Throwable $th) {
-            throw $th;
+            Log::error($th, ['function' => 'preparationSave']);
+            die;
+            // throw $th;
         }
     }
 
-    public static function compressImage(string $tempPath, string $currDir, string $folder_path, string $file_name, UploadedFile $file){
-
-        $root = public_path() . $currDir;
+    public static function compressImage(string $fullTempPath, string $folder_path, string $file_name, UploadedFile $file){
 
         $file_name = mb_substr($file_name, 0, 16) . '.webp';
         $fullPath = $folder_path.$file_name;
 
-        dump($tempPath);
-        dump($file);
-        // dump($file->getRealPath());
-
         try{
-            $exec = exec('magick '.$root. $tempPath.' -quality 20 '.$root. $fullPath);
+            $exec = exec('magick '.$fullTempPath.' -quality 80% '.$fullPath);
 
-            Log::error($exec);
+            // Log::warning($exec);
 
             return $file_name;
 
@@ -233,22 +232,15 @@ class FileService
         }
     }
 
-    public static function compressVideo(string $tempPath, string $currDir, string $folder_path, string $file_name, UploadedFile $file){
-
-        $root = public_path() . $currDir;
+    public static function compressVideo(string $fullTempPath, string $folder_path, string $file_name, UploadedFile $file){
 
         $file_name = mb_substr($file_name, 0, 16) . '.' . $file->getClientOriginalExtension();
         $fullPath = $folder_path.$file_name;
-        
-        dump($tempPath);
-        dump($root. $tempPath);
-        dump($fullPath);
-        // dump($file->getRealPath());
 
         try {
-            $exec = exec("ffmpeg -i ".$root. $tempPath." -b:v 400 $fullPath");
+            $exec = exec('ffmpeg -i '.$fullTempPath.' -b 800k '. $fullPath);
             
-            Log::error($exec);
+            // Log::warning($exec);
 
             return $file_name;
 

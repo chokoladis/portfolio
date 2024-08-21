@@ -100,7 +100,7 @@ class SearchController extends Controller
         return view('search', compact('result', 'total_count', 'pages'));
     }
 
-    public function checkPermission(string $model){
+    static public function checkPermission(string $model){
 
         if (auth()->id() && auth()->user()->email_verified_at){
             return true;

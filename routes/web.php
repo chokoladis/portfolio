@@ -34,6 +34,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 Route::get('/', 'IndexController@index')->name('index');
                 Route::post('/', 'IndexController@update')->name('update');
 
+                Route::post('/change_user_info', 'IndexController@changeUserInfo')->name('change_user_info');
                 Route::post('/change_avatar', 'IndexController@changeAvatar')->name('change_avatar');
                 Route::post('/delete', 'IndexController@delete')->name('delete');
 
@@ -128,6 +129,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
 
 
 Auth::routes();
+
+Route::get('/api/google_auth.php', [ App\Services\AuthService::class, 'googleAuth' ])->name('google_auth');
+Route::get('/api/yandex_auth.php', [ App\Services\AuthService::class, 'yandexAuth' ])->name('yandex_auth');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();

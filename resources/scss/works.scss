@@ -172,5 +172,21 @@ html{
         max-height: 400px;
         width: 100%;
         object-fit: cover;
-    }    
+    }
+    
+    .work-files{
+        
+        > div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            b{
+                text-align: center;
+                width: 80%;
+                margin: 0 auto;
+                display: block;
+            }
+        }
+    }
 }

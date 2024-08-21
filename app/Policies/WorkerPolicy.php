@@ -8,28 +8,17 @@ use Illuminate\Auth\Access\Response;
 
 class WorkerPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
+    public function view(User $user){
+        $currentUser = $user->id && $user->email_verify_at;
+        $admin = $user->role == 'admin';
+        return $currentUser || $admin;
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Workers $workers): bool
+    public function store(User $user): bool
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        //
+        $currentUser = $user->id && $user->email_verify_at;
+        $admin = $user->role == 'admin';
+        return $currentUser || $admin;
     }
 
     /**

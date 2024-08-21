@@ -29,16 +29,9 @@ class IndexController extends Controller
         $works = $this->userWorks($userId);
         $worker = $this->userWorker($userId);
 
-        if (!$worker){
-            session([
-                'status' => __('warning'),
-                'msg' => __('Профиль не найден, вы можете создать его на текущей странице.')
-            ]);
+        $isEmptyProfile = !$worker ? true : false;
 
-            return redirect()->route('workers.index');
-        }
-
-        return view('profile.index', compact('worker', 'works'));
+        return view('profile.index', compact('worker', 'works', 'isEmptyProfile'));
     }
 
     public static function userWorks(int $userId){
@@ -117,5 +110,10 @@ class IndexController extends Controller
             return responseJson(false, '', __('Произошла ошибка при удалении'));
         }
 
+    }
+
+    public function changeUserInfo(){
+
+        // Hash::make
     }
 }

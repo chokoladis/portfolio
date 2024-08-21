@@ -112,4 +112,17 @@ return [
 
     'password_timeout' => 10800,
 
+    'socials' => [
+        'google' => [
+            'redirect_uri' => env('GOOGLE_AUTH_URL'), 
+            'client_id' => env('GOOGLE_AUTH_CLIENT_ID'),
+            'client_secret' => env('GOOGLE_AUTH_SECRET')
+        ],
+        'yandex' => [
+            'redirect_uri' => env('YANDEX_AUTH_URL'), 
+            'client_id' => env('YANDEX_AUTH_CLIENT_ID'),
+            'client_secret' => env('YANDEX_AUTH_SECRET')
+        ]
+    ],
+
 ];

@@ -847,3 +847,37 @@ ul,li,p{
         color: var(--main-clr-text-hv);
     }
 }
+
+.services_auth{
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 10px;
+
+    p{
+        margin: 0;
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .services{
+        display: flex;
+        // justify-content: space-between;
+        align-items: center;
+        // margin-left: 10px;
+
+
+        a{
+            margin-right: 5px;
+
+            img{
+                height: 32px;
+                object-fit: contain;
+            }
+
+            &:last-of-type{
+                margin: 0;
+            }
+        }
+    }
+}

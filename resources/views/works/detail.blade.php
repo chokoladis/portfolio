@@ -10,7 +10,7 @@
 @endpush
 
 @php   
-    if($worker = $work->user->workers){
+    if($worker = $work?->user?->workers){
         $linkToWorker = route('workers.detail', $worker->code);
     } else {
         $linkToWorker = '#';
@@ -24,22 +24,32 @@
         $link = $work->url_work;
     } else {
         $link = 'https://'.$work->url_work;
-    }    
+    }
+
+    foreach ($arFilesPath as $path) {
+        if (is_image($path)){
+            $cover = config('filesystems.clients.works').trim($path);
+            break;
+        }
+    }
+
+    $cover = $cover ?? '';
+
+
 @endphp
 @section('content')
     
-    <main>
+    <main class="work-detail">
         <div class="container">
             
-            <div class="work-detail uk-card uk-card-default" data-id="{{ $work->slug }}">
+            <div class="uk-card uk-card-default" data-id="{{ $work->slug }}">
                 <div class="uk-card-media-top">
-                    @if (!empty($arFilesPath))
-                        <img src="/storage/works/img/{{ trim($arFilesPath[0]) }}">
+                    @if (!empty($cover))
+                        <img src="{{ $cover }}">
                     @endif
                 </div>
                 <div class="uk-card-body">
-                    
-                    <a href="{{ $linkToWorker }}" class="uk-card-badge uk-label">{{ $work->user->fio }}</a>
+                    <a href="{{ $linkToWorker }}" class="uk-card-badge uk-label">{{ $work->user?->fio ?? '*no-user*' }}</a>
                     <h3 class="uk-card-title">{{ $work->title }}</h3>
                     <a href="{{ $link }}">{{ $work->url_work }}</a>
                     <p>{{ $work->description }}</p>
@@ -58,11 +68,17 @@
             </div>
 
             @if (!empty($arFilesPath))
-                <div class="uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-margin-medium-top" uk-grid uk-lightbox="animation: slide">
-                    @foreach ($arFilesPath as $path)
+                <div class="work-files uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-margin-medium-top" uk-grid uk-lightbox="animation: slide">
+                    @foreach($arFilesPath as $path)
                         <div>
-                            <a class="uk-inline" href="/storage/works/img/{{ trim($path) }}">
-                                <img src="/storage/works/img/{{ trim($path) }}" width="1800" height="1200" alt="Поломанна картинка 0-о">
+                            <a class="uk-inline" href="{{ config('filesystems.clients.works').trim($path) }}">
+                                @if (is_image($path))
+                                    <img src="{{ config('filesystems.clients.works').trim($path) }}" width="1800" height="1200" alt="Поломанна картинка 0-о">
+                                @elseif (is_video($path))
+                                    <video src="{{ config('filesystems.clients.works').trim($path) }}" controls preload="none"></video>
+                                @else
+                                    <b>Файл - {{ config('filesystems.clients.works').trim($path) }}</b>
+                                @endif
                             </a>
                         </div>
                     @endforeach

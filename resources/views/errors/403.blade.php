@@ -2,8 +2,8 @@
 
 @php
     $arImg = [
-        '/storage/general/403_1.gif',
-        '/storage/general/403_2.png',
+        '/storage/general/errors/403_1.gif',
+        '/storage/general/errors/403_2.png',
     ];
 
     $randomImg = $arImg[rand(0,1)];

@@ -31,6 +31,8 @@ class WorkersController extends Controller
      */
     public function index(FilterRequest $request)
     {
+        $this->authorize('view');
+
         $workerById = null;
         if (auth()->user()){
             $userId = auth()->id();
@@ -114,6 +116,8 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        $this->authorize('store');
+
         $data = $request->validated();
     
         $data['socials'] = isset($data['socials']) ? $this->getSocials($data['socials']) : null;
@@ -157,6 +161,8 @@ class WorkersController extends Controller
 
     public function detail(Workers $worker)
     {
+        $this->authorize('view');
+
         Event(New ViewsEvent($worker));
 
         $works = $worker->getWorks();
