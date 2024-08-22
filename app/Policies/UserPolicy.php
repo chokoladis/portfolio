@@ -5,17 +5,10 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Workers;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class UserPolicy
 {
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
-
     /**
      * Determine whether the user can view the model.
      */
@@ -38,9 +31,9 @@ class UserPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function store(User $user): bool
     {
-        //
+        
     }
 
     /**

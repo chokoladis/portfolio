@@ -4,6 +4,7 @@ import 'jquery-mask-plugin';
 import {Helper} from './variables';
 
 
+// js_send_accept_email todo
 // todo 
 // GenerateRoutesForJavascript
 $('.js-phone-mask').mask('+9 999 9999 999');
@@ -78,6 +79,8 @@ $(function(){
 
             } else if (formId === 'menu_edit'){
                 action = '/admin/menu/'+itemId.val()+'/update/';
+            // } else if (formId === 'worker_add'){
+
             } else {
                 return;
             }

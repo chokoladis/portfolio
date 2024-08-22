@@ -9,7 +9,11 @@ use App\Http\Requests\Workers\StoreRequest;
 use App\Http\Requests\Workers\FilterRequest;
 use App\Http\Controllers\HelperController;
 use App\Models\Workers_stats;
+use App\Services\FileService;
 use App\Services\ImageService;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 
@@ -31,7 +35,9 @@ class WorkersController extends Controller
      */
     public function index(FilterRequest $request)
     {
-        $this->authorize('view');
+        if (!Gate::allows('view', Workers::class)){
+            abort(403);
+        }
 
         $workerById = null;
         if (auth()->user()){
@@ -116,7 +122,9 @@ class WorkersController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $this->authorize('store');
+        if (!Gate::allows('store', Workers::class)){
+            abort(403);
+        }
 
         $data = $request->validated();
     
@@ -124,7 +132,20 @@ class WorkersController extends Controller
         $phone = $this->getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
-        $data['url_avatar'] = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+        $fileService = new FileService($request, 'photo', config('filesystems.clients.workers'));
+        $arResFiles = $fileService->handlerFiles();
+
+        Log::debug('test', ['arResFiles' => $arResFiles]);
+
+        if (!empty($arResFiles['file_saved'])){
+            $filePath = $arResFiles['file_saved'][0]['path'];
+        } elseif(!empty($arResFiles['errors'])) {
+            $error = $arResFiles['errors'][0];
+        } else {
+            $error = 'Не предвиденная ошибка';
+        }
+
+        $data['url_avatar'] = $filePath;
 
         unset($data['photo']);
 
@@ -137,6 +158,9 @@ class WorkersController extends Controller
 
         if ($res->wasRecentlyCreated){
             self::$response = __('Профиль Workers создан');
+            if (isset($error) && $error){
+                self::$error = __('Аватарку не удалось сохранить - '. $error);
+            }
         } else {
             self::$success = false;
             self::$error = __('Профиль Workers с такими данными уже есть в БД');
@@ -161,7 +185,9 @@ class WorkersController extends Controller
 
     public function detail(Workers $worker)
     {
-        $this->authorize('view');
+        if (!Gate::allows('view', Workers::class)){
+            abort(403);
+        }
 
         Event(New ViewsEvent($worker));
 
@@ -183,8 +209,8 @@ class WorkersController extends Controller
 
     public function getTransliteName(){
 
-        $user = User::find(auth()->user()->id, 'name');
-        $code = Str::slug($user->name, '_', 'ru');
+        $user = User::find(auth()->user()->id, 'fio');
+        $code = Str::slug($user->fio, '_', 'ru');
         return $code;
     }
 }

@@ -21,7 +21,7 @@ $(function(){
 
                 } else {
                     $('#response').show();
-                    $('#response .messsage').html(data.error+"<br/>");
+                    $('#response .message').html(data.error+"<br/>");
                 }
             }
         });
@@ -73,7 +73,7 @@ $(function(){
                     UIkit.modal('#md-work_edit').show();
                 } else {
                     UIkit.modal('#md-response').show();
-                    UIkit.modal('#md-response .messsage').html('Ошибка при получении данных <br/>');
+                    UIkit.modal('#md-response .message').html('Ошибка при получении данных <br/>');
                 }
 
             },
@@ -129,7 +129,7 @@ $(function(){
 
         if (updateJson.success){
             
-            $('#md-response .messsage').text(updateJson.result);
+            $('#md-response .message').text(updateJson.result);
             UIkit.modal('#md-response').show();
 
             Helper.updateWorksHtml();

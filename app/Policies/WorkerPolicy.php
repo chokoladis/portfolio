@@ -5,18 +5,19 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Workers;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Log;
 
 class WorkerPolicy
 {
     public function view(User $user){
-        $currentUser = $user->id && $user->email_verify_at;
+        $currentUser = $user->id && $user->email_verified_at;
         $admin = $user->role == 'admin';
         return $currentUser || $admin;
     }
 
     public function store(User $user): bool
     {
-        $currentUser = $user->id && $user->email_verify_at;
+        $currentUser = $user->id && $user->email_verified_at;
         $admin = $user->role == 'admin';
         return $currentUser || $admin;
     }

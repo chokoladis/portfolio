@@ -125,6 +125,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     // ajax requests
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
     Route::post('/ajax/feedback', 'FeedbackController@store' )->name('feedback.store');
+    // Route::post('/ajax/acceptEmail', 'ProfileController@acceptEmail' )->name('workers.acceptEmail');
+    
 });
 
 
@@ -132,6 +134,12 @@ Auth::routes();
 
 Route::get('/api/google_auth.php', [ App\Services\AuthService::class, 'googleAuth' ])->name('google_auth');
 Route::get('/api/yandex_auth.php', [ App\Services\AuthService::class, 'yandexAuth' ])->name('yandex_auth');
+
+Route::get('/profile/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::post('/profile/verify/resend', [ App\Http\Controllers\Auth\VerificationController::class , 'resend' ])->middleware('auth')->name('verification.resend');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();

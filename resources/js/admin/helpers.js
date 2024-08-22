@@ -48,12 +48,12 @@ class Helpers {
             errorBlock.hide();
         }
     };
-    showError(input, messsage, f_show = true){ // $(input)
+    showError(input, message, f_show = true){ // $(input)
 
         let parent = input.parent();
         var errorBlock = parent.find('p.error');
 
-        if (!f_show || messsage == ''){
+        if (!f_show || message == ''){
             input.removeClass('uk-form-danger');
 
             if (errorBlock.length){
@@ -64,9 +64,9 @@ class Helpers {
             input.addClass('uk-form-danger');
 
             if (errorBlock.length){
-                errorBlock.text(messsage);
+                errorBlock.text(message);
             } else {
-                errorBlock = parent.append('<p class="error uk-text-danger">'+messsage+'</p>');
+                errorBlock = parent.append('<p class="error uk-text-danger">'+message+'</p>');
             }
             errorBlock.show();
         }

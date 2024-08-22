@@ -22,6 +22,7 @@
     if ($user != null){
         $role = $user->role;
     }
+    // todo rename to lang
 @endphp
 
 

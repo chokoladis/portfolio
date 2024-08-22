@@ -32,7 +32,7 @@ $(function(){
                     tr.remove();
 
                 } else {
-                    $('#response .messsage').html(data.error+"<br/>");
+                    $('#response .message').html(data.error+"<br/>");
                     UIkit.modal('#md-response').show();
                 }
             }
@@ -63,7 +63,7 @@ $(function(){
                     tr.remove();
 
                 } else {
-                    $('#response .messsage').html(data.error+"<br/>");
+                    $('#response .message').html(data.error+"<br/>");
                     UIkit.modal('#md-response').show();
                 }
             }
@@ -86,7 +86,7 @@ $(function(){
                 if (data.success){
                     tr.remove();
                 } else {
-                    $('#response .messsage').html(data.error+"<br/>");
+                    $('#response .message').html(data.error+"<br/>");
                     UIkit.modal('#md-response').show();
                 }
             }
@@ -127,7 +127,7 @@ $(function(){
 
         if (updateJson.success){
             
-            $('#md-response .messsage').text(updateJson.result);
+            $('#md-response .message').text(updateJson.result);
             UIkit.modal('#md-response').show();
 
             Helper.updateWorksHtmlToAdmin();
@@ -187,7 +187,7 @@ $(function(){
 
         if (response.success){
             
-            $('#md-response .messsage').text(response.result);
+            $('#md-response .message').text(response.result);
             UIkit.modal('#md-response').show();
 
             Helper.updateWorksHtmlToAdmin();
