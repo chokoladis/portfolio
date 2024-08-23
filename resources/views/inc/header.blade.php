@@ -47,10 +47,7 @@
                             <span></span>
                         </div>
                         <x-main-menu-li route="{{ route('home') }}">
-                            {{ __('Главная') }}
-                        </x-main-menu-li>
-                        <x-main-menu-li route="{{ route('about') }}">
-                            {{ __('О проекте') }}
+                            {{ trans('menu.home') }}
                         </x-main-menu-li>
 
                         <x-main-menu-list-active />
@@ -60,7 +57,7 @@
                                 <input type="search" name="search" minlength="3" maxlength="40" size="30"
                                     value="{{ Request::get('search') ? Request::get('search') : '' }}" autocomplete="on"
                                     required>
-                                <input type="submit" class="uk-button uk-button-search" value="Поиск">
+                                <input type="submit" class="uk-button uk-button-search" value="{{ trans('menu.search') }}">
                             </form>
                         </li>
 
@@ -68,13 +65,13 @@
                             @guest
                                 @if (Route::has('login'))
                                     <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>
-                                        {{ __('Вход') }}
+                                        {{ trans('menu.login') }}
                                     </x-main-menu-li>
                                 @endif
 
                                 @if (Route::has('register'))
                                     <x-main-menu-li route="{{ route('register') }}" a_class='nav-link'>
-                                        {{ __('Регистрация') }}
+                                        {{ trans('menu.registration') }}
                                     </x-main-menu-li>
                                 @endif
                             @else
@@ -84,10 +81,10 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a>
+                                        <a class="dropdown-item" href="{{ route('profile.index') }}">{{ trans('menu.profile') }}</a>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            {{ __('Выйти') }}
+                                            {{ trans('menu.quit') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -114,10 +111,7 @@
                 
                 <ul>
                     <x-main-menu-li route="{{ route('home') }}">
-                        {{ __('Главная') }}
-                    </x-main-menu-li>
-                    <x-main-menu-li route="{{ route('about') }}">
-                        {{ __('О проекте') }}
+                        {{ trans('menu.home') }}
                     </x-main-menu-li>
     
                     <x-main-menu-list-active />
@@ -126,13 +120,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>
-                                    {{ __('Вход') }}
+                                    {{ trans('menu.login') }}
                                 </x-main-menu-li>
                             @endif
 
                             @if (Route::has('register'))
                                 <x-main-menu-li route="{{ route('register') }}" a_class='nav-link'>
-                                    {{ __('Регистрация') }}
+                                    {{ trans('menu.registration') }}
                                 </x-main-menu-li>
                             @endif
                         @endguest

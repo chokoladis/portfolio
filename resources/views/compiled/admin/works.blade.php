@@ -32,7 +32,11 @@
                             {{  $work->id  }} | {{  $work->slug  }}
                         </td>
                         <td>
-                            <a href="{{ route('admin.users.edit', $work->user ) }}">{{ $work->user->fio }}</a>
+                            @if($work->user)
+                                <a href="{{ route('admin.users.edit', $work->user->id ) }}">{{ $work->user->fio }}</a>
+                            @else
+                                <a href="#">{{ __('*empty*') }}</a>
+                            @endif
                         </td>
                         <td class="js_title_work">
                             {{  $work->title  }}

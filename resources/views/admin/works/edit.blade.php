@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @php
-    use App\Services\ImageService;
+    use App\Services\FileService;
 @endphp
 
 @push('styles')
@@ -35,7 +35,14 @@
                                     <span>{{ __('Картинка - '.$key+1) }}</span>
                                 </label>
                                 <input type="hidden" name="url_files[{{ $key }}]" value="{{ trim($filePath) }}">
-                                <img src="{{ '/storage/works/img/'.trim($filePath) }}" alt="">
+
+                                @if (is_image($filePath))
+                                    <img src="{{ config('filesystems.clients.works').trim($filePath) }}" alt="Поломанна картинка 0-о">
+                                @elseif (is_video($filePath))
+                                    <video src="{{ config('filesystems.clients.works').trim($filePath) }}" controls preload="none"></video>
+                                @else
+                                    <b>Файл - {{ config('filesystems.clients.works').trim($filePath) }}</b>
+                                @endif
                             </div>                                
                         @endforeach
                     </div>
@@ -44,8 +51,8 @@
                     
                     <label for="photo">
                         <p>{{ __('Ссылки на картинки/скриншоты') }}</p>
-                        <sub class="mt-2 mb-2">{{ __('* Выберите файлы размером не более '.round(ImageService::ACCEPT_FILE_SIZE_MB).' мб')  }}</sub>
-                        <input type="file" name="photo[]" id="photo" multiple="multiple" accept="image/*">
+                        <sub class="mt-2 mb-2">{{ __('* Выберите файлы размером не более '.round(FileService::ACCEPT_FILE_SIZE_MB).' мб')  }}</sub>
+                        <input type="file" name="photo[]" id="photo" multiple="multiple">
                         
                         <button class="uk-button uk-button-small uk-button-upload" type="button" tabindex="-1">{{ __('Добавить') }}</button>
                     </label>

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name', 50);
-            $table->string('link', 100);
-            $table->string('role', 20)->default('user');
+            $table->string('link', 100)->unique();
+            $table->string('role', 20)->default('guest');
             $table->boolean('active')->default(1);
             $table->smallInteger('sort')->default(100);
             $table->softDeletes();

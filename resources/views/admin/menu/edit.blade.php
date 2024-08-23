@@ -22,17 +22,21 @@
         
                 <div class="uk-margin">
                     <input class="uk-input" type="text" name="name"
-                        placeholder="{{ __('Название') }}" value="{{ $menuNav->name }}">
+                        placeholder="{{ __('Название') }}" value="{{ trans('menu.'.$menuNav->name) }}">
                 </div>
                 <div class="uk-margin">
                     <input class="uk-input" type="text" name="link" 
                         placeholder="{{ __('Ссылка') }}" value="{{ $menuNav->link }}">
                 </div>
                 <div class="uk-margin">
+                    
                     <select class="uk-select" aria-label="Select" name="role">
-                        @foreach (MenuNav::LIST_ROLE as $code)
-                            <option>{{ $code }}</option>
-                        @endforeach
+                        @php
+                            foreach (MenuNav::LIST_ROLE as $code){
+                                $select = $menuNav->role === $code ? 'selected' : '';
+                                echo '<option '.$select.'>'. $code .'</option>';
+                            }
+                        @endphp
                     </select>
                 </div>
                 <div class="uk-margin">

@@ -52,7 +52,7 @@ Breadcrumbs::for('admin.menu', function ($trail) {
 });
 Breadcrumbs::for('admin.menu.edit', function ($trail, $menuNav) {
     $trail->parent('admin.menu');
-    $trail->push( __('Пункт - ').$menuNav->name, route('admin.menu.edit', $menuNav));
+    $trail->push( __('Пункт - ').trans('menu.'.$menuNav->name), route('admin.menu.edit', $menuNav));
 });
 Breadcrumbs::for('admin.menu.add', function ($trail) {
     $trail->parent('admin.menu');
@@ -97,4 +97,8 @@ Breadcrumbs::for('admin.feedback', function ($trail) {
 Breadcrumbs::for('admin.feedback.show', function ($trail, $feedback) {
     $trail->parent('admin.feedback');
     $trail->push( __('Заявка от ').$feedback->email, route('admin.feedback.show', $feedback));
+});
+Breadcrumbs::for('admin.feedback.recycle', function ($trail) {
+    $trail->parent('admin.feedback');
+    $trail->push( __('Корзина'), route('admin.feedback.recycle'));
 });

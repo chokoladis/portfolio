@@ -47,7 +47,7 @@
             <div class="content">
                 <div class="title">
                     <i class="fas {{ $imgRole }}"></i>
-                    <h4>{{ $item['name'] }}</h4>
+                    <h4>{{ trans('menu.'.$item['name']) }}</h4>
                 </div>                        
                 <span>{{ $item['link'] }}</span>
             </div>

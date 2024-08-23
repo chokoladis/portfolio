@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'works',
                 'link' => '/works',
-                'role' => 'user',
+                'role' => 'guest',
                 'active' => true,
                 'sort' => 500,
             ]

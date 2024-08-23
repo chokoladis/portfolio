@@ -222,33 +222,6 @@ $(function(){
         urlParse.searchParams.set('per_page', val);
         location.href = urlParse.href;
     });
-
-
-    $(document).on('click','.js_menu_del', function(){
-
-        let parent = $(this).parents('.link');
-        let menuId = parent.attr('data-id');
-
-        $.ajax({
-            url: '/admin/menu/'+menuId+'/delete/',
-            method: 'GET',
-            dataType: 'json',
-            success: function(data){
-
-                if (data.success){
-                    
-                    $('.links_list [data-id="'+menuId+'"]').remove();
-                    
-                    updMenuAdmin();
-
-                } else {
-                    $('#response').show();
-                    $('#response .message').html(data.error+"<br/>");
-                }
-            }
-        });
-
-    });
     
     $(document).on('click','.header-filter .btn', function(){
 

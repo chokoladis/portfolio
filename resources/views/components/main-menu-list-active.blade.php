@@ -18,10 +18,7 @@
     });
     
     $user = auth()->user();
-    $role = 'guest';
-    if ($user != null){
-        $role = $user->role;
-    }
+    $role = $user != null ? $user->role : 'guest';
 @endphp
 
 
@@ -38,7 +35,7 @@
         if ($viewLink){
             @endphp
                 <x-main-menu-li route="{{ $item['link'] }}">
-                    {{ $item['name'] }}
+                    {{ trans('menu.'.$item['name']) }}
                 </x-main-menu-li>
             @php
         }            

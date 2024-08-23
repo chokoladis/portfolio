@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 class FileService
 {
     const ACCEPT_FILE_SIZE = 15728640; // bytes
+    const ACCEPT_FILE_SIZE_MB = self::ACCEPT_FILE_SIZE/1048576;
     const LIMIT_FILES = 5;
 
     private UploadedFile $file;

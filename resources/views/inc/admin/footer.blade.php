@@ -18,6 +18,7 @@
   <script src="{{ asset('/dist/js/adminlte.js') }}"></script>
 
   @vite(['resources/js/app.js'])
+  @vite(['resources/js/admin/app.js'])
   @stack('scripts')
   @include('inc.modal.response')
   <!-- поменять проверку на ? -->

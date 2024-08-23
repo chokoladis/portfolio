@@ -18,10 +18,7 @@
     });
     
     $user = auth()->user();
-    $role = 'guest';
-    if ($user != null){
-        $role = $user->role;
-    }
+    $role = $user != null ? $user->role : 'guest';
     // todo rename to lang
 @endphp
 
@@ -37,7 +34,7 @@
             }
         @endphp
         @if ($viewLink){
-            <li class='animated'><a href="{{ $item['link'] }}">{{ $item['name'] }}</a></li>
+            <li class='animated'><a href="{{ $item['link'] }}">{{ trans('menu.'.$item['name']) }}</a></li>
         @endif
     @endforeach
 
