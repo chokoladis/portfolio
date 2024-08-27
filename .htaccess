@@ -1,0 +1,12 @@
+# AuthType Basic
+# AuthName "Protected Area"
+# AuthUserFile /var/www/u2774107/data/protected/.htpasswd
+# Require valid-user
+
+RewriteEngine on 
+RewriteRule ^$ public/ [L] 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteRule ((?s).*) public/$1 [L]
+
+RewriteCond %{THE_REQUEST} ^.*/index.php 
+RewriteRule (.*) http://%{HTTP_HOST} [R=301,L]

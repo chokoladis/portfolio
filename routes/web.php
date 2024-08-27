@@ -121,10 +121,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
         });
     });
 
+    // donation
+
     // ajax requests
     Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
     Route::post('/ajax/feedback', 'FeedbackController@store' )->name('feedback.store');
-    // Route::post('/ajax/acceptEmail', 'ProfileController@acceptEmail' )->name('workers.acceptEmail');
     
 });
 

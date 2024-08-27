@@ -15,7 +15,7 @@
                         
                     </div>
                     <div class="copyrithg">
-                        <br>© you-profile.online, 2023-2024
+                        <br>© you-portfolio.online, 2023-2024
                     </div>
                 </div>
             </footer>
