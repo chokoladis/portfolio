@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Mail\ServiceAuthMail;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AuthService
@@ -27,6 +29,8 @@ class AuthService
                     ->first();
 
                 if (!$user){
+                    $profilePhoto = isset($userData['picture']) ? $userData['picture'] : '';
+
                     $password = Str::random(12);
 
                     $newUser = User::create([
@@ -34,11 +38,13 @@ class AuthService
                         'email' => $userData['email'],
                         'password' => $password,
                         'active' => 1,
-                        'profile_photo_path' => $userData['picture'],
+                        'profile_photo_path' => $profilePhoto,
                     ]);
 
                     $user = $newUser;
-                    // send psw on email
+                    
+                    Mail::to($userData['email'])
+                        ->send(new ServiceAuthMail($user));
                 }
 
                 Auth::login($user);
@@ -122,17 +128,22 @@ class AuthService
                     ->first();
 
                 if (!$user){
+
+                    $profilePhoto = isset($userData['default_avatar_id']) ? self::YANDEX_LINK_PICTURE.$userData['default_avatar_id'] : '';
+
                     $password = Str::random(12);
                     $newUser = User::create([
                         'fio' => $userData['real_name'],
                         'email' => $userData['default_email'],
                         'password' => $password,
                         'active' => 1,
-                        'profile_photo_path' => self::YANDEX_LINK_PICTURE.$userData['default_avatar_id'],
+                        'profile_photo_path' => $profilePhoto,
                     ]);
 
                     $user = $newUser;
-                    // send psw on email
+
+                    Mail::to($userData['default_email'])
+                        ->send(new ServiceAuthMail($user));
                 }
 
                 Auth::login($user);

@@ -101,7 +101,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'info@you-portfolio.online'),
-        'name' => env('MAIL_FROM_NAME', 'Admin'),
+        'name' => env('MAIL_FROM_NAME', 'Informator'),
     ],
 
     /*

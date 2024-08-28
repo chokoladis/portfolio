@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="author" content="chokoladis">
-        <meta name="keywords" content="{{ _('Создать портфолио, свое портфолио') }}">
+        <meta name="keywords" content="{{ _('Создать портфолио, свое портфолио, your portfolio, portfolio online, free service portfolio') }}">
         <meta name="description" content="{{ _('Создай свое портфолио бесплатно за 5 минут!') }}">
         <link rel="shortcut icon" href="/portfolioicon.png" type="image/x-png">
         
