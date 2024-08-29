@@ -5,7 +5,7 @@
 @else
     <div class="works_list">
         @foreach($works as $work)
-            @php 
+            @php
                 $addClass = (!empty($work->url_files))?' work_have_preview':'';
                 $imgclass = '';
 
