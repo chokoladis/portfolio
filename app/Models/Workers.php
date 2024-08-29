@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 use App\Models\User;
 use App\Models\Example_work;
+use Illuminate\Support\Facades\Log;
 
 class Workers extends Model
 {
@@ -93,17 +94,19 @@ class Workers extends Model
 
         self::updating(function($model){
 
-            $old_avatar = $model->getOriginal('url_avatar');
+            $old_avatar = $model->getOriginal('url_avatar');            
             $new_avatar = $model->url_avatar;
-            if ($new_avatar && $new_avatar != $old_avatar){
-                $real_path = public_path().config('filesystems.img.workers'). $old_avatar;
 
-                if ($old_avatar && file_exists($real_path)){
+            if ($new_avatar && $new_avatar != $old_avatar && $old_avatar){
+
+                $real_path = public_path().config('filesystems.clients.workers'). $old_avatar;
+                
+                if (file_exists($real_path)){
                     unlink($real_path);
                 }
 
                 $arPath = explode('/', $old_avatar);
-                $folder = public_path(config('filesystems.img.workers').$arPath[0]);
+                $folder = public_path(config('filesystems.clients.workers').$arPath[0]);
                 if (is_dir($folder)){
                     $countFiles = count(Storage::files($folder));
 
@@ -121,13 +124,13 @@ class Workers extends Model
 
                 $arPath = explode('/', $filePath);
 
-                $filePath = public_path(config('filesystems.img.workers').$filePath);
+                $filePath = public_path(config('filesystems.clients.workers').$filePath);
 
                 if (file_exists($filePath)){
                     unlink($filePath);
                 }
 
-                $folder = public_path(config('filesystems.img.workers').$arPath[0]);
+                $folder = public_path(config('filesystems.clients.workers').$arPath[0]);
                 if (is_dir($folder)){
                     $countFiles = count(Storage::files($folder));
 

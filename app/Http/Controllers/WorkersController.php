@@ -145,7 +145,7 @@ class WorkersController extends Controller
             $error = 'Не предвиденная ошибка';
         }
 
-        $data['url_avatar'] = $filePath;
+        $data['url_avatar'] = $filePath ?? null;
 
         unset($data['photo']);
 

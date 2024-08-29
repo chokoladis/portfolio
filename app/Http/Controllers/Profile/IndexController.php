@@ -15,6 +15,7 @@ use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Controllers\WorkersController;
 use App\Http\Requests\Profile\ChangeUserInfoRequest;
 use App\Http\Requests\Profile\WorksRequest;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
@@ -52,7 +53,15 @@ class IndexController extends Controller
     
         $userId = auth()->id();
 
-        $file_path = ImageService::getNewPhotoPath($request, 'url_avatar', config('filesystems.img.workers'));
+        $fileService = new FileService($request, 'url_avatar', config('filesystems.clients.workers'));
+        $arResFiles = $fileService->handlerFiles();
+        $file_path = '';
+
+        if (!empty($arResFiles['file_saved'])){
+            $file_path = $arResFiles['file_saved'][0]['path'];
+        } elseif (!empty($arResFiles['errors'])){
+            $resError = 'файл не был записан: '.$arResFiles['errors'][0];
+        }
 
         if ($file_path) {
 
@@ -69,10 +78,13 @@ class IndexController extends Controller
                 self::$success = false;
                 self::$error = __('Не удалось изменить аватарку');
             }
-            
         } else {
             self::$success = false;
-            self::$error = __('Не удалось задать новую аватарку');
+            if (!empty($arResFiles['errors'])){
+                self::$error = __('Не удалось задать новую аватарку - '.$arResFiles['errors'][0]);
+            } else {
+                self::$error = __('Не удалось задать новую аватарку');
+            }
         }
 
         return responseJson(self::$success, self::$response, self::$error);
@@ -117,8 +129,10 @@ class IndexController extends Controller
 
         $data = $request->validated();
         
-        if ($data['password']){
+        if (isset($data['password']) && $data['password']){
             $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
 
         $user = User::query()->where('id', auth()->id())->first();
