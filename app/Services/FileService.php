@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
@@ -192,6 +193,16 @@ class FileService
                 mkdir($folder, 0755);
             }
 
+            // todo
+            // Log::error('fileservice', ['file' => $this->file]);
+            
+            // $path = $this->file->getRealPath();
+            // Log::debug('path ', ['meess' => $path]);
+            // $size2 = Storage::disk('local')->size($file_name. '.' .$ext);
+            // $size = Storage::size($fullTempPath);
+            // Log::debug('size ', ['meess' => $size2]);
+            // Log::error('fileservice', ['file sieze' => $this->file->getSize()]);
+
             if ($arMime[0] === 'video'){
 
                 $file_name = $this->compressVideo($fullTempPath, $folder, $file_name, $this->file)
@@ -223,9 +234,7 @@ class FileService
         try{
             $exec = exec('magick '.$fullTempPath.' -quality 80% '.$fullPath);
 
-            // Log::warning($exec);
-
-            return $file_name;
+            return $exec ? $file_name : false;
 
         } catch (\Throwable $th) {
             Log::error($th);
@@ -241,9 +250,7 @@ class FileService
         try {
             $exec = exec('ffmpeg -i '.$fullTempPath.' -b 800k '. $fullPath);
             
-            // Log::warning($exec);
-
-            return $file_name;
+            return $exec ? $file_name : false;
 
         } catch (\Throwable $th) {
             Log::error($th);

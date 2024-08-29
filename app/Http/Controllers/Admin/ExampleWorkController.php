@@ -115,7 +115,7 @@ class ExampleWorkController extends Controller
 
         if ($request->hasFile('photo')){
             $url_files .= $url_files ? ',' : '';
-            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.works'));
         }
 
         if ($url_files){

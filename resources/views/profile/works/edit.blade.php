@@ -25,6 +25,7 @@
                         $columns = $work->getColumns(); 
                         $arFiles = $work->url_files ? explode(',', $work->url_files) : [];
                         $model = $work;
+
                     @endphp
                     
                     @include('compiled.admin.form')
@@ -35,10 +36,16 @@
                                 <div>
                                     <label>
                                         <input type="checkbox" name="url_files_flags[{{ $key }}]" class="uk-checkbox" checked>
-                                        <span>{{ __('Картинка - '.$key+1) }}</span>
+                                        <span>{{ __('файл - '.$key+1) }}</span>
                                     </label>
                                     <input type="hidden" name="url_files[{{ $key }}]" value="{{ trim($filePath) }}">
-                                    <img src="{{ '/storage/works/img/'.trim($filePath) }}" alt="">
+                                    @if (is_image($filePath))
+                                        <img src="{{ config('filesystems.clients.works').trim($filePath) }}">
+                                    @elseif(is_video($filePath))
+                                        <video src="{{ config('filesystems.clients.works').trim($filePath) }}" controls preload="none"></video>
+                                    @else
+                                        <p>Файл - {{ config('filesystems.clients.works').trim($filePath) }}</p>
+                                    @endif
                                 </div>                                
                             @endforeach
                         </div>
@@ -46,7 +53,7 @@
                     <div class="uk-margin js-upload uk-width-1-1 uk-width-1-4@s" uk-form-custom>
                         
                         <label for="photo">
-                            <input type="file" name="photo[]" id="photo" multiple="multiple" accept="image/*">
+                            <input type="file" name="photo[]" id="photo" multiple="multiple">
                             {{ __('Ссылки на картинки/скриншоты') }}
                             <button class="uk-button uk-button-small uk-button-upload" type="button" tabindex="-1">{{ __('Добавить') }}</button>
                         </label>

@@ -14,6 +14,8 @@
         <meta name="author" content="chokoladis">
         <meta name="keywords" content="{{ _('Создать портфолио, свое портфолио, your portfolio, portfolio online, free service portfolio') }}">
         <meta name="description" content="{{ _('Создай свое портфолио бесплатно за 5 минут!') }}">
+        <meta name="yandex-verification" content="f1b55fd121a25479" />
+        
         <link rel="shortcut icon" href="/portfolioicon.png" type="image/x-png">
         
         <title>@yield('page.title', config('app.name'))</title>

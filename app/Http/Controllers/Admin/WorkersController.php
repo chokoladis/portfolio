@@ -105,7 +105,7 @@ class WorkersController extends Controller
         $phone = $this->getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
-        $data['url_avatar'] = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.workers'));
+        $data['url_avatar'] = ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.workers'));
 
         unset($data['photo']);
 

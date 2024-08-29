@@ -122,6 +122,27 @@ async function profileDelete() {
     }
 }
 
+async function workDelete(action) {
+    
+    const resDelete = await fetch(action,
+        {
+            method: 'DELETE',
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+        }
+    );
+
+    let jsonDelete = await resDelete.json();
+    if (jsonDelete.success) {
+        location.href = "/workers";
+    } else {
+        UIkit.notification({
+            message: jsonDelete.error,
+            status: 'danger',
+            timeout: 5000
+        });
+    }
+}
+
 $(function () {
 
     $('.file_change').on('click', function () {
@@ -235,5 +256,12 @@ $(function () {
         if (confirm('Вы уверенны что хотите удалить профиль?')) {
             profileDelete();
         }
+    });
+
+    $('.js-profile-work-delete').on('click', function(){
+
+        const link = $(this).attr('data-href');
+
+        workDelete(link);
     });
 });

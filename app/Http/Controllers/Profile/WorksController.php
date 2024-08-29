@@ -9,6 +9,7 @@ use App\Models\Example_work;
 use App\Http\Controllers\Profile\IndexController;
 use App\Http\Requests\Profile\WorksRequest;
 use App\Http\Requests\Profile\WorkUpdateRequest;
+use App\Services\FileService;
 use App\Services\ImageService;
 
 class WorksController extends Controller
@@ -47,6 +48,29 @@ class WorksController extends Controller
 
         $data = $request->validated();
 
+        // $fileService = new FileService($request, 'url_files', config('filesystems.clients.workers'));
+        // $arResFiles = $fileService->handlerFiles();
+        // $filePath = '';
+
+        // if ($arResFiles['file_saved']){
+        //     $count = count($arResFiles['file_saved']) - 1;
+        //     foreach ($arResFiles['file_saved'] as $key => $value) {
+        //         $c = $key == $count ? '' : ',';
+        //         $filePath .= $value['path'].$c;
+        //     }
+        // }
+
+        // if (!empty($arResFiles['errors'])){
+        //     $resError = 'Нектороые файлы не были записаны: ';
+        //     $count = count($arResFiles['errors']) - 1;
+        //     foreach ($arResFiles['errors'] as $key => $value) {
+        //         $c = $key == $count ? '' : '<br>';
+        //         $resError .= $value.$c;
+        //     }
+        // }
+
+        // $data['url_files'] = $filePath;
+
         $data['url_files'] = $this->getNewFilesPath($request, $data);
         
         unset($data['url_files_flags'], $data['photo']);
@@ -71,7 +95,7 @@ class WorksController extends Controller
 
         if ($request->hasFile('photo')){
             $url_files .= $url_files ? ',' : '';
-            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.img.works'));
+            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.works'));
         }
 
         if ($url_files){
@@ -90,15 +114,8 @@ class WorksController extends Controller
     {
         $this->authorize('delete', $work);
 
-        dd($work);
-        // can ?
-        // work
+        $work->delete();
 
-        $userId = auth()->id();
-
-        $works = Example_work::query()
-            ->where(['user_id' => $userId ]);
-
-        return view('profile.works.index', compact('work'));
+        return redirect()->route('profile.works.index');
     }
 }

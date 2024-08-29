@@ -153,17 +153,17 @@ class Example_work extends Model
                         $filePath = trim($filePath);
                         $arPath = explode('/', $filePath);
     
-                        $filePath = public_path(config('filesystems.img.works').$filePath);
+                        $filePath = public_path(config('filesystems.clients.works').$filePath);
         
                         if (file_exists($filePath)){
                             unlink($filePath);
                         }
 
-                        $folder = public_path(config('filesystems.img.works').$arPath[0]);
+                        $folder = public_path(config('filesystems.clients.works').$arPath[0]);
                         $countFiles = count(Storage::files($folder));
     
                         if (!$countFiles &&
-                            $folder != public_path(config('filesystems.img.works'))) 
+                            $folder != public_path(config('filesystems.clients.works'))) 
                             rmdir($folder);
                     }
                 }

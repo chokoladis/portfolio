@@ -10,3 +10,6 @@ RewriteRule ((?s).*) public/$1 [L]
 
 RewriteCond %{THE_REQUEST} ^.*/index.php 
 RewriteRule (.*) http://%{HTTP_HOST} [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www.you-portfolio.online$ [NC]
+RewriteRule ^(.*)$ http://you-portfolio.online/$1 [R=301,L]

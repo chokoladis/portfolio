@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="uk-card-footer">
                                     <a href="{{ route('profile.works.edit',$work->slug) }}" class="uk-button uk-button-default">Редактировать</a>
-                                    <a href="{{ route('profile.works.delete',$work->slug) }}" class="uk-button uk-button-danger">Удалить</a>
+                                    <a href="javascript: void(0);" data-href="{{ route('profile.works.delete',$work->slug) }}" class="uk-button uk-button-danger js-profile-work-delete">Удалить</a>
                                 </div>
                             </div>
                         </div>

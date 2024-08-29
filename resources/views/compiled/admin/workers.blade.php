@@ -28,7 +28,7 @@
                         </td>
                         <td>
                             @if ($worker->url_avatar)
-                                <img src="{{ config('filesystem.img.workers').$worker->url_avatar }}">
+                                <img src="{{ config('filesystems.clients.workers').$worker->url_avatar }}">
                             @else 
                                 <span uk-icon="icon: user; ratio:2"></span>
                             @endif

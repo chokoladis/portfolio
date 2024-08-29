@@ -26,7 +26,7 @@ class StoreRequest extends BaseRequest
             'title' => 'required|string',
             'description' => 'string',
             'url_files' => '',
-            'url_work' => 'string',
+            'url_work' => 'string|nullable',
         ];
     }
 }

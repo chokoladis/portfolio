@@ -42,7 +42,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                         Route::get('/', 'index')->name('index');
                         Route::get('/{work}', 'edit')->name('edit');
                         Route::post('/{work}', 'update')->name('update');
-                        Route::post('/{work}/delete', 'delete')->name('delete');
+                        Route::delete('/{work}', 'delete')->name('delete');
                     });
                 });
             });
