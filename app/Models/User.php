@@ -86,6 +86,4 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $res;
     }
-
-    // sendEmailVerificationNotification
 }

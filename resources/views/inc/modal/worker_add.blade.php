@@ -56,8 +56,8 @@
             <form>
                 <h2 class="uk-modal-title">{{ __('Создание профиля') }}</h2>
                 
-                <p class="uk-text-warning">Для того чтобы мочь создать профиль и видеть профили других пользователей, необходимо подтвердить почту</>
-                <span type="submit" class="mt-4 uk-button uk-button-default" id="js_send_accept_email" value="{{ __('Подтвердить почту') }}">{{ __('Подтвердить почту') }}</span>
+                <p class="uk-text-warning">Для того чтобы мочь создать профиль и видеть профили других пользователей, необходимо подтвердить почту</p>
+                <span type="submit" class="mt-4 uk-button uk-button-default" id="js_send_accept_email">{{ __('Подтвердить почту') }}</span>
             </form>
         @endcannot
     </div>

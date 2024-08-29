@@ -7,6 +7,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -31,12 +32,13 @@ class AuthService
                 if (!$user){
                     $profilePhoto = isset($userData['picture']) ? $userData['picture'] : '';
 
-                    $password = Str::random(12);
+                    $password = str()->random(10);
+                    $passwordHased = Hash::make($password);
 
                     $newUser = User::create([
                         'fio' => $userData['name'],
                         'email' => $userData['email'],
-                        'password' => $password,
+                        'password' => $passwordHased,
                         'active' => 1,
                         'profile_photo_path' => $profilePhoto,
                     ]);
@@ -131,11 +133,13 @@ class AuthService
 
                     $profilePhoto = isset($userData['default_avatar_id']) ? self::YANDEX_LINK_PICTURE.$userData['default_avatar_id'] : '';
 
-                    $password = Str::random(12);
+                    $password = str()->random(10);
+                    $passwordHased = Hash::make($password);
+
                     $newUser = User::create([
                         'fio' => $userData['real_name'],
                         'email' => $userData['default_email'],
-                        'password' => $password,
+                        'password' => $passwordHased,
                         'active' => 1,
                         'profile_photo_path' => $profilePhoto,
                     ]);
