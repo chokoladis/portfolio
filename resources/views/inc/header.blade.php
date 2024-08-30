@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="author" content="chokoladis">
-        <meta name="keywords" content="{{ _('Создать портфолио, свое портфолио, your portfolio, portfolio online, free service portfolio') }}">
-        <meta name="description" content="{{ _('Создай свое портфолио бесплатно за 5 минут!') }}">
+        <meta name="keywords" content="{{ _('Создать портфолио, создать портфолио онлайн бесплатно, создать портфолио онлайн, портфолио для работы, service creation free portfolio, make portfolio online free') }}">
+        <meta name="description" content="{{ _('Создай портфолио работ бесплатно!') }}">
         <meta name="yandex-verification" content="f1b55fd121a25479" />
         
         <link rel="shortcut icon" href="/portfolioicon.png" type="image/x-png">

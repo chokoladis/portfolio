@@ -3,7 +3,7 @@
 @section('page.title'){{ __('Вход') }}@endsection
 
 @section('content')
-    <main>
+    <main class="page-login">
         <div class="container">
             <div class="uk-flex uk-flex-center">
                 <div class="uk-width-1-1 uk-width-3-5@s uk-width-1-3@l">
@@ -53,7 +53,10 @@
                                 </div>
                                 
                                 <div class="uk-width-1-1 mb-3">
-                                    <button type="submit" class="uk-button uk-button-primary uk-margin-small-right">
+                                    <button type="submit" class="uk-button uk-button-primary uk-margin-small-right g-recaptcha"
+                                        data-sitekey="<?=config('services.captcha.sitekey')?>"
+                                        data-callback='loginCaptcha'
+                                        data-action='loginCaptcha'>
                                         {{ __('Войти') }}
                                     </button>
 

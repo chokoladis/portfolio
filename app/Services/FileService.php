@@ -177,8 +177,6 @@ class FileService
             $file_name = md5($salt . '_' . $this->file->getClientOriginalName());
             $subdir = substr($file_name, 0, 3);
 
-            // temp check
-            // $fullTempPath = $root. 'temp/'.$subdir.'/'. $file_name. '.' .$ext; // old
             $fullTempPath = $root . 'temp/' . $subdir . '/' . $file_name . '.' . $ext;
 
             if (!is_dir($root . 'temp/')) {
@@ -186,6 +184,7 @@ class FileService
             }
 
             $this->file->move($root . 'temp/' . $subdir, $file_name . '.' . $ext);
+            $size = filesize($root . 'temp/' . $subdir .'/' . $file_name . '.' . $ext);
 
             $folder = $root  . $subdir . '/';
 
@@ -194,26 +193,32 @@ class FileService
             }
 
 
-            if ($arMime[0] === 'video') {
+            if ($arMime[0] === 'video' && $size > 700000) { // 700kb
 
-                $file_name = $this->compressVideo($fullTempPath, $folder, $file_name, $this->file)
-                    ? $this->compressVideo($fullTempPath, $folder, $file_name, $this->file) : mb_substr($file_name, 0, 16) . '.' . $ext;
+                $compress = $this->compressVideo($fullTempPath, $folder, $file_name, $this->file);
+
+                $file_name = $compress ? $compress :  mb_substr($file_name, 0, 16) . '.' . $ext;
+
             } elseif (
                 $arMime[0] === 'image' && $ext !== 'webp'
-                || ($ext === 'webp' && $this->file->getSize() > 300000)
-            ) { // webp size > 300kb
+                || ($ext === 'webp' && $size > 300000)
+            ) {
 
-                $file_name = $this->compressImage($fullTempPath, $folder, $file_name, $this->file)
-                    ? $this->compressImage($fullTempPath, $folder, $file_name, $this->file)  : mb_substr($file_name, 0, 16) . '.' . $ext;
+                $compress = $this->compressImage($fullTempPath, $folder, $file_name, $this->file);
+
+                $file_name = $compress ? $compress :  mb_substr($file_name, 0, 16) . '.' . $ext;
+
             } else {
+
+                copy($root . 'temp/' . $subdir .'/' . $file_name.'.'.$ext, $root . $subdir . '/' . mb_substr($file_name, 0, 16) . '.' . $ext);
+
                 $file_name = mb_substr($file_name, 0, 16) . '.' . $ext;
             }
 
             return ['subdir' => $subdir, 'file_name' => $file_name];
         } catch (\Throwable $th) {
             Log::error($th, ['function' => 'preparationSave']);
-            die;
-            // throw $th;
+            return redirect()->back()->with('error', 'Error handler files');
         }
     }
 
@@ -226,6 +231,8 @@ class FileService
         try {
             // $exec = exec('magick '.$fullTempPath.' -quality 80% '.$fullPath); //old
             $exec = exec('convert ' . $fullTempPath . ' -quality 80% ' . $fullPath); //hosting
+
+            unlink($fullTempPath);
 
             return $file_name;
         } catch (\Throwable $th) {
@@ -242,6 +249,8 @@ class FileService
 
         try {
             $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b:v 800k ' . $fullPath);
+            
+            unlink($fullTempPath);
 
             return $file_name;
         } catch (\Throwable $th) {

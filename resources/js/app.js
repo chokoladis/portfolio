@@ -253,4 +253,14 @@ $(function(){
             label.removeClass('fill');
         }
     });
+
+    window.loginCaptcha = function(){
+        $('main.page-login form').submit();
+    }
+    window.registrCaptcha = function(){
+        $('main.page-registration form').submit();
+    }
+    window.feedbackCaptcha = function(){
+        $('#md-feedback-add form').submit();
+    }
 });

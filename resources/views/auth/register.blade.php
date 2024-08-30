@@ -3,7 +3,7 @@
 @section('page.title') {{ __('Регистрация') }} @endsection
 
 @section('content')
-    <main>
+    <main class="page-registration">
         <div class="container">
             <div class="uk-flex uk-flex-center">
                 <div class="uk-width-1-1 uk-width-3-5@s uk-width-1-3@l">
@@ -18,7 +18,7 @@
                                     <label for="fio" class="uk-form-label">{{ __('ФИО') }}</label>
 
                                     <div class="">
-                                        <input id="fio" type="text" class="uk-input @error('name') is-invalid @enderror" name="fio" value="{{ old('fio') }}" required autocomplete="name" maxlength="120" autofocus>
+                                        <input id="fio" type="text" class="uk-input @error('fio') is-invalid @enderror" name="fio" value="{{ old('fio') }}" required autocomplete="name" maxlength="120" autofocus>
 
                                         @error('fio')
                                             <span class="invalid-feedback" role="alert">
@@ -66,7 +66,10 @@
 
                                 
                                 <div class="uk-flex uk-flex-center">
-                                    <button type="submit" class="uk-button uk-button-primary">
+                                    <button type="submit" class="uk-button uk-button-primary g-recaptcha"
+                                        data-sitekey="<?=config('services.captcha.sitekey')?>"
+                                        data-callback='registrCaptcha'
+                                        data-action='registrCaptcha'>
                                         {{ __('Зарегистрироваться') }}
                                     </button>
                                 </div>

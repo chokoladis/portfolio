@@ -95,13 +95,23 @@ class WorksController extends Controller
 
         if ($request->hasFile('photo')){
             $url_files .= $url_files ? ',' : '';
-            $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.works'));
+            // $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.works'));
+            $fileservice = new FileService($request, 'photo', config('filesystems.clients.works'));
+            $arResFiles = $fileservice->handlerFiles();
+
+            if ($arResFiles['file_saved']){
+                $count = count($arResFiles['file_saved']) - 1;
+                foreach ($arResFiles['file_saved'] as $key => $value) {
+                    $c = $key == $count ? '' : ',';
+                    $url_files .= $value['path'].$c;
+                }
+            }
         }
 
         if ($url_files){
             $arFilesPath = explode(',', $url_files);
 
-            if (count($arFilesPath) > ImageService::LIMIT_FILES){
+            if (count($arFilesPath) > FileService::LIMIT_FILES){
                 $arFilesPath = array_slice($arFilesPath, 0, 5);
                 $url_files = implode(', ', $arFilesPath);
             }
@@ -114,8 +124,11 @@ class WorksController extends Controller
     {
         $this->authorize('delete', $work);
 
-        $work->delete();
-
-        return redirect()->route('profile.works.index');
+        $success = $work->delete();
+        if ($success){
+            return responseJson($success, ['result' => 'OK']);
+        } else {
+            return responseJson($success, error: 'Удалить запись не удалось');
+        }
     }
 }

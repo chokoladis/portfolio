@@ -133,7 +133,7 @@ async function workDelete(action) {
 
     let jsonDelete = await resDelete.json();
     if (jsonDelete.success) {
-        location.href = "/workers";
+        location.href = "/profile/works";
     } else {
         UIkit.notification({
             message: jsonDelete.error,

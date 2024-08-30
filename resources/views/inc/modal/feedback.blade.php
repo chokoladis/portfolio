@@ -25,7 +25,11 @@
                 <textarea class="uk-textarea" name="comment" autocomplete="on" placeholder="{{ __('Комментарий') }}"></textarea>
             </div>
         
-            <input class="uk-button uk-button-default" type="submit" id="js-feedback-submit" value="{{ __('Отправить') }}">
+            <input type="submit" id="js-feedback-submit" value="{{ __('Отправить') }}"
+                class="uk-button uk-button-default g-recaptcha"
+                data-sitekey="<?=config('services.captcha.sitekey')?>"
+                data-callback='feedbackCaptcha'
+                data-action='feedbackCaptcha'>
         </form>
     </div>
 </div>

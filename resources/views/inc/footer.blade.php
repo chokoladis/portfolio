@@ -33,6 +33,7 @@
 
         @vite(['resources/js/app.js'])
         @stack('scripts')
+        <script defer src="https://www.google.com/recaptcha/api.js"></script>
 
         <!-- Top.Mail.Ru counter -->
         <script type="text/javascript">

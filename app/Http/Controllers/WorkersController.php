@@ -135,8 +135,6 @@ class WorkersController extends Controller
         $fileService = new FileService($request, 'photo', config('filesystems.clients.workers'));
         $arResFiles = $fileService->handlerFiles();
 
-        Log::debug('test', ['arResFiles' => $arResFiles]);
-
         if (!empty($arResFiles['file_saved'])){
             $filePath = $arResFiles['file_saved'][0]['path'];
         } elseif(!empty($arResFiles['errors'])) {
