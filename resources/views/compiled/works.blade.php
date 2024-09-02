@@ -37,7 +37,7 @@
                             @php
                                 foreach(explode(',', $work->url_files) as $filesPath){
                                     if (is_image($filesPath)){
-                                        echo '<img src="'. config('filesystems.clients.works').trim($filesPath).'" class="'.$imgclass.'">';
+                                        echo '<img src="'. config('filesystems.clients.Example_work').trim($filesPath).'" class="'.$imgclass.'">';
                                     }
                                 }
                             @endphp

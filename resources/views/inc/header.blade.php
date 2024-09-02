@@ -15,6 +15,7 @@
         <meta name="keywords" content="{{ _('Создать портфолио, создать портфолио онлайн бесплатно, создать портфолио онлайн, портфолио для работы, service creation free portfolio, make portfolio online free') }}">
         <meta name="description" content="{{ _('Создай портфолио работ бесплатно!') }}">
         <meta name="yandex-verification" content="f1b55fd121a25479" />
+        <meta name="google-site-verification" content="MKcmf-D2QV_nclfq_5lUAtAGOh8rM8LCKdZFOzKGKz0" />
         
         <link rel="shortcut icon" href="/portfolioicon.png" type="image/x-png">
         

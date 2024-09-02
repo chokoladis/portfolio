@@ -50,7 +50,7 @@ class SearchController extends Controller
             $modelClass = 'App\Models\\'.$model;
             $fields = $modelClass::$searchable;
 
-            $query = $modelClass::query();            
+            $query = $modelClass::query();      
 
             foreach($fields as $field){
                 $query->orWhere($field, 'like', '%'.$searchForSql.'%');

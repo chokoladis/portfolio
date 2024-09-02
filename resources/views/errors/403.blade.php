@@ -16,7 +16,7 @@
                 <h3 class="uk-text-warning">{{ __('Не твой уровень, дорогой') }}</h3>
                 <p class="uk-text-warning">{{ __('Доступ запрещен') }}</p>
                 <h1>403</h1>
-                <img src="{{ $randomImg }}" alt="">
+                <img src="{{ $randomImg }}" alt="403">
             </div>
         </div>
     </main>

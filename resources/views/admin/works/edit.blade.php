@@ -37,11 +37,11 @@
                                 <input type="hidden" name="url_files[{{ $key }}]" value="{{ trim($filePath) }}">
 
                                 @if (is_image($filePath))
-                                    <img src="{{ config('filesystems.clients.works').trim($filePath) }}" alt="Поломанна картинка 0-о">
+                                    <img src="{{ config('filesystems.clients.Example_work').trim($filePath) }}" alt="Поломанна картинка 0-о">
                                 @elseif (is_video($filePath))
-                                    <video src="{{ config('filesystems.clients.works').trim($filePath) }}" controls preload="none"></video>
+                                    <video src="{{ config('filesystems.clients.Example_work').trim($filePath) }}" controls preload="none"></video>
                                 @else
-                                    <b>Файл - {{ config('filesystems.clients.works').trim($filePath) }}</b>
+                                    <b>Файл - {{ config('filesystems.clients.Example_work').trim($filePath) }}</b>
                                 @endif
                             </div>                                
                         @endforeach

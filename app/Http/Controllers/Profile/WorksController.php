@@ -47,8 +47,8 @@ class WorksController extends Controller
         $this->authorize('modify', $work);
 
         $data = $request->validated();
-
-        // $fileService = new FileService($request, 'url_files', config('filesystems.clients.workers'));
+        
+        // $fileService = new FileService($request, 'url_files', 'Workers');
         // $arResFiles = $fileService->handlerFiles();
         // $filePath = '';
 
@@ -95,8 +95,8 @@ class WorksController extends Controller
 
         if ($request->hasFile('photo')){
             $url_files .= $url_files ? ',' : '';
-            // $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.works'));
-            $fileservice = new FileService($request, 'photo', config('filesystems.clients.works'));
+            // $url_files .= ImageService::getNewPhotoPath($request, 'photo', config('filesystems.clients.Example_work'));
+            $fileservice = new FileService($request, 'photo', 'Example_work');
             $arResFiles = $fileservice->handlerFiles();
 
             if ($arResFiles['file_saved']){

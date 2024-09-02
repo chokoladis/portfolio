@@ -132,7 +132,7 @@ class WorkersController extends Controller
         $phone = $this->getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
 
-        $fileService = new FileService($request, 'photo', config('filesystems.clients.workers'));
+        $fileService = new FileService($request, 'photo', 'Workers');
         $arResFiles = $fileService->handlerFiles();
 
         if (!empty($arResFiles['file_saved'])){

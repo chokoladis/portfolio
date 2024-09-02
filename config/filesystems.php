@@ -75,7 +75,12 @@ return [
 
 
     'clients' => [
-        'works' => env('WORKS_DIR'),
-        'workers' => env('WORKERS_DIR')
+        'Example_work' => env('WORKS_DIR'),
+        'Workers' => env('WORKERS_DIR')
+    ],
+
+    'property' => [
+        'Example_work' => 'url_files',
+        'Workers' => 'url_avatar'
     ]
 ];

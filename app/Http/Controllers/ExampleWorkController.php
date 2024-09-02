@@ -52,7 +52,7 @@ class ExampleWorkController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->id();
 
-        $fileService = new FileService($request, 'url_files', config('filesystems.clients.works'));
+        $fileService = new FileService($request, 'url_files', 'Example_work');
         $arResFiles = $fileService->handlerFiles();
         $filePath = '';
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Optimizer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -124,7 +125,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
     // donation
 
     // ajax requests
-    Route::get('/ajax/changeTheme', 'HelperController@changeTheme');
+    Route::get('/ajax/change_theme', 'HelperController@changeTheme');
+    Route::get('/ajax/set_lang?lang={lang}', '\App\Services\LangService@setLang' )->name('lang.setLang');
     Route::post('/ajax/feedback', 'FeedbackController@store' )->name('feedback.store');
     
 });

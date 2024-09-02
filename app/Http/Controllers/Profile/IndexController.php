@@ -53,14 +53,12 @@ class IndexController extends Controller
     
         $userId = auth()->id();
 
-        $fileService = new FileService($request, 'url_avatar', config('filesystems.clients.workers'));
+        $fileService = new FileService($request, 'url_avatar', 'Workers');
         $arResFiles = $fileService->handlerFiles();
         $file_path = '';
 
         if (!empty($arResFiles['file_saved'])){
             $file_path = $arResFiles['file_saved'][0]['path'];
-        } elseif (!empty($arResFiles['errors'])){
-            $resError = 'файл не был записан: '.$arResFiles['errors'][0];
         }
 
         if ($file_path) {

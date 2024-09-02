@@ -1,7 +1,7 @@
 @php
     use App\Http\Controllers\HelperController;
 
-    $url_avatar = config('filesystems.clients.workers').$worker->url_avatar;
+    $url_avatar = config('filesystems.clients.Workers').$worker->url_avatar;
     $imgUrl = $worker->url_avatar && file_exists(public_path($url_avatar)) ? $url_avatar : '/storage/general/user.png' ;
 
     if ($worker->about){

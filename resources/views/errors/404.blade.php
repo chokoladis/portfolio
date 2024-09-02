@@ -7,7 +7,7 @@
                 <h3 class="uk-text-warning">{{ __('Ты ошибься номер друг') }}</h3>
                 <p class="uk-text-warning">{{ __('Проверьте правильность ссылки') }}</p>
                 <h1>404</h1>
-                <img src="{{ '/storage/general/errors/404.gif' }}" alt="">
+                <img src="{{ '/storage/general/errors/404.gif' }}" alt="404">
             </div>
         </div>
     </main>

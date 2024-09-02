@@ -21,7 +21,7 @@ $(function(){
         activeTheme = f_htmlDark ? 'dark' : 'light';
         
         $.ajax({
-            url: '/ajax/changeTheme/',
+            url: '/ajax/change_theme/',
             data: {
                 'activeTheme' : activeTheme
             },

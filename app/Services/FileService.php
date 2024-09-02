@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Optimizer;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -20,6 +21,7 @@ class FileService
     public $request;
     public string $propertyName;
     public string $currentDir;
+    public string $entity;
     static $imgExt = [
         'png',
         'webp',
@@ -65,7 +67,7 @@ class FileService
     ];
 
 
-    function __construct($request, string $propertyName, string $currentDir)
+    function __construct($request, string $propertyName, string $entity)
     {
         if (!$request instanceof Request) {
             throw new Exception("Param Request if not instanceof Request", 400);
@@ -73,16 +75,9 @@ class FileService
 
         $this->request = $request;
         $this->propertyName = $propertyName;
-        $this->currentDir = $currentDir;
-        // $this->errors = [];
-        // $this->arSaved = [];
+        $this->entity = $entity;
+        $this->currentDir = config('filesystems.clients.'.$entity);
     }
-
-    // function __destruct()
-    // {
-    //     $this->errors = [];
-    //     $this->arSaved = [];
-    // }
 
     public function handlerFiles()
     {
@@ -184,46 +179,18 @@ class FileService
             }
 
             $this->file->move($root . 'temp/' . $subdir, $file_name . '.' . $ext);
-            $size = filesize($root . 'temp/' . $subdir .'/' . $file_name . '.' . $ext);
 
-            $folder = $root  . $subdir . '/';
-
-            if (!is_dir($folder)) {
-                mkdir($folder, 0755);
-            }
-
-
-            if ($arMime[0] === 'video' && $size > 700000) { // 700kb
-
-                $compress = $this->compressVideo($fullTempPath, $folder, $file_name, $this->file);
-
-                $file_name = $compress ? $compress :  mb_substr($file_name, 0, 16) . '.' . $ext;
-
-            } elseif (
-                $arMime[0] === 'image' && $ext !== 'webp'
-                || ($ext === 'webp' && $size > 300000)
-            ) {
-
-                $compress = $this->compressImage($fullTempPath, $folder, $file_name, $this->file);
-
-                $file_name = $compress ? $compress :  mb_substr($file_name, 0, 16) . '.' . $ext;
-
-            } else {
-
-                copy($root . 'temp/' . $subdir .'/' . $file_name.'.'.$ext, $root . $subdir . '/' . mb_substr($file_name, 0, 16) . '.' . $ext);
-
-                $file_name = mb_substr($file_name, 0, 16) . '.' . $ext;
-            }
-
-            return ['subdir' => $subdir, 'file_name' => $file_name];
+            return ['subdir' => 'temp/' . $subdir, 'file_name' => $file_name.'.' . $ext];
         } catch (\Throwable $th) {
             Log::error($th, ['function' => 'preparationSave']);
             return redirect()->back()->with('error', 'Error handler files');
         }
     }
 
-    public static function compressImage(string $fullTempPath, string $folder_path, string $file_name, UploadedFile $file)
+    public static function compressImage(string $fullTempPath, string $folder_path, string $file_name)
     {
+
+        Log::debug('temp 1 - '. $fullTempPath);
 
         $file_name = mb_substr($file_name, 0, 16) . '.webp';
         $fullPath = $folder_path . $file_name;
@@ -231,6 +198,9 @@ class FileService
         try {
             // $exec = exec('magick '.$fullTempPath.' -quality 80% '.$fullPath); //old
             $exec = exec('convert ' . $fullTempPath . ' -quality 80% ' . $fullPath); //hosting
+
+            Log::debug('img 2 - '. $fullPath);
+            Log::debug($exec);
 
             unlink($fullTempPath);
 
@@ -241,16 +211,21 @@ class FileService
         }
     }
 
-    public static function compressVideo(string $fullTempPath, string $folder_path, string $file_name, UploadedFile $file)
+    public static function compressVideo(string $fullTempPath, string $folder_path, string $file_name, string $ext)
     {
 
-        $file_name = mb_substr($file_name, 0, 16) . '.' . $file->getClientOriginalExtension();
+        Log::debug('video 1 - '. $fullTempPath);
+
+        $file_name = mb_substr($file_name, 0, 16) . '.' . $ext;
         $fullPath = $folder_path . $file_name;
 
         try {
-            $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b:v 800k ' . $fullPath);
+            $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b:v 800k ' . $fullPath); //hosting
+            // $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b 800k ' . $fullPath); //old
             
-            unlink($fullTempPath);
+            Log::debug('video 2 - '. $fullPath);
+            Log::debug($exec);
+            // unlink($fullTempPath);
 
             return $file_name;
         } catch (\Throwable $th) {

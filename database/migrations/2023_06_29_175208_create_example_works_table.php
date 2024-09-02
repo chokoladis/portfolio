@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('description', 1500)->nullable();
             $table->string('url_files', 200)->nullable();
             $table->string('url_work', 40)->nullable();
+            $table->boolean('active')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

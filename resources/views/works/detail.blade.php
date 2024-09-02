@@ -28,7 +28,7 @@
 
     foreach ($arFilesPath as $path) {
         if (is_image($path)){
-            $cover = config('filesystems.clients.works').trim($path);
+            $cover = config('filesystems.clients.Example_work').trim($path);
             break;
         }
     }
@@ -71,13 +71,13 @@
                 <div class="work-files uk-child-width-1-1 uk-child-width-1-2@m uk-child-width-1-3@l uk-margin-medium-top" uk-grid uk-lightbox="animation: slide">
                     @foreach($arFilesPath as $path)
                         <div>
-                            <a class="uk-inline" href="{{ config('filesystems.clients.works').trim($path) }}">
+                            <a class="uk-inline" href="{{ config('filesystems.clients.Example_work').trim($path) }}">
                                 @if (is_image($path))
-                                    <img src="{{ config('filesystems.clients.works').trim($path) }}" width="1800" height="1200" alt="Поломанна картинка 0-о">
+                                    <img src="{{ config('filesystems.clients.Example_work').trim($path) }}" width="1800" height="1200" alt="Поломанна картинка 0-о">
                                 @elseif (is_video($path))
-                                    <video src="{{ config('filesystems.clients.works').trim($path) }}" controls preload="none"></video>
+                                    <video src="{{ config('filesystems.clients.Example_work').trim($path) }}" controls preload="none"></video>
                                 @else
-                                    <b>Файл - {{ config('filesystems.clients.works').trim($path) }}</b>
+                                    <b>Файл - {{ config('filesystems.clients.Example_work').trim($path) }}</b>
                                 @endif
                             </a>
                         </div>

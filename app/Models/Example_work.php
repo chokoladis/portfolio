@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\OptimizerController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -139,6 +140,8 @@ class Example_work extends Model
 
             Example_work_stats::query()
                 ->create(['work_id' => $item->id]);
+
+            OptimizerController::beforeCreateModel($item, 'Example_work', 'url_files');
         });
 
         static::updating(function ($item) {
@@ -159,18 +162,18 @@ class Example_work extends Model
                         $filePath = trim($filePath);
                         $arPath = explode('/', $filePath);
 
-                        $filePath = public_path(config('filesystems.clients.works') . $filePath);
+                        $filePath = public_path(config('filesystems.clients.Example_work') . $filePath);
 
                         if (file_exists($filePath)) {
                             unlink($filePath);
                         }
 
-                        $folder = public_path(config('filesystems.clients.works') . $arPath[0]);
+                        $folder = public_path(config('filesystems.clients.Example_work') . $arPath[0]);
                         $countFiles = count(Storage::files($folder));
 
                         if (
                             !$countFiles &&
-                            $folder != public_path(config('filesystems.clients.works'))
+                            $folder != public_path(config('filesystems.clients.Example_work'))
                         )
                             rmdir($folder);
                     }

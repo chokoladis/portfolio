@@ -16,7 +16,7 @@
                 <h3 class="uk-text-warning">{{ __('Не правильно #bанные волки, широкую на широкую') }}</h3>
                 <p class="uk-text-warning">{{ __('На сервере что то отработало не правильно') }}</p>
                 <h1>500</h1>
-                <img src="{{ $randomImg }}" alt="">
+                <img src="{{ $randomImg }}" alt="500">
             </div>
         </div>
     </main>

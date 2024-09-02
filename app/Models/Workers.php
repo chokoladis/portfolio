@@ -99,14 +99,14 @@ class Workers extends Model
 
             if ($new_avatar && $new_avatar != $old_avatar && $old_avatar){
 
-                $real_path = public_path().config('filesystems.clients.workers'). $old_avatar;
+                $real_path = public_path().config('filesystems.clients.Workers'). $old_avatar;
                 
                 if (file_exists($real_path)){
                     unlink($real_path);
                 }
 
                 $arPath = explode('/', $old_avatar);
-                $folder = public_path(config('filesystems.clients.workers').$arPath[0]);
+                $folder = public_path(config('filesystems.clients.Workers').$arPath[0]);
                 if (is_dir($folder)){
                     $countFiles = count(Storage::files($folder));
 
@@ -124,13 +124,13 @@ class Workers extends Model
 
                 $arPath = explode('/', $filePath);
 
-                $filePath = public_path(config('filesystems.clients.workers').$filePath);
+                $filePath = public_path(config('filesystems.clients.Workers').$filePath);
 
                 if (file_exists($filePath)){
                     unlink($filePath);
                 }
 
-                $folder = public_path(config('filesystems.clients.workers').$arPath[0]);
+                $folder = public_path(config('filesystems.clients.Workers').$arPath[0]);
                 if (is_dir($folder)){
                     $countFiles = count(Storage::files($folder));
 
