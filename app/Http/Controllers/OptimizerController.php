@@ -23,8 +23,6 @@ class OptimizerController extends Controller
             ->orderBy('id', 'DESC')
             ->first();
 
-        Log::debug('1', ['inProccess' => $inProccess]);
-
         if ($inProccess){
 
             if (($process_id - intval($inProccess->start_generate_at)) > self::$timeOptimize){
@@ -43,8 +41,6 @@ class OptimizerController extends Controller
                 ->orderBy('id', 'DESC')
                 ->first();
 
-            Log::debug('2', ['notOptimizing' => $notOptimizing]);
-
             if (!is_null($notOptimizing)){
                 $model = $notOptimizing;
                 $needOptimize = true;
@@ -57,7 +53,6 @@ class OptimizerController extends Controller
     static function start(Model $model){
 
         $mainDir = config('filesystems.clients.'.$model->model_name);
-        Log::debug('maindir', [$mainDir]);
         $root = public_path() . $mainDir;
         
         $fullTempPath = $root . $model->path;

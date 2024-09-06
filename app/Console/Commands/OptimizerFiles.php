@@ -29,6 +29,6 @@ class OptimizerFiles extends Command
     {
         $result = OptimizerController::optimize();
 
-        Log::alert('optimizer' , ['result' => $result]);
+        // Log::alert('optimizer' , ['result' => $result]);
     }
 }

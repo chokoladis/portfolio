@@ -190,8 +190,6 @@ class FileService
     public static function compressImage(string $fullTempPath, string $folder_path, string $file_name)
     {
 
-        Log::debug('temp 1 - '. $fullTempPath);
-
         $file_name = mb_substr($file_name, 0, 16) . '.webp';
         $fullPath = $folder_path . $file_name;
 
@@ -216,8 +214,6 @@ class FileService
     public static function compressVideo(string $fullTempPath, string $folder_path, string $file_name, string $ext)
     {
 
-        Log::debug('video 1 - '. $fullTempPath);
-
         $file_name = mb_substr($file_name, 0, 16) . '.' . $ext;
         $fullPath = $folder_path . $file_name;
 
@@ -225,8 +221,6 @@ class FileService
             $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b:v 800k ' . $fullPath); //hosting
             // $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b 800k ' . $fullPath); //old
             
-            Log::debug('video 2 - '. $fullPath);
-            Log::debug($exec);
             // unlink($fullTempPath);
 
             return $file_name;

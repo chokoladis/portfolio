@@ -26,7 +26,7 @@ class ExampleWorkController extends Controller
         $page = $data['page'] ?? Example_work::DEFAULT_PAGE;
         $perPage = $data['per_page'] ?? Example_work::DEFAULT_PERPAGE;
         
-        $query = Example_work::query();
+        $query = Example_work::query()->where('active', 1);
         
         $query = isset($data['work']) ? $this->filterByWork($query, $data['work']) : $query;
         $query = isset($data['profile']) ? $this->filterByProfile($query, $data['profile']) : $query;

@@ -38,7 +38,7 @@ class CaptchaV3 implements ValidationRule
         // This means Google successfully processed our POST request. We still need to check the results!
         if ($siteVerify->successful()) {
             $body = $siteVerify->json();
-            Log::debug('captcha', ['res' => $body]);
+            // Log::debug('captcha', ['res' => $body]);
 
             // When this fails it means the browser didn't send a correct code. This means it's very likely a bot we should block
             if ($body['success'] !== true) {
