@@ -7,6 +7,15 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 
 Route::get('/', function(){ return view('home'); })->name('home');
+// Route::get('/', function(){ 
+
+//     $perm = substr(sprintf('%o', fileperms('/Users/igorch/sites_dir/0724/portfolio/public/storage/works/temp/d0e/d0ed98a3449b77b82728c3320edace6b.mp4')) , -4);
+//     dump($perm);
+//     $perm2 = substr(sprintf('%o', fileperms('/Users/igorch/sites_dir/0724/portfolio/public/storage/works/fc7/fc74ad4215644959.MP4')), -4);
+//     dump($perm2);
+
+// })->name('home');
+
 
 Route::group(['namespace' => 'App\Http\Controllers'], function(){
 

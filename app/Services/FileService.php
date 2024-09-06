@@ -196,11 +196,13 @@ class FileService
         $fullPath = $folder_path . $file_name;
 
         try {
+            $out = [];
             // $exec = exec('magick '.$fullTempPath.' -quality 80% '.$fullPath); //old
-            $exec = exec('convert ' . $fullTempPath . ' -quality 80% ' . $fullPath); //hosting
+            $exec = exec('convert ' . $fullTempPath . ' -quality 80% ' . $fullPath, $out); //hosting
 
-            Log::debug('img 2 - '. $fullPath);
-            Log::debug($exec);
+            // Log::debug('img 2 - '. $fullPath);
+            // Log::debug('exec', [$exec]);
+            // Log::debug('out', [$out]);
 
             unlink($fullTempPath);
 
