@@ -89,7 +89,7 @@ class OptimizerController extends Controller
             $file_name = $compress ? $compress :  $newFileName;
 
         } elseif (
-            $arMime[0] === 'image' && $ext !== 'webp'
+            $arMime[0] === 'image' && ($ext !== 'webp' || $ext !== 'gif')
             || ($ext === 'webp' && $size > 300000)
         ) {
 

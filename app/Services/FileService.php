@@ -196,7 +196,7 @@ class FileService
         try {
             $out = [];
             // $exec = exec('magick '.$fullTempPath.' -quality 80% '.$fullPath); //old
-            $exec = exec('convert ' . $fullTempPath . ' -quality 80% ' . $fullPath, $out); //hosting
+            $exec = exec('convert ' . $fullTempPath . ' -quality 80% ' . $fullPath); //hosting
 
             // Log::debug('img 2 - '. $fullPath);
             // Log::debug('exec', [$exec]);

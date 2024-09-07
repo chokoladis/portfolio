@@ -95,14 +95,14 @@ class Example_work extends Model
         return $works;
     }
 
-    public static function getCacheOne($id)
+    public function getCacheOne($id)
     {
 
         $key = static::class . '_' . $id;
 
         if (!$work = Cache::get($key)) {
 
-            $work = Example_work::query()->where('active', 1)->where(self::getRouteKeyName(),$id);
+            $work = Example_work::query()->where('active', 1)->where($this->getRouteKeyName(),$id);
 
             Cache::put($key, $work, 21600); // 6hours
         }
