@@ -102,7 +102,7 @@ class Example_work extends Model
 
         if (!$work = Cache::get($key)) {
 
-            $work = Example_work::query()->where('active', 1)->where($this->getRouteKeyName(),$id);
+            $work = Example_work::query()->where('active', 1)->where('id',$id);
 
             Cache::put($key, $work, 21600); // 6hours
         }
