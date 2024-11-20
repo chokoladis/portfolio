@@ -13,15 +13,17 @@ class HelperController extends Controller
         // 'view_count' => 'По просмотрам',
         'created_at' => 'По дате добавления'
     ];
-    
+
     const SORT = [
-        'asc' => 'По возрастанию', 
+        'asc' => 'По возрастанию',
         'desc' => 'По убыванию'
     ];
 
     const PER_PAGE = [
         5, 10, 15, 20
     ];
+
+    const GENERAL_PATH = 'storage/general/';
 
     public static function getAdminUser(){
         $userObj = auth()->user();
@@ -90,5 +92,23 @@ class HelperController extends Controller
         }
 
         return $query;
+    }
+
+    static function getTheme()
+    {
+        return request()->cookie('theme') ?? 'dark';
+    }
+
+    static function getMainSliderFiles(string $folder)
+    {
+        $pathDir = self::GENERAL_PATH.$folder.'/';
+        $files = [];
+
+        foreach (new \DirectoryIterator($pathDir) as $file) {
+            if(!$file->isDot())
+                $files[] = $pathDir.$file->getFilename();
+        }
+
+        return $files;
     }
 }

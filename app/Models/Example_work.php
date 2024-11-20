@@ -73,43 +73,6 @@ class Example_work extends Model
         return $this->hasOne(Example_work_stats::class, 'work_id', 'id');
     }
 
-    public static function getCacheList($arKeyCache, $query)
-    {
-
-        $key = implode(',', $arKeyCache);
-        $key = str_replace(',', '_', $key);
-
-        $request = array_diff_key(request()->all(), $arKeyCache);
-
-        if (empty($request)) {
-            if (!$works = Cache::get($key)) {
-
-                $works = $query->paginate($arKeyCache['per_page'])->appends(request()->query());
-
-                Cache::put($key, $works, 7200);
-            }
-        } else {
-            $works = $query->paginate($arKeyCache['per_page'])->appends(request()->query());
-        }
-
-        return $works;
-    }
-
-    public function getCacheOne($id)
-    {
-
-        $key = static::class . '_' . $id;
-
-        if (!$work = Cache::get($key)) {
-
-            $work = Example_work::query()->where('active', 1)->where('id',$id);
-
-            Cache::put($key, $work, 21600); // 6hours
-        }
-
-        return $work;
-    }
-
     public function getColumns()
     {
 

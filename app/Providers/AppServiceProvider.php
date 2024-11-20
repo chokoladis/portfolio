@@ -24,10 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $menuNav = new MenuNav();
         // $helper = new HelperController();
 
-        View::share('G_menuNav', $menuNav->getActive());
+        View::share('G_menuNav', MenuNav::getActive());
         // View::share('G_theme', $helper->getCookie('theme'));
 
         Paginator::defaultView('vendor.pagination.bootstrap-5-perpage');

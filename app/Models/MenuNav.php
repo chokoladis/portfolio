@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Cache;
 
 class MenuNav extends Model
 {
@@ -22,7 +22,7 @@ class MenuNav extends Model
 
     // protected $attributes = [
     //     'name' => 'string',
-    //     'link' => 'string', 
+    //     'link' => 'string',
     //     'role' => 'string',
     //     // 'active' => 'boolean',
     //     'sort' => 'int'
@@ -30,17 +30,23 @@ class MenuNav extends Model
 
     protected $casts = [
         'name' => 'string',
-        'link' => 'string', 
+        'link' => 'string',
         'role' => 'string',
         // 'active' => 'boolean',
         'sort' => 'int'
     ];
 
-    public function getActive(){
-        $query = MenuNav::query();
-        $list = $query->where('active', 1)->get();
-        return $list;
+    /**
+     * @return mixed[]
+     */
+    static function getActive(): mixed
+    {
+        return Cache::remember('main_menu_active', 86400, function () {
+            return static::query()
+                ->where('active', 1)
+                ->get() ?? [];
+        });
     }
 
-    
+
 }

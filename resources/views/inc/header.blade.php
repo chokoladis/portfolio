@@ -1,9 +1,5 @@
 @php
-    $theme = request()->cookie('theme');
-
-    if(!$theme){
-        $theme = 'dark';
-    }    
+    $theme = \App\Http\Controllers\HelperController::getTheme();
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{$theme}}">
@@ -12,31 +8,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="author" content="chokoladis">
-        <meta name="keywords" content="{{ _('Создать портфолио, создать портфолио онлайн бесплатно, создать портфолио онлайн, портфолио для работы, service creation free portfolio, make portfolio online free') }}">
-        <meta name="description" content="{{ _('Создай портфолио работ бесплатно!') }}">
+
         <meta name="yandex-verification" content="f1b55fd121a25479" />
         <meta name="google-site-verification" content="MKcmf-D2QV_nclfq_5lUAtAGOh8rM8LCKdZFOzKGKz0" />
-        
+
         <link rel="shortcut icon" href="/portfolioicon.png" type="image/x-png">
-        
+
+        {{-- todo seo controller --}}
         <title>@yield('page.title', config('app.name'))</title>
-        
+        <meta name="keywords" content="{{ _('Создать портфолио, создать портфолио онлайн бесплатно, создать портфолио онлайн, портфолио для работы, service creation free portfolio, make portfolio online free') }}">
+        <meta name="description" content="{{ _('Создай портфолио работ бесплатно!') }}">
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
 
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/js/uikit-icons.min.js"></script>
-        
+        {{-- <script src="{{ asset('') }}"></script> --}}
+
         @vite(['resources/scss/app.scss'])
         @stack('styles')
 
         <!-- Yandex.Metrika counter -->
         <script type="text/javascript" >
-            (function(m,e,t,r,i,k,a){m[i]=m[i]function(){(m[i].a=m[i].a[]).push(arguments)};
+            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
             m[i].l=1*new Date();
             for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
             k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
             (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-        
+
             ym(98259871, "init", {
                 clickmap:true,
                 trackLinks:true,
@@ -49,7 +48,7 @@
     </head>
     <body class="antialiased">
         <div class="root">
-            
+
             @if($status = session()->get('status') && $msg = session()->pull('msg'))
                 <script>
                     UIkit.notification({
@@ -72,7 +71,7 @@
                         </x-main-menu-li>
 
                         <x-main-menu-list-active />
-                        
+
                         <li class="search">
                             <form action="{{ route('search') }}" method="GET">
                                 <input type="search" name="search" minlength="3" maxlength="40" size="30"
@@ -120,7 +119,7 @@
             </header>
 
             <div class="mob-menu">
-                
+
                 <div class="close">X</div>
 
                 <form action="{{ route('search') }}" method="GET">
@@ -129,12 +128,12 @@
                         required>
                     <input type="submit" class="uk-button uk-button-search" value="Поиск">
                 </form>
-                
+
                 <ul>
                     <x-main-menu-li route="{{ route('home') }}">
                         {{ trans('menu.home') }}
                     </x-main-menu-li>
-    
+
                     <x-main-menu-list-active />
 
                     <div class="personal">

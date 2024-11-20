@@ -1,30 +1,24 @@
 <h2>HYSTORY LINE</h2>
 
-<ul>
-    <li>...</li>
-    <li>
-        <b>0.35</b>
-        <p>add recycle for works (force delete, restore)</p>
-    </li>
-    <li>
-        <b>0.3</b>
-        <p>add global search, use lang file</p>
-    </li>
-    <li>
-        <b>0.2</b>
-        <p>add breadcrumbs, fix security</p>
-    </li>
-    <li>
-        <b>0.18</b>
-        <p>rework admin!</p>
-    </li>
-    <li>
-        <b>0.175</b>
-        <p>Ready section - workers!</p>
-    </li>
-    <li>
-        <b>0.1</b>
-        <p>Ready section - works!</p>
-    </li>
-</ul>
+- <h4>Tags:</h4>
+ 
+    - #0.36
+    > start rework works, search, add slider, coding on phpstorm
 
+    - #0.35
+    > add recycle for works (force delete, restore)
+
+    - #0.3
+    > add global search, use lang file
+
+    - #0.2
+    > add breadcrumbs, fix security
+    
+    - #0.18
+    > rework admin!
+    
+    - #0.175
+    > Ready section - workers!
+  
+    - #0.1
+    > Ready section - works!

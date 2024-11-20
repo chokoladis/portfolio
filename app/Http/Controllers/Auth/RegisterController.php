@@ -52,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'fio' => [ 'required', 'string', 'min:3', 'max:120', 'regex:/([а-яёa-z-]+)([а-яёa-z ]*)/i' ],
-            'email' => ['required', 'string', 'email', 'max:70', 'unique:users', 'regex:/[\w\d]+@[\w\d]+\.[\w\d]+/i'],
+            'email' => ['required', 'string', 'email', 'max:70', 'unique:users', 'regex:/[\w\d\_\-]+@[\w\d\-\_]+\.[\w\d]+/i'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'g-recaptcha-response' => ['required', new CaptchaV3('registrCaptcha', 0.5)]
         ],

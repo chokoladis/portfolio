@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Optimizer;
+use App\Traits\Errors;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
+    use Errors;
+
     const ACCEPT_FILE_SIZE = 15728640; // bytes
     const ACCEPT_FILE_SIZE_MB = self::ACCEPT_FILE_SIZE / 1048576;
     const LIMIT_FILES = 5;
@@ -109,10 +112,10 @@ class FileService
                 }
             }
         } else {
-            $this->errors = ['Файлы не найдены'];
+            $this->errors = $this->compileError('files_not_find', 'Файлы не найдены');
         }
 
-        return ['file_saved' => $this->arSaved, 'errors' => $this->errors];
+        return [$this->arSaved, [$this->errors]];
     }
 
     public function saveFile()
@@ -142,19 +145,20 @@ class FileService
     {
         $ext = strtolower($this->file->getClientOriginalExtension());
 
+        // todo test
         if (!in_array($ext, self::$allowExt)) {
-            return $this->addError('Файл - ' . $this->file->getClientOriginalName() . ' имеет не поддерживаемое расширение');
+            $this->addError(['not_support', 'Файл - ' . $this->file->getClientOriginalName() . ' имеет не поддерживаемое расширение']);
         }
 
         if ($this->file->getSize() > self::ACCEPT_FILE_SIZE) {
-            return $this->addError('Файл - ' . $this->file->getClientOriginalName() . ' имеет слишком большой размер');
+            $this->addError(['big_size', 'Файл - ' . $this->file->getClientOriginalName() . ' имеет слишком большой размер']);
         }
 
         if (!$this->file->isValid()) {
-            return $this->addError('Файл - ' . $this->file->getClientOriginalName() . ' имеет ошибки');
+            $this->addError(['have_errors', 'Файл - ' . $this->file->getClientOriginalName() . ' имеет ошибки']);
         }
 
-        return false;
+        return !empty($this->errors);
     }
 
     public function preparationSave(): array
@@ -220,7 +224,7 @@ class FileService
         try {
             $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b:v 800k ' . $fullPath); //hosting
             // $exec = exec('ffmpeg -i ' . $fullTempPath . ' -b 800k ' . $fullPath); //old
-            
+
             // unlink($fullTempPath);
 
             return $file_name;
@@ -230,11 +234,8 @@ class FileService
         }
     }
 
-    public function addError(string $error)
+    public function addError(array $error)
     {
-
-        $this->errors[] = $error;
-
-        return true;
+        $this->errors[] = $this->compileErrorFromArray($error);
     }
 }
