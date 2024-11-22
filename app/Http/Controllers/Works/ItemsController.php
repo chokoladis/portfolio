@@ -10,9 +10,13 @@ use App\Http\Requests\ExampleWork\FilterRequest;
 use App\Models\Example_work;
 use App\Models\User;
 use App\Services\WorksService;
+use App\Traits\Errors;
+use Predis\Command\Traits\BloomFilters\Error;
 
 class ItemsController extends Controller
 {
+    use Errors;
+
     public WorksService $worksService;
 
     public  function  __construct()
@@ -62,13 +66,11 @@ class ItemsController extends Controller
         }
     }
 
-//    todo
-
     public function edit(Example_work $work){
 
         $this->authorize('modify', $work);
 
-        $ar = [
+        $data = [
             'id' => $work->id,
             'title' => $work->title,
             'description' => $work->description,
@@ -76,9 +78,7 @@ class ItemsController extends Controller
             'url_work' => $work->url_work
         ];
 
-        $json = json_encode($ar);
-
-        return $json;
+        return json_encode($data);
     }
 
     public function update(UpdateRequest $request, Example_work $work){
@@ -87,16 +87,11 @@ class ItemsController extends Controller
 
         $data = $request->validated();
 
-        $res = $work->update($data);
-
-        if ($res){
-            self::$response = 'Данные успешно обновлены';
+        if ($work->update($data)){
+            return responseJson(false, __('controllers.action.success', ['action' => 'Изменение']));
         } else {
-            self::$success = false;
-            self::$error = 'При изменении данных возникла ошибка';
+            return responseJson(false, error: [$this->getUnknownError('изменении')]);
         }
-
-        return responseJson(self::$success, self::$response, self::$error);
     }
 
     public function delete(Example_work $work){
@@ -104,9 +99,9 @@ class ItemsController extends Controller
         $this->authorize('delete', $work);
 
         if ($work->delete()){
-            return responseJson(true, __('Запись успешно удаленна'));
+            return responseJson(true, __('controllers.action.success', ['action' => 'Удаление']));
         } else {
-            return responseJson(false, '', __('Произошла ошибка при удалении'));
+            return responseJson(false, [$this->getUnknownError('удалении')]);
         }
     }
 
@@ -125,8 +120,8 @@ class ItemsController extends Controller
         return $query->whereIn('user_id', $arUsersId);
     }
 
-    public function getUsersByLikeName(string $data) : array{
-
+    public function getUsersByLikeName(string $data) : array
+    {
         $userFinder = User::query()
             ->where('name', 'like', '%'.$data.'%')
             ->orWhere('email', 'like', '%'.$data.'%')

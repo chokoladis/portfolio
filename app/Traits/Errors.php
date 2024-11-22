@@ -4,6 +4,13 @@ namespace App\Traits;
 
 trait Errors
 {
+    public function getUnknownError(string $action){
+        return $this->compileError(
+            'unknown',
+            __('controllers.action.error', ['action' => $action])
+        );
+    }
+
     public function compileErrors(array $errors){
         $result = [];
         foreach ($errors as $error){
