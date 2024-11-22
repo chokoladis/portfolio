@@ -70,7 +70,7 @@
                             {{ trans('menu.home') }}
                         </x-main-menu-li>
 
-                        <x-main-menu-list-active />
+                        <x-menu.main />
 
                         <li class="search">
                             <form action="{{ route('search') }}" method="GET">
@@ -134,7 +134,7 @@
                         {{ trans('menu.home') }}
                     </x-main-menu-li>
 
-                    <x-main-menu-list-active />
+                    <x-menu.main />
 
                     <div class="personal">
                         @guest
