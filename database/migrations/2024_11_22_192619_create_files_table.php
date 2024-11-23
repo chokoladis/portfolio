@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('optimizers', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('process_id')->default(null)->nullable();
-            $table->string('model_name', 30);
-            $table->unsignedBigInteger('model_id');
+            $table->string('name', 40)->index('files_name_inx');
             $table->string('path', 60);
-            $table->timestamp('start_generate_at')->default(null)->nullable();
-            $table->boolean('is_optimize')->default(0);
+            $table->string('description', 255)->nullable();
+
+            $table->string('entity_code', 30);
+            $table->unsignedBigInteger('entity_id');
+
+            $table->smallInteger('sort')->default(100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('optimizers');
+        Schema::dropIfExists('files');
     }
 };

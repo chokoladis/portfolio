@@ -42,10 +42,11 @@ Breadcrumbs::for('profile.works.edit', function ($trail, $work) {
     $trail->push($work->title, route('profile.works.edit', $work));
 });
 
+// -- Admin
 Breadcrumbs::for('admin', function ($trail) {
     $trail->push( __('Панель'), route('admin.index'));
 });
-// 
+//
 Breadcrumbs::for('admin.menu', function ($trail) {
     $trail->parent('admin');
     $trail->push( __('Меню'), route('admin.menu.index'));
@@ -58,7 +59,7 @@ Breadcrumbs::for('admin.menu.add', function ($trail) {
     $trail->parent('admin.menu');
     $trail->push( __('Создание'), route('admin.menu.create'));
 });
-// 
+//
 Breadcrumbs::for('admin.works', function ($trail) {
     $trail->parent('admin');
     $trail->push( __('Работы'), route('admin.works.index'));
@@ -80,7 +81,7 @@ Breadcrumbs::for('admin.users.edit', function ($trail, $user) {
     $trail->parent('admin.users');
     $trail->push($user->fio, route('admin.users.edit', $user));
 });
-// 
+//
 Breadcrumbs::for('admin.workers', function ($trail) {
     $trail->parent('admin');
     $trail->push( __('Профили'), route('admin.workers.index'));
@@ -89,7 +90,7 @@ Breadcrumbs::for('admin.workers.edit', function ($trail, $worker) {
     $trail->parent('admin.workers');
     $trail->push($worker->user->fio, route('admin.workers.edit', $worker));
 });
-// 
+//
 Breadcrumbs::for('admin.feedback', function ($trail) {
     $trail->parent('admin');
     $trail->push( __('Обратная связь'), route('admin.feedback.index'));
@@ -102,3 +103,16 @@ Breadcrumbs::for('admin.feedback.recycle', function ($trail) {
     $trail->parent('admin.feedback');
     $trail->push( __('Корзина'), route('admin.feedback.recycle'));
 });
+//
+Breadcrumbs::for('admin.category', function ($trail) {
+    $trail->parent('admin');
+    $trail->push( __('Категории'), route('admin.categories.index'));
+});
+Breadcrumbs::for('admin.category.create', function ($trail) {
+    $trail->parent('admin.feedback');
+    $trail->push( __('Добавление'), route('admin.categories.create'));
+});
+//Breadcrumbs::for('admin.categories.recycle', function ($trail) {
+//    $trail->parent('admin.feedback');
+//    $trail->push( __('Корзина'), route('admin.feedback.recycle'));
+//});

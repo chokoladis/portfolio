@@ -33,7 +33,31 @@ if (!function_exists('getUserRole')) {
         return auth()->user()?->role ?? 'guest';
     }
 }
+if (!function_exists('getCorrectUrl')) {
+    function getCorrectUrl(string|null $url)
+    {
+        if ($url === null)
+            return $url;
 
+        if (str_contains($url, 'https://') || str_contains($url, 'http://')){
+            $link = $url;
+        } else {
+            $link = 'https://'.$url;
+        }
+        return $link;
+    }
+}
+if (!function_exists('getCorrectCountViews')) {
+    function getCorrectCountViews(int|null $views)
+    {
+        if ($views) {
+            $views = $views > 1000 ? $views / 1000 . 'k' : $views;
+        } else {
+            $views = '-';
+        }
+        return $views;
+    }
+}
 
 // optimizer - mergeSort
 // set_time_limit(120);

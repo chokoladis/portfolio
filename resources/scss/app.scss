@@ -2,6 +2,7 @@
 @import 'variables';
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+@import 'uikit'; // temp solution
 
 // animation
 @keyframes work_item_hover {
@@ -116,9 +117,9 @@ ul,li,p{
             border: 1px solid $header-bg;
             margin-top: 5px;
         }
-    
+
         &:hover{
-    
+
             .uk-button-upload{
                 background: $header-bg;
             }
@@ -146,6 +147,14 @@ ul,li,p{
 }
 .pagination-per_page, .pagination *{
     font-size: 14px;
+}
+.slider{
+    img{
+        max-width: 100%;
+        width: 100%;
+        height: 400px;
+        object-fit: contain;
+    }
 }
 
 .root{
@@ -211,7 +220,7 @@ ul,li,p{
                 }
 
                 li{
-                    
+
                     display: block;
                     padding-left: 10px;
                     padding-right: 5px;
@@ -230,25 +239,25 @@ ul,li,p{
 
                     &.animated{
                         overflow: hidden;
-    
+
                         &::after{
                             content: '';
                             position: absolute;
                             left: 0;
                             top: 0;
-                            
+
                             width: 4px;
                             height: 4px;
-    
+
                             background: var(--header-link-clr-visited);
                         }
-    
+
                         &:hover{
-    
+
                             a{
                                 color: $header-link-color-hv;
                             }
-    
+
                             &::after{
                                 bottom: 0;
                                 top:unset;
@@ -256,7 +265,7 @@ ul,li,p{
                                 width: 50px;
                                 left: 70%;
                             }
-                            
+
                         }
                     }
 
@@ -270,7 +279,7 @@ ul,li,p{
 
                     &.search{
                         margin-left: auto;
-                        
+
                         input[name="search"]{
                             padding: 15px 10px;
                             height: 35px;
@@ -332,7 +341,7 @@ ul,li,p{
                 overflow: hidden;
                 position: fixed;
                 opacity: 0.4;
-                
+
                 &:hover{
                     opacity: 1;
                 }
@@ -360,12 +369,14 @@ ul,li,p{
 
             background: var(--header-link-clr-visited-lt);
 
-            ul{
+
+            form{
                 display: flex;
                 margin: 10px 0;
 
-                li{
+                .inputs{
                     display: flex;
+                    align-items: center;
 
                     .btn{
 
@@ -374,24 +385,15 @@ ul,li,p{
                             color: var(--main-clr-text);
                         }
                     }
-                    .inputs{
+
+                    input{
                         display: none;
                         flex: 1;
-
-                        input{
-                            width: 100%;
-                            padding: 5px 20px;
-                            outline: none;
-                            border: 0;
-                            background: rgba(white, 0.6);
-                        }
-                    }
-
-                    &.active{
-
-                        .inputs{
-                            display: flex;
-                        }
+                        width: 100%;
+                        padding: 5px 20px;
+                        outline: none;
+                        border: 0;
+                        background: rgba(white, 0.6);
                     }
                 }
 
@@ -399,23 +401,21 @@ ul,li,p{
                     display: none;
                 }
 
-                &.one-row{
-                    
-                    li{
-                        margin-right: 10px;
-                    }
-                }
-
                 &.active{
+                    .inputs{
+                        margin-right: 10px;
+
+                        .btn{
+                            margin-right: 10px;
+                        }
+
+                        input{
+                            display: flex;
+                        }
+                    }
 
                     [type="submit"]{
                         display: block;
-                    }
-                    &.one-row{
-
-                        >*.active{
-                            width: 32%;
-                        }
                     }
                 }
 
@@ -437,11 +437,11 @@ ul,li,p{
                                 margin: 0;
                                 margin-bottom: 10px;
                                 flex-direction: row;
-    
+
                                 &.active{
                                     width: 100%;
                                 }
-    
+
                                 .inputs{
                                     width: 100%;
                                     margin: 0;
@@ -451,7 +451,7 @@ ul,li,p{
                     }
 
                     flex-direction: column;
-                    
+
                     & > *{
                         width: 100%;
                     }
@@ -480,7 +480,7 @@ ul,li,p{
                         }
                     }
 
-                    
+
                 }
             }
         }
@@ -499,7 +499,7 @@ ul,li,p{
         box-shadow: 2px 0px 40px black;
 
         &.show{
-            left: 0;            
+            left: 0;
         }
 
         .close{
@@ -545,7 +545,7 @@ ul,li,p{
                         height: 3px;
                         left: 0;
                         margin-right: 10px;
-                        
+
                         background: black;
                         position: relative;
                     }
@@ -601,7 +601,7 @@ ul,li,p{
                 position: absolute;
                 width: 35px;
                 height: 100%;
-                background: green;            
+                background: green;
             }
 
             @media screen and (max-width:640px) {
@@ -630,7 +630,7 @@ ul,li,p{
         box-shadow: 2px 0px 40px black;
 
         &.show{
-            left: 0;            
+            left: 0;
         }
 
         .close{
@@ -676,7 +676,7 @@ ul,li,p{
                         height: 3px;
                         left: 0;
                         margin-right: 10px;
-                        
+
                         background: black;
                         position: relative;
                     }
@@ -721,7 +721,7 @@ ul,li,p{
             position: absolute;
             width: 40px;
             height: 100%;
-            background: green;            
+            background: green;
         }
     }
 
@@ -745,7 +745,7 @@ ul,li,p{
 
         .content{
             // width: fit-content;
-            
+
 
             ul{
                 display: flex;

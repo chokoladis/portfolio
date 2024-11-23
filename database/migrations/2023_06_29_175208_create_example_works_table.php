@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('slug', 70)->unique()->index();
             $table->string('title', 70);
             $table->string('description', 1500)->nullable();
-            $table->string('url_files', 200)->nullable();
+            $table->string('files', 15)->nullable();
             $table->string('url_work', 40)->nullable();
             $table->boolean('active')->default(0);
             $table->timestamps();

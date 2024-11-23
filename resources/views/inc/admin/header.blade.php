@@ -1,4 +1,4 @@
-@php 
+@php
   use App\Http\Controllers\HelperController;
 @endphp
 <!DOCTYPE html>
@@ -7,18 +7,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  
+
   <title>Admin | @yield('title-content') </title>
-  
+
   <link rel="stylesheet" href="{{ asset('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback') }}">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
+
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/dist/css/adminlte.min.css') }}">
-  
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.22/dist/css/uikit.min.css" />
 
   <!-- UIkit JS -->
@@ -27,7 +27,7 @@
   @vite(['resources/scss/app.scss'])
   @vite(['resources/scss/admin/app.scss'])
   @stack('styles')
-  
+
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
@@ -82,7 +82,7 @@
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a href="#" class="dropdown-item">
-              
+
               <div class="media">
                 <img src="{{ asset('/dist/img/user1-128x128.jpg') }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
                 <div class="media-body">
@@ -94,11 +94,11 @@
                   <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                 </div>
               </div>
-              
+
             </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
-              
+
               <div class="media">
                 <img src="{{ asset('/dist/img/user8-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                 <div class="media-body">
@@ -110,11 +110,11 @@
                   <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                 </div>
               </div>
-              
+
             </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
-              
+
               <div class="media">
                 <img src="{{ asset('/dist/img/user3-128x128.jpg') }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
                 <div class="media-body">
@@ -126,12 +126,12 @@
                   <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
                 </div>
               </div>
-              
+
             </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
           </div>
-        <!-- </li> --> 
+        <!-- </li> -->
         <!-- todo -->
         <!-- Notifications Dropdown Menu -->
         <!-- <li class="nav-item dropdown">
@@ -196,8 +196,7 @@
             </div>
           </div>
         </div> -->
-
-        @include('inc.admin.sidebar')
+        <x-admin.sidebar.main/>
       </div>
     </aside>
 
@@ -209,10 +208,10 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">@yield('title-content')</h1>
-                </div>  
+                </div>
                 <div class="col-sm-6">
                   @yield('breadcrumb')
-                </div>  
-            </div> 
-        </div> 
+                </div>
+            </div>
+        </div>
       </div>

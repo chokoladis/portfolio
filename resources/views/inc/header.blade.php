@@ -66,9 +66,9 @@
                         <div class="btn-mob-menu">
                             <span></span>
                         </div>
-                        <x-main-menu-li route="{{ route('home') }}">
-                            {{ trans('menu.home') }}
-                        </x-main-menu-li>
+                        <x-menu.main-li route="{{ route('home') }}">
+                            {{ __('menu.home') }}
+                        </x-menu.main-li>
 
                         <x-menu.main />
 
@@ -77,22 +77,22 @@
                                 <input type="search" name="search" minlength="3" maxlength="40" size="30"
                                     value="{{ Request::get('search') ? Request::get('search') : '' }}" autocomplete="on"
                                     required>
-                                <input type="submit" class="uk-button uk-button-search" value="{{ trans('menu.search') }}">
+                                <input type="submit" class="uk-button uk-button-search" value="{{ __('menu.search') }}">
                             </form>
                         </li>
 
                         <div class="personal">
                             @guest
                                 @if (Route::has('login'))
-                                    <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>
-                                        {{ trans('menu.login') }}
-                                    </x-main-menu-li>
+                                    <x-menu.main-li route="{{ route('login') }}" a_class='nav-link'>
+                                        {{ __('menu.login') }}
+                                    </x-menu.main-li>
                                 @endif
 
                                 @if (Route::has('register'))
-                                    <x-main-menu-li route="{{ route('register') }}" a_class='nav-link'>
-                                        {{ trans('menu.registration') }}
-                                    </x-main-menu-li>
+                                    <x-menu.main-li route="{{ route('register') }}" a_class='nav-link'>
+                                        {{ __('menu.registration') }}
+                                    </x-menu.main-li>
                                 @endif
                             @else
                                 <li class="nav-item dropdown">
@@ -101,10 +101,10 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('profile.index') }}">{{ trans('menu.profile') }}</a>
+                                        <a class="dropdown-item" href="{{ route('profile.index') }}">{{ __('menu.profile') }}</a>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            {{ trans('menu.quit') }}
+                                            {{ __('menu.quit') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -130,24 +130,24 @@
                 </form>
 
                 <ul>
-                    <x-main-menu-li route="{{ route('home') }}">
-                        {{ trans('menu.home') }}
-                    </x-main-menu-li>
+                    <x-menu.main-li route="{{ route('home') }}">
+                        {{ __('menu.home') }}
+                    </x-menu.main-li>
 
                     <x-menu.main />
 
                     <div class="personal">
                         @guest
                             @if (Route::has('login'))
-                                <x-main-menu-li route="{{ route('login') }}" a_class='nav-link'>
-                                    {{ trans('menu.login') }}
-                                </x-main-menu-li>
+                                <x-menu.main-li route="{{ route('login') }}" a_class='nav-link'>
+                                    {{ __('menu.login') }}
+                                </x-menu.main-li>
                             @endif
 
                             @if (Route::has('register'))
-                                <x-main-menu-li route="{{ route('register') }}" a_class='nav-link'>
-                                    {{ trans('menu.registration') }}
-                                </x-main-menu-li>
+                                <x-menu.main-li route="{{ route('register') }}" a_class='nav-link'>
+                                    {{ __('menu.registration') }}
+                                </x-menu.main-li>
                             @endif
                         @endguest
                     </div>

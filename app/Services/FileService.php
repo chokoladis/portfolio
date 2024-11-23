@@ -2,13 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Files;
 use App\Models\Optimizer;
 use App\Traits\Errors;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class FileService
 {
@@ -17,6 +18,7 @@ class FileService
     const ACCEPT_FILE_SIZE = 15728640; // bytes
     const ACCEPT_FILE_SIZE_MB = self::ACCEPT_FILE_SIZE / 1048576;
     const LIMIT_FILES = 5;
+    const DEFAULT_IMG_PATH = '';
 
     private UploadedFile $file;
 
@@ -237,5 +239,12 @@ class FileService
     public function addError(array $error)
     {
         $this->errors[] = $this->compileErrorFromArray($error);
+    }
+
+    public static function getById(int $id)
+    {
+        return Cache::remember('id_' . $id, 3600000, function () use ($id) {
+            return Files::query()->find($id)->first();
+        });
     }
 }

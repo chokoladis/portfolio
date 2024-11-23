@@ -64,6 +64,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 Route::get('/workers/', 'WorkersController@index')->name('workers.index');
                 Route::get('/menu/', 'MenuNavController@index')->name('menu.index');
                 Route::get('/feedback/', 'FeedbackController@index')->name('feedback.index');
+                Route::get('/category/', 'CategoryController@index')->name('categories.index');
 
                 Route::group(['prefix' => 'menu', 'controller' => 'MenuNavController'], function() {
                     Route::name('menu.')->group(function(){
@@ -117,6 +118,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                         Route::get('/recycle/', 'recycle')->name('recycle');
                         Route::post('/recycle/delete', 'recycleDelete')->name('recycleDelete');
                         Route::post('/recycle/restore', 'recycleRestore')->name('recycleRestore');
+                    });
+                });
+
+                Route::group(['prefix' => 'category', 'controller' => 'CategoryController'], function() {
+                    Route::name('categories.')->group(function () {
+
+                        Route::get('/add/', 'create')->name('create');
+                        Route::post('/', 'store')->name('store');
+                        Route::post('/{category}/delete/', 'delete')->name('delete');
+
                     });
                 });
             });
