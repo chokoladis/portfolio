@@ -4,12 +4,16 @@
 
 @section('breadcrumb'){{ Breadcrumbs::render('admin.category.create') }}@endsection
 
+@push('scripts')
+    @vite(['resources/js/admin/categories.js'])
+@endpush
+
 @section('content')
 
     <section class="content">
         <div class="container-fluid">
 
-            <form action="{{ route('admin.categories.store') }}" method="POST">
+            <form action="{{ route('admin.categories.store') }}" method="POST" id="category_store">
 
                 @csrf
 
@@ -31,6 +35,5 @@
 
         </div>
     </section>
-
 
 @endsection
