@@ -125,7 +125,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                     Route::name('categories.')->group(function () {
 
                         Route::get('/add/', 'create')->name('create');
-                        Route::get('/entity/{entity_code}', 'getByEntity')->name('getByEntity');
+                        Route::get('/entity', 'getByEntity')->name('getByEntity');
                         Route::post('/', 'store')->name('store');
                         Route::post('/{category}/delete/', 'delete')->name('delete');
 
@@ -133,6 +133,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                 });
             });
         });
+
+        Route::post('/ajax/translate_to_code', 'HelperController@translateToCode');
     });
 
     // donation

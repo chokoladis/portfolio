@@ -7,10 +7,14 @@ use App\Http\Requests\Category\FilterRequest;
 use App\Http\Requests\Category\StoreRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
+use App\Traits\Errors;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
+    use Errors;
+
     const ENTITIES = [
         'Example_work', 'Workers', 'Feedback'
     ];
@@ -45,19 +49,22 @@ class CategoryController extends Controller
 
     public function getByEntity(Request $request)
     {
-        $data = $request->validate([
-            'entity_code' => 'required|in:' . implode(',', array_keys(self::ENTITIES)),
-            'return_json' => 'boolean'
-        ]);
-        dd($data);
+        try {
+            $validData = $request->validate([
+                'code' => ['required', Rule::in(self::ENTITIES)],
+                'return_json' => 'boolean'
+            ]);
 
-        $returnJson = $data['return_json'];
+            $returnJson = isset($validData['return_json']) ? $validData['return_json'] : false;
 
-        $data = CategoryService::getList([
-            'entity_code' => $data['entity_code'],
-            'active' => true
-        ]);
+            $data = CategoryService::getList([
+                'entity_code' => $validData['code'],
+                'active' => true
+            ]);
 
-        return $returnJson ? json_encode($data, JSON_UNESCAPED_UNICODE) : $data;
+            return responseJson(true, $data);
+        } catch (\Throwable $th) {
+            return responseJson(false, error: [$this->compileError($th->getCode(), $th->getMessage())]);
+        }
     }
 }

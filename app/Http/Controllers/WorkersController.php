@@ -24,7 +24,7 @@ class WorkersController extends Controller
     static $response = '';
 
     const SOCIAL_LIST = [ // placeholder
-        'telegram' => '', 
+        'telegram' => '',
         'github' => '',
         'hh' => '',
         'kwork' => ''
@@ -57,7 +57,7 @@ class WorkersController extends Controller
         }
 
         $workers = $queryWorkers->paginate($perPage)->appends(request()->query());
-        
+
         return view('workers.index', compact('workers', 'workerById'));
     }
 
@@ -73,7 +73,7 @@ class WorkersController extends Controller
         } else {
 
             $matches = $this->getNumbers($fieldProfile);
-            
+
             if (!empty($matches)){
                 $phone = implode('', $matches);
                 $queryWorkers->where('phone', 'like', '%'.$phone.'%');
@@ -93,7 +93,7 @@ class WorkersController extends Controller
 
         preg_match_all('/[\d]/', $data, $matches_num);
         if(!empty($matches_num)){
-            // && count($matches_num[0]) > 3){            
+            // && count($matches_num[0]) > 3){
             return $matches_num[0];
         } else {
             return [];
@@ -127,7 +127,7 @@ class WorkersController extends Controller
         }
 
         $data = $request->validated();
-    
+
         $data['socials'] = isset($data['socials']) ? $this->getSocials($data['socials']) : null;
         $phone = $this->getNumbers($data['phone']);
         $data['phone'] = !empty($phone) ? implode('', $phone) : null;
@@ -147,7 +147,7 @@ class WorkersController extends Controller
 
         unset($data['photo']);
 
-        $data['code'] = self::getTransliteName();
+        $data['code'] = translateToCode(User::find(auth()->user()->id, 'fio'));
 
         $res = Workers::firstOrCreate(
             [ 'user_id' => auth()->user()->id ],
@@ -174,7 +174,7 @@ class WorkersController extends Controller
 
         if (isset($data['telegram']))
             $data['telegram'] = HelperController::replaceArrobaToLink($data['telegram'], 't.me');
-        
+
         if(isset($data['github']))
             $data['github'] = HelperController::replaceArrobaToLink($data['github'], 'github.com');
 
@@ -199,16 +199,9 @@ class WorkersController extends Controller
             'phone' => $worker->phone,
             'about' => $worker->about,
             'socials' => $worker->socials,
-            
+
         ];
 
         return view('workers.detail', compact('worker','works'));
-    }
-
-    public function getTransliteName(){
-
-        $user = User::find(auth()->user()->id, 'fio');
-        $code = Str::slug($user->fio, '_', 'ru');
-        return $code;
     }
 }

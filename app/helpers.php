@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\FileService;
+use Illuminate\Support\Str;
 
 if (!function_exists('responseJson')) {
     function responseJson(bool $success = true, array|string $response = null, $error = null, $status = '200')
@@ -56,6 +57,12 @@ if (!function_exists('getCorrectCountViews')) {
             $views = '-';
         }
         return $views;
+    }
+}
+if (!function_exists('translateToCode')) {
+    function translateToCode(string $text): string
+    {
+        return Str::slug($text, '_', 'ru');
     }
 }
 

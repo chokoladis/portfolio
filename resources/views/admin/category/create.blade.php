@@ -26,6 +26,7 @@
 
                 <x-forms.input title="Название" field="name" type="text" />
                 <x-forms.input title="Символьный код" field="code" type="text" />
+                <x-forms.input title="Сортировка" field="sort" type="number" />
                 <x-forms.input title="Активность" field="active" type="checkbox" checked="checked" />
 
                 <x-forms.input title="Иконка" field="preview" type="file" />

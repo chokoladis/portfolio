@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Hash;
+use App\Traits\Errors;
 
 class HelperController extends Controller
 {
+    use Errors;
+
     const ORDER_BY = [
         // 'view_count' => 'По просмотрам',
         'created_at' => 'По дате добавления'
@@ -110,5 +109,14 @@ class HelperController extends Controller
         }
 
         return $files;
+    }
+
+    public function translateToCode(string $text) : string
+    {
+        try {
+            return responseJson(true, translateToCode($text));
+        } catch (\Throwable $th) {
+            return responseJson(false, error: [ $this->compileError($th->getCode(),$th->getMessage())] );
+        }
     }
 }
