@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Traits\Errors;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class HelperController extends Controller
 {
@@ -111,10 +114,10 @@ class HelperController extends Controller
         return $files;
     }
 
-    public function translateToCode(string $text) : string
+    public function translateToCode(Request $request) : Response
     {
         try {
-            return responseJson(true, translateToCode($text));
+            return responseJson(true, translateToCode($request->get('text')));
         } catch (\Throwable $th) {
             return responseJson(false, error: [ $this->compileError($th->getCode(),$th->getMessage())] );
         }

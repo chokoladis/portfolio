@@ -43,6 +43,7 @@ class CategoryController extends Controller
 
     public function store(StoreRequest $request)
     {
+        dd($request);
         $data = $request->validationData();
         dd($data);
     }
@@ -60,7 +61,7 @@ class CategoryController extends Controller
             $data = CategoryService::getList([
                 'entity_code' => $validData['code'],
                 'active' => true
-            ]);
+            ])->toArray();
 
             return responseJson(true, $data);
         } catch (\Throwable $th) {

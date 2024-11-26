@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Workers;
 
+use App\Services\FileService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
@@ -28,7 +29,7 @@ class StoreRequest extends FormRequest
                 'nullable',
                 'mimes:jpg,png,jpeg,gif',
                 File::image()
-                    ->max(3 * 1024)
+                    ->max(FileService::ACCEPT_FILE_SIZE)
             ],
             'url_avatar' => 'string|nullable',
             'phone' => 'required|regex:/\+([\d]) ([\d]{3}) ([\d]{4}) ([\d]{3})/i',

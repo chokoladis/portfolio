@@ -17,14 +17,21 @@ async function updCategoriesByEntity(entity){
 
     let jsonResponse = await getQuery.json();
 
-    console.log(jsonResponse);
-
     if (jsonResponse.success){
 
-        console.log($(form_id+' select[name="parent_id"]'));
+        let arCategories = jsonResponse.result;
+
+        console.log(arCategories);
+
+        $(form_id+' select[name="parent_id"]').empty();
+
+        for(let key in arCategories){
+            console.log(arCategories[key]);
+            $(form_id+' select[name="parent_id"]').append(`<option>${arCategories[key]}</option>`);
+        }
 
     } else {
-        console.log(jsonResponse);
+        console.error(jsonResponse);
 
         UIkit.notification({
             message: jsonResponse.error,
@@ -34,9 +41,13 @@ async function updCategoriesByEntity(entity){
     }
 }
 
+$(form_id + ' [name="name"]').on('change', function (){
+    if ($(this).val().length > 3){
+        getTranslateCategoryName($(this).val());
+    }
+});
 async function getTranslateCategoryName(text){
 
-    // todo
     let action = '/ajax/translate_to_code?text='+text;
 
     const getQuery = await fetch(action, {
@@ -46,14 +57,10 @@ async function getTranslateCategoryName(text){
 
     let jsonResponse = await getQuery.json();
 
-    console.log(jsonResponse);
-
     if (jsonResponse.success){
-
-        console.log($(form_id+' select[name="parent_id"]'));
-
+        $(form_id+' [name="code"]').val(jsonResponse.result);
     } else {
-        console.log(jsonResponse);
+        console.error(jsonResponse);
 
         UIkit.notification({
             message: jsonResponse.error,

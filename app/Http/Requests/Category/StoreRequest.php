@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Category;
 
+use App\Services\FileService;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class StoreRequest extends FormRequest
 {
@@ -26,8 +28,14 @@ class StoreRequest extends FormRequest
             'parent_id' => 'integer',
             'name' => 'required|string|min:2|max:30',
             'code' => 'required|string|min:2|max:30',
-            'active' => 'boolean|default:true',
-            'preview' => 'file', //convert to preview_id
+            'sort' => 'integer|nullable',
+            'active' => 'boolean',
+            'preview' => [
+                'nullable',
+                'mimes:jpg,png,jpeg,gif',
+                File::image()
+                    ->max(FileService::ACCEPT_FILE_SIZE),
+            ] , //convert to preview_id
         ];
     }
 }
