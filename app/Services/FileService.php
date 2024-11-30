@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Models\Files;
 use App\Models\Optimizer;
 use App\Traits\Errors;
-use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
@@ -22,8 +20,7 @@ class FileService
 
     private UploadedFile $file;
 
-    public $errors, $arSaved = [];
-    public $request;
+    public array $errors, $arFilesId, $validationData;
     public string $propertyName;
     public string $currentDir;
     public string $entity;
@@ -72,13 +69,11 @@ class FileService
     ];
 
 
-    function __construct($request, string $propertyName, string $entity)
+    function __construct(array $data, string $propertyName, string $entity)
     {
-        if (!$request instanceof Request) {
-            throw new Exception("Param Request if not instanceof Request", 400);
-        }
-
-        $this->request = $request;
+        $this->errors = [];
+        $this->arFilesId = [];
+        $this->validationData = $data;
         $this->propertyName = $propertyName;
         $this->entity = $entity;
         $this->currentDir = config('filesystems.clients.'.$entity);
@@ -86,38 +81,41 @@ class FileService
 
     public function handlerFiles()
     {
+        try {
 
-        if ($this->request->hasFile($this->propertyName)) {
+            if (isset($this->validationData[$this->propertyName])){
 
-            $files = $this->request->file($this->propertyName);
+                $files = $this->validationData[$this->propertyName];
 
-            if (is_array($files)) {
+                if (is_array($files)) {
 
-                foreach ($files as $i => $file) {
+                    foreach ($files as $i => $file) {
 
-                    if ($i + 1 > self::LIMIT_FILES) {
-                        break;
+                        if ($i + 1 > self::LIMIT_FILES) {
+                            break;
+                        }
+
+                        $this->file = $file;
+
+                        if (!$this->isHaveErrors()) {
+                            $this->saveFile();
+                        }
                     }
-
-                    $this->file = $file;
+                } else {
+                    $this->file = $files;
 
                     if (!$this->isHaveErrors()) {
                         $this->saveFile();
                     }
                 }
             } else {
-
-                $this->file = $files;
-
-                if (!$this->isHaveErrors()) {
-                    $this->saveFile();
-                }
+                $this->errors[] = $this->compileError('files_not_find', 'Файлы не найдены');
             }
-        } else {
-            $this->errors = $this->compileError('files_not_find', 'Файлы не найдены');
-        }
 
-        return [$this->arSaved, [$this->errors]];
+            return [$this->arFilesId, $this->errors];
+        } catch (\Exception $e){
+            return [false, [$e->getMessage()]];
+        }
     }
 
     public function saveFile()
@@ -125,19 +123,22 @@ class FileService
         try {
             $root = public_path() . $this->currentDir;
 
-            $fileAr = self::preparationSave($this->file);
+            $fileAr = self::preparationSave();
+
+            if (!empty($fileAr['error'])) {
+                $this->errors[] = $fileAr['error'];
+                return false;
+            }
 
             $file_path = $fileAr['subdir'] . '/' . $fileAr['file_name'];
 
-            // if (!file_exists($root . $file_path)) {
-            //     $this->file->move($root . $fileAr['subdir'], $fileAr['file_name']);
-            // }
+            $newFile = Files::create([
+                'name' => $fileAr['file_name'],
+                'path' => $file_path,
+                'entity_code' => $this->entity,
+            ]);
 
-            $this->arSaved[] = [
-                'originalName' => $this->file->getClientOriginalName(),
-                'newName' => $fileAr['file_name'],
-                'path' => $file_path
-            ];
+            $this->arFilesId[] = $newFile->id;
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -163,7 +164,7 @@ class FileService
         return !empty($this->errors);
     }
 
-    public function preparationSave(): array
+    public function preparationSave()
     {
 
         try {
@@ -172,16 +173,11 @@ class FileService
 
             $salt = auth()->user()->id . '_' . time();
 
-            $mime = $this->file->getMimeType();
-            $arMime = explode('/', $mime);
-
             $file_name = md5($salt . '_' . $this->file->getClientOriginalName());
             $subdir = substr($file_name, 0, 3);
 
-            $fullTempPath = $root . 'temp/' . $subdir . '/' . $file_name . '.' . $ext;
-
             if (!is_dir($root . 'temp/')) {
-                mkdir($root . 'temp/', 0755);
+                mkdir($root . 'temp/', 0755, true);
             }
 
             $this->file->move($root . 'temp/' . $subdir, $file_name . '.' . $ext);
@@ -189,7 +185,7 @@ class FileService
             return ['subdir' => 'temp/' . $subdir, 'file_name' => $file_name.'.' . $ext];
         } catch (\Throwable $th) {
             Log::error($th, ['function' => 'preparationSave']);
-            return redirect()->back()->with('error', 'Error handler files');
+            return ['error' => $this->compileError($th->getCode(), $th->getMessage())];
         }
     }
 

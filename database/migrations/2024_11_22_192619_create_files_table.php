@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description', 255)->nullable();
 
             $table->string('entity_code', 30);
-            $table->unsignedBigInteger('entity_id');
+            $table->unsignedBigInteger('entity_id')->nullable();
 
             $table->smallInteger('sort')->default(100);
             $table->timestamps();

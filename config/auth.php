@@ -94,7 +94,7 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_reset_tokens',
-            'expire' => 60,
+            'expire' => 3600,
             'throttle' => 30,
         ],
     ],
@@ -114,12 +114,12 @@ return [
 
     'socials' => [
         'google' => [
-            'redirect_uri' => env('GOOGLE_AUTH_URL'), 
+            'redirect_uri' => env('GOOGLE_AUTH_URL'),
             'client_id' => env('GOOGLE_AUTH_CLIENT_ID'),
             'client_secret' => env('GOOGLE_AUTH_SECRET')
         ],
         'yandex' => [
-            'redirect_uri' => env('YANDEX_AUTH_URL'), 
+            'redirect_uri' => env('YANDEX_AUTH_URL'),
             'client_id' => env('YANDEX_AUTH_CLIENT_ID'),
             'client_secret' => env('YANDEX_AUTH_SECRET')
         ]

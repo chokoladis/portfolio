@@ -24,4 +24,12 @@ class CategoryService
             return $query->get();
         });
     }
+
+    static function isRowExists(array $data)
+    {
+        return Category::query()
+            ->where('code', $data['code'])
+            ->where('entity_code', $data['entity_code'])
+            ->exists();
+    }
 }

@@ -15,10 +15,16 @@
             @break
 
         @case('file')
-            <div class="js-upload" uk-form-custom>
-                <input type="file" name="{{ $field }}" @isset($multiple) multiple="multiple" @endisset>
-                <button class="uk-button uk-button-default" type="button" tabindex="-1">{{ __('Файл для ').$title }}</button>
-            </div>
+            <label class="{{ $field }}">
+                <div class="uk-button uk-button-primary">{{ __('Вставьте '.$title) }}</div>
+                <p class="uk-hidden">
+                    <input type="file" name="{{ $field }}" @isset($multiple) multiple="multiple" @endisset>
+                </p>
+            </label>
+{{--            <div class="js-upload" uk-form-custom>--}}
+{{--                <input type="file" name="{{ $field }}" @isset($multiple) multiple="multiple" @endisset>--}}
+{{--                <button class="uk-button uk-button-default" type="button" tabindex="-1">{{ __('Файл для ').$title }}</button>--}}
+{{--            </div>--}}
             @break
 
         @default

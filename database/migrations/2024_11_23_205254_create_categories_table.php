@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name', 30);
             $table->string('code', 30);
             $table->boolean('active')->default(1);
             $table->smallInteger('sort')->default(100)->unsigned();
 
-            $table->unsignedBigInteger('preview_id')->index('category_preview_idx');
+            $table->unsignedBigInteger('preview_id')->index('category_preview_idx')->nullable();
             $table->foreign('preview_id', 'category_preview_id_fk')
                 ->references('id')->on('files');
 

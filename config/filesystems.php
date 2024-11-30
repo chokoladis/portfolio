@@ -76,7 +76,8 @@ return [
 
     'clients' => [
         'Example_work' => env('WORKS_DIR'),
-        'Workers' => env('WORKERS_DIR')
+        'Workers' => env('WORKERS_DIR'),
+        'Category' => env('CATEGORY_DIR'),
     ],
 
     'property' => [

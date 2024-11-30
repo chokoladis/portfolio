@@ -7,6 +7,7 @@ use App\Http\Requests\Category\FilterRequest;
 use App\Http\Requests\Category\StoreRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
+use App\Services\FileService;
 use App\Traits\Errors;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -35,7 +36,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::all(['id', 'name']);
         $entities = self::ENTITIES;
 
         return view('admin.category.create', compact('categories', 'entities'));
@@ -43,9 +44,34 @@ class CategoryController extends Controller
 
     public function store(StoreRequest $request)
     {
-        dd($request);
         $data = $request->validationData();
-        dd($data);
+
+        $fileService = new FileService($data, 'preview', 'Category');
+        [$previewId, $errors] = $fileService->handlerFiles();
+
+        if (CategoryService::isRowExists($data)){
+            return redirect()->route('admin.categories.create')->withErrors(['Такая запись уже есть, смените название']);
+        }
+
+        $data['preview_id'] = !empty($previewId) ? $previewId[0] : null;
+
+        $dataSave = [
+            'entity_code' => $data['entity_code'],
+            'parent_id' => $data['parent_id'] ?? null,
+            'name' => $data['name'],
+            'code' => $data['code'],
+            'active' => $data['active'] ?? false,
+            'sort' => $data['sort'] ?? 100,
+            'preview_id' => $data['preview_id'],
+        ];
+
+        $result = Category::create($dataSave);
+
+         if ($result){
+             return redirect()->to(route('admin.categories.index'))->with('session', 'success');
+         } else {
+             return redirect()->to(route('admin.categories.create'))->with(['Ошибка добавления записи']);
+         }
     }
 
     public function getByEntity(Request $request)

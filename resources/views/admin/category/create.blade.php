@@ -13,13 +13,12 @@
     <section class="content">
         <div class="container-fluid">
 
-            <form action="{{ route('admin.categories.store') }}" method="POST" id="category_store">
+            <form action="{{ route('admin.categories.store') }}" method="POST" id="category_store" enctype="multipart/form-data">
 
                 @csrf
 
                 <x-forms.select title="Сущность" field="entity_code" :values='$entities' />
 
-{{--                ajax при изменении ентити и кэширование --}}
                 @if(!empty($categories))
                     <x-forms.select title="Родительская категория" field="parent_id" :values='$categories' />
                 @endif
