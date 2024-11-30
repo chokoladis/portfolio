@@ -132,8 +132,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function(){
                     });
                 });
 
-                Route::get('/settings', 'SettingsController@index')->name('settings.index');
-                Route::get('/settings/cache/clear-all', 'SettingsController@cacheClearAll')->name('settings.index');
+                Route::get('/settings', 'SettingController@index')->name('settings.index');
+                Route::get('/settings/cache/clear-all', 'SettingController@cacheClearAll')->name('settings.cache.clearAll');
             });
         });
 

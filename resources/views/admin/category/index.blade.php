@@ -9,7 +9,8 @@
     <section class="content">
         <div class="container-fluid">
 
-{{--            @include('compiled.admin.feedbacks')--}}
+{{--            todo filters --}}
+            {!! $table !!}
 
         </div>
     </section>

@@ -116,3 +116,9 @@ Breadcrumbs::for('admin.category.create', function ($trail) {
 //    $trail->parent('admin.feedback');
 //    $trail->push( __('Корзина'), route('admin.feedback.recycle'));
 //});
+
+
+Breadcrumbs::for('admin.setting', function ($trail) {
+    $trail->parent('admin');
+    $trail->push( __('Настройки'), route('admin.settings.index'));
+});

@@ -10,11 +10,13 @@ class SettingController extends Controller
 {
     public function index()
     {
-        return view('admin.setting.index');
+        return view('admin.settings.index');
     }
 
     public function cacheClearAll()
     {
-        Artisan::call('cache:clear');
+        Artisan::call('optimize:clear');
+
+        return redirect()->route('admin.settings.index')->with('success', 'Cache cleared!');
     }
 }

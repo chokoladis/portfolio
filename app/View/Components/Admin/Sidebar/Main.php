@@ -38,6 +38,7 @@ class Main extends Component
             'Workers' => $this->getWorkers(),
             'Feedback' => $this->getFeedback(),
             'Category' => $this->getCategory(),
+            'Setting' => $this->getSetting()
         ];
     }
 
@@ -127,7 +128,7 @@ class Main extends Component
             'name' => __('Категории'),
             'img' =>    '<i class="nav-icon fas fa-solid fa-table-list"></i>',
             'link' => 'admin.categories.index',
-            'open' => Route::is('admin.category.*'),
+            'open' => Route::is('admin.categories.*'),
             'items' => [
                 'list' => [
                     'name' =>   __('Список'),
@@ -140,6 +141,16 @@ class Main extends Component
                     'link' => 'admin.categories.create'
                 ],
             ]
+        ];
+    }
+
+    public function getSetting(): array
+    {
+        return [
+            'name' => __('Настройки'),
+            'img' =>    '<i class="nav-icon fas fa-solid fa-wrench"></i>',
+            'link' => 'admin.settings.index',
+            'open' => Route::is('admin.settings.*')
         ];
     }
 }

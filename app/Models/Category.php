@@ -10,4 +10,6 @@ class Category extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public $tableFields = [ 'id', 'name', 'active', 'entity_code', 'updated_at', 'preview_src' ];
 }

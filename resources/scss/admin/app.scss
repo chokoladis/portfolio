@@ -27,19 +27,19 @@ ul{
         }
 
         // &.menu-open{
-            
+
         // }
     }
 }
 
 body{
-     
+
     .uk-modal{
         z-index: 2000;
     }
 
     &.dark-mode{
-        
+
         .uk-modal-body{
             background: $darkMode_bg;
             color: $darkMode_clr;
@@ -50,11 +50,11 @@ body{
 
         &.header-filter{
 
-            background: $second-color-lg;            
+            background: $second-color-lg;
 
             form{
                 padding: 15px 0;
-    
+
                 input:not([type="checkbox"]){
                     padding: 5px 10px;
                     width: 190px;
@@ -63,7 +63,7 @@ body{
                 [type="submit"]{
                     display: none;
                 }
-    
+
                 label{
                     margin: 0;
                 }
@@ -86,7 +86,7 @@ body{
         h4{
             margin-bottom: 10px;
         }
-        
+
         .data{
             display: flex;
             flex-wrap: wrap;
@@ -101,7 +101,7 @@ body{
                     background: rgb(3, 116, 56);
                     padding: 5px;
                     max-width: 100%;
-                }                
+                }
             }
         }
         .attr{
@@ -113,4 +113,14 @@ body{
             }
         }
     }
+
+    .uk-table{
+
+        img{
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+        }
+    }
+
 }
